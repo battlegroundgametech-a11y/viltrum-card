@@ -1,5 +1,6 @@
 "use client";
-
+import HamburgerMenu from "../../../components/HamburgerMenu";
+import WalletBadge from "../../../components/WalletBadge";
 import { useState } from "react";
 
 export default function FreeMintPage() {
@@ -33,6 +34,8 @@ export default function FreeMintPage() {
 
   return (
     <main className="checkout-premium">
+      <HamburgerMenu />
+      <WalletBadge />
       <div className="checkout-card-preview free-preview">
         <span>VILTRUM</span>
         <h2>Free Mint</h2>
