@@ -2,6 +2,7 @@ import HamburgerMenu from "../components/HamburgerMenu";
 import HeroCard from "../components/HeroCard";
 import ExtraSections from "../components/ExtraSections";
 import PowerSections from "../components/PowerSections";
+import FinalPolish from "../components/FinalPolish";
 
 export default function HomePage() {
   return (
@@ -79,6 +80,7 @@ export default function HomePage() {
           </a>
         </div>
       </section>
+     <FinalPolish />
      <ExtraSections />
     </main>
   );
