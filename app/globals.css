@@ -551,3 +551,49 @@ a {
     font-size: 11px;
   }
 }
+
+.elite-card-center {
+  margin-top: 42px;
+}
+
+.elite-tag {
+  margin-top: 12px;
+  font-size: 10px;
+  letter-spacing: .18em;
+  white-space: nowrap;
+}
+
+.elite-card-bottom {
+  bottom: 24px;
+}
+
+@media (max-width: 520px) {
+  .elite-card-center {
+    margin-top: 42px;
+  }
+
+  .elite-number {
+    font-size: 15px;
+    letter-spacing: .13em;
+  }
+
+  .elite-tag {
+    margin-top: 10px;
+    font-size: 7px;
+    letter-spacing: .14em;
+  }
+
+  .elite-card-bottom {
+    bottom: 20px;
+    grid-template-columns: 1.4fr .45fr .45fr;
+  }
+
+  .elite-card-bottom span {
+    display: block;
+    font-size: 7px;
+  }
+
+  .elite-card-bottom b {
+    font-size: 10px;
+  }
+}
