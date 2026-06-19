@@ -2,20 +2,18 @@
 
 export default function HeroCard() {
   return (
-    <div className="float-card card-shine relative mx-auto mt-10 h-56 w-full max-w-sm rounded-3xl border border-white/20 bg-gradient-to-br from-viltrumPurple via-[#111827] to-viltrumCyan p-6 shadow-2xl shadow-viltrumPurple/30 md:h-64 md:max-w-md">
+    <div className="relative mx-auto h-60 w-full max-w-md rounded-[2rem] border border-white/20 bg-gradient-to-br from-[#8B5CF6] via-[#111827] to-[#00E5FF] p-7 shadow-2xl shadow-purple-500/30">
       <div className="flex justify-between">
         <div>
-          <p className="text-sm uppercase tracking-[0.3em] text-white/70">
-            Viltrum
-          </p>
-          <h3 className="mt-2 text-2xl font-black">Crypto Card</h3>
+          <p className="tracking-[0.35em] text-white/60">VILTRUM</p>
+          <h3 className="mt-3 text-2xl font-black">Crypto Card</h3>
         </div>
-        <div className="h-12 w-16 rounded-xl bg-viltrumGold/90" />
+        <div className="h-12 w-16 rounded-xl bg-yellow-400" />
       </div>
 
-      <div className="mt-12 text-xl font-semibold tracking-[0.22em]">
+      <p className="mt-12 text-xl tracking-[0.25em]">
         4242 4242 4242 1234
-      </div>
+      </p>
 
       <div className="mt-8 flex justify-between text-sm">
         <div>
