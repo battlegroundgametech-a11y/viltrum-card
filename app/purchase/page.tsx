@@ -1,6 +1,11 @@
+import HamburgerMenu from "../../components/HamburgerMenu";
+import WalletBadge from "../../components/WalletBadge";
+
 export default function PurchasePage() {
   return (
     <main className="purchase-premium">
+      <HamburgerMenu />
+      <WalletBadge />
       <section className="purchase-hero">
         <p className="purchase-label">Viltrum Access Tiers</p>
         <h1>Choose your card</h1>
