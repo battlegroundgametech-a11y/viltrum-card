@@ -1,29 +1,36 @@
 "use client";
 
+import { useAccount } from "wagmi";
+import { useEffect } from "react";
+
+import WalletConnect from "@/components/WalletConnect";
 import HamburgerMenu from "@/components/HamburgerMenu";
 
 export default function ConnectWalletPage() {
+  const { isConnected } = useAccount();
+
+  useEffect(() => {
+    if (isConnected) {
+      window.location.href = "/purchase";
+    }
+  }, [isConnected]);
+
   return (
     <main className="viltrum-gradient flex min-h-screen items-center justify-center px-5">
       <HamburgerMenu />
 
-      <div className="viltrum-glass max-w-lg rounded-3xl p-8 text-center">
-        <h1 className="text-4xl font-black">Telegram Connected</h1>
+      <div className="viltrum-glass max-w-xl rounded-3xl p-8 text-center">
+        <h1 className="text-4xl font-black">
+          Connect Wallet
+        </h1>
 
         <p className="mt-4 text-white/70">
-          Your Telegram account was connected successfully.
+          Connect your Sepolia wallet to continue.
         </p>
 
-        <p className="mt-2 text-white/50">
-          Next, connect your crypto wallet on Sepolia.
-        </p>
-
-        <a
-          href="/purchase"
-          className="mt-8 inline-block rounded-2xl bg-viltrumPurple px-8 py-4 font-bold"
-        >
-          Continue to Purchase Options
-        </a>
+        <div className="mt-8">
+          <WalletConnect />
+        </div>
       </div>
     </main>
   );
