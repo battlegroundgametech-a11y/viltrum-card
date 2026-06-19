@@ -7,6 +7,7 @@ export default function PhysicalCheckoutPage() {
 
   async function submitOrder(e: any) {
     e.preventDefault();
+
     setLoading(true);
 
     const form = new FormData(e.target);
@@ -25,32 +26,47 @@ export default function PhysicalCheckoutPage() {
     });
 
     const data = await res.json();
-    setLoading(false);
 
-    if (!data.success) {
-      alert(data.error || "Order failed");
-      return;
+    if (data.success) {
+      window.location.href =
+        `/success?order=${data.order_id}&secret=${data.secret_code}`;
     }
 
-    window.location.href = `/success?order=${data.order_id}&secret=${data.secret_code}`;
+    setLoading(false);
   }
 
   return (
-    <main className="v-home min-h-screen px-5 py-24 text-white">
-      <div className="mx-auto max-w-xl rounded-[32px] border border-white/10 bg-white/[0.07] p-8 backdrop-blur-xl">
-        <h1 className="text-4xl font-black">Physical Card</h1>
-        <p className="mt-3 text-white/60">$60 premium order + $15 bonus + shipment tracking.</p>
+    <main className="checkout-premium">
+      <div className="checkout-card-preview physical-preview">
+        <span>VILTRUM</span>
+        <h2>Physical Card</h2>
+        <p>4242 4242 4242 6060</p>
+      </div>
 
-        <form onSubmit={submitOrder} className="mt-8 space-y-5">
-          <input name="full_name" required placeholder="Full name" className="w-full rounded-2xl bg-black/40 p-4" />
-          <input name="telegram_username" required placeholder="Telegram username" className="w-full rounded-2xl bg-black/40 p-4" />
-          <input name="shipping_address" required placeholder="Shipping address" className="w-full rounded-2xl bg-black/40 p-4" />
-          <input name="city" required placeholder="City" className="w-full rounded-2xl bg-black/40 p-4" />
-          <input name="country" required placeholder="Country" className="w-full rounded-2xl bg-black/40 p-4" />
-          <input name="coupon_code" placeholder="Coupon code optional" className="w-full rounded-2xl bg-black/40 p-4" />
+      <div className="checkout-form-box">
+        <h1>Physical Card Purchase</h1>
 
-          <button disabled={loading} className="w-full rounded-2xl bg-gradient-to-r from-red-600 to-yellow-400 p-4 font-black text-black">
-            {loading ? "Processing..." : "Complete Physical Card Order"}
+        <form onSubmit={submitOrder}>
+          <input name="full_name" required placeholder="Full Name" />
+          <input
+            name="telegram_username"
+            required
+            placeholder="Telegram Username"
+          />
+          <input
+            name="shipping_address"
+            required
+            placeholder="Shipping Address"
+          />
+          <input name="city" required placeholder="City" />
+          <input name="country" required placeholder="Country" />
+          <input
+            name="coupon_code"
+            placeholder="Coupon Code (Optional)"
+          />
+
+          <button>
+            {loading ? "Processing..." : "Purchase Physical Card"}
           </button>
         </form>
       </div>
