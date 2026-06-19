@@ -38,16 +38,16 @@ export default function LoginPage() {
       }
 
       localStorage.setItem("viltrum_user", data.telegram_id);
-      localStorage.setItem("viltrum_telegram_username", data.telegram_username);
-      localStorage.setItem("viltrum_telegram_name", data.telegram_name);
+      localStorage.setItem("viltrum_telegram_username", data.telegram_username || "");
+      localStorage.setItem("viltrum_telegram_name", data.telegram_name || "");
       localStorage.setItem("viltrum_phone", phone);
 
       alert("Telegram connected successfully");
-
       window.location.href = "/connect-wallet";
     };
 
     const container = document.getElementById("telegram-login-widget");
+
     if (!container || !botName) return;
 
     container.innerHTML = "";
@@ -107,24 +107,23 @@ export default function LoginPage() {
         )}
 
         {showTelegram && (
-  <div className="mt-8">
-    <p className="mb-4 text-white/50">
-      Complete Telegram verification:
-    </p>
+          <div className="mt-8">
+            <p className="mb-4 text-white/50">
+              Complete Telegram verification:
+            </p>
 
-    <div
-      className="flex justify-center"
-      id="telegram-login-widget"
-    />
+            <div
+              className="flex justify-center"
+              id="telegram-login-widget"
+            />
 
-    <a
-      href={`https://t.me/${process.env.NEXT_PUBLIC_TELEGRAM_BOT_NAME}`}
-      className="mt-5 inline-block rounded-2xl bg-gradient-to-r from-red-600 to-yellow-400 px-6 py-4 font-black text-black"
-    >
-      Open Telegram Bot
-    </a>
-  </div>
-)}
+            <a
+              href={`https://t.me/${process.env.NEXT_PUBLIC_TELEGRAM_BOT_NAME}`}
+              className="mt-5 inline-block rounded-2xl bg-gradient-to-r from-red-600 to-yellow-400 px-6 py-4 font-black text-black"
+            >
+              Open Telegram Bot
+            </a>
+          </div>
         )}
       </div>
     </main>
