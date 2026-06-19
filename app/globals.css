@@ -386,3 +386,135 @@ a{text-decoration:none;color:inherit}
   .v-label{font-size:8px}
   .v-value{font-size:11px}
 }
+
+.cursor-glow {
+  position: fixed;
+  top: 10%;
+  left: 70%;
+  width: 420px;
+  height: 420px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(250,204,21,.12), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(45px);
+  animation: glowDrift 9s ease-in-out infinite;
+}
+
+@keyframes glowDrift {
+  0%, 100% {
+    transform: translate(0,0);
+  }
+  50% {
+    transform: translate(-120px,80px);
+  }
+}
+
+.v-section-tag {
+  text-align: center;
+  color: #facc15;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.v-product-hot {
+  background:
+    radial-gradient(circle at top right, rgba(250,204,21,.16), transparent 34%),
+    rgba(255,255,255,.07);
+  border-color: rgba(250,204,21,.28);
+}
+
+.v-dashboard-section {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 40px 28px 130px;
+}
+
+.v-dashboard {
+  border: 1px solid rgba(255,255,255,.12);
+  background:
+    radial-gradient(circle at top left, rgba(220,38,38,.16), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(34,211,238,.14), transparent 28%),
+    rgba(255,255,255,.055);
+  backdrop-filter: blur(22px);
+  border-radius: 36px;
+  padding: 38px;
+  box-shadow: 0 35px 110px rgba(0,0,0,.45);
+}
+
+.v-dashboard h2 {
+  margin: 0 auto;
+  max-width: 760px;
+  text-align: center;
+  font-size: clamp(34px, 4vw, 58px);
+  line-height: 1.05;
+  font-weight: 950;
+  letter-spacing: -.05em;
+}
+
+.v-dashboard-grid {
+  margin-top: 36px;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 16px;
+}
+
+.v-dash-box {
+  min-height: 130px;
+  border-radius: 26px;
+  padding: 22px;
+  border: 1px solid rgba(255,255,255,.1);
+  background: rgba(0,0,0,.22);
+}
+
+.v-dash-box span {
+  display: block;
+  color: rgba(255,255,255,.55);
+  font-size: 13px;
+}
+
+.v-dash-box b {
+  display: block;
+  margin-top: 18px;
+  font-size: 25px;
+}
+
+.v-mini-card span {
+  position: absolute;
+  left: 26px;
+  top: 24px;
+  font-size: 13px;
+  letter-spacing: .34em;
+  color: rgba(255,255,255,.45);
+  font-weight: 900;
+}
+
+@media(max-width:900px) {
+  .v-dashboard-grid {
+    grid-template-columns: repeat(2,1fr);
+  }
+}
+
+@media(max-width:520px) {
+  .cursor-glow {
+    width: 260px;
+    height: 260px;
+    left: 35%;
+  }
+
+  .v-dashboard {
+    padding: 24px;
+    border-radius: 28px;
+  }
+
+  .v-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .v-dash-box {
+    min-height: 105px;
+  }
+}
