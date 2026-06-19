@@ -1,5 +1,5 @@
-import HamburgerMenu from "@/components/HamburgerMenu";
-import HeroCard from "@/components/HeroCard";
+import HamburgerMenu from "../components/HamburgerMenu";
+import HeroCard from "../components/HeroCard";
 
 export default function HomePage() {
   return (
