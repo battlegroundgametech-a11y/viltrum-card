@@ -1838,3 +1838,155 @@ body.light-mode .hamburger-menu,
 body.light-mode .menu-panel {
   color: white !important;
 }
+
+/* PREMIUM LIGHT MODE COLOR RESET */
+
+body.light-mode {
+  background: #f7f3ea !important;
+  color: #111111 !important;
+}
+
+body.light-mode .elite-home {
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255, 122, 24, 0.22), transparent 30%),
+    radial-gradient(circle at 82% 12%, rgba(255, 207, 64, 0.28), transparent 28%),
+    radial-gradient(circle at 70% 85%, rgba(14, 116, 144, 0.12), transparent 30%),
+    linear-gradient(135deg, #fff7ed 0%, #fffaf0 48%, #eef7f8 100%) !important;
+  color: #111111 !important;
+}
+
+body.light-mode .elite-title,
+body.light-mode .elite-products h2,
+body.light-mode .extra-timeline h2,
+body.light-mode .extra-comparison h2,
+body.light-mode .extra-security h2,
+body.light-mode .extra-roadmap h2,
+body.light-mode .extra-faq h2,
+body.light-mode .extra-showcase h2,
+body.light-mode .power-copy h2,
+body.light-mode .power-flow h2,
+body.light-mode .polish-roadmap h2,
+body.light-mode .polish-footer h2 {
+  color: #111111 !important;
+}
+
+body.light-mode .elite-title span {
+  background: linear-gradient(90deg, #dc2626, #f97316 45%, #ca8a04) !important;
+  -webkit-background-clip: text !important;
+  color: transparent !important;
+}
+
+body.light-mode .elite-desc,
+body.light-mode .extra-showcase p,
+body.light-mode .elite-product p,
+body.light-mode .v-desc,
+body.light-mode .polish-footer p {
+  color: rgba(17, 17, 17, 0.72) !important;
+}
+
+body.light-mode .elite-kicker,
+body.light-mode .v-kicker {
+  color: #7c2d12 !important;
+  background: rgba(255, 247, 237, 0.82) !important;
+  border-color: rgba(249, 115, 22, 0.38) !important;
+  box-shadow: 0 12px 35px rgba(249, 115, 22, 0.12) !important;
+}
+
+body.light-mode .elite-primary,
+body.light-mode .v-primary {
+  background: linear-gradient(135deg, #ef4444, #f97316, #facc15) !important;
+  color: #111111 !important;
+  box-shadow: 0 18px 45px rgba(249, 115, 22, 0.25) !important;
+}
+
+body.light-mode .elite-secondary,
+body.light-mode .v-secondary {
+  background: rgba(255, 255, 255, 0.72) !important;
+  border-color: rgba(17, 17, 17, 0.12) !important;
+  color: #111111 !important;
+}
+
+body.light-mode .elite-metrics div,
+body.light-mode .elite-product,
+body.light-mode .extra-stat,
+body.light-mode .timeline-step,
+body.light-mode .security-grid div,
+body.light-mode .roadmap-grid div,
+body.light-mode .extra-faq details,
+body.light-mode .polish-stats div,
+body.light-mode .polish-road-grid div,
+body.light-mode .dash-panel,
+body.light-mode .v-dashboard,
+body.light-mode .comparison-table,
+body.light-mode .v-product {
+  background: rgba(255, 255, 255, 0.72) !important;
+  border-color: rgba(17, 17, 17, 0.1) !important;
+  color: #111111 !important;
+  box-shadow: 0 24px 70px rgba(120, 53, 15, 0.1) !important;
+}
+
+body.light-mode .elite-metrics b,
+body.light-mode .extra-stat b,
+body.light-mode .polish-stats b,
+body.light-mode .power-prestige b {
+  background: linear-gradient(90deg, #dc2626, #f97316, #ca8a04) !important;
+  -webkit-background-clip: text !important;
+  color: transparent !important;
+}
+
+body.light-mode .elite-metrics span,
+body.light-mode .extra-stat span,
+body.light-mode .timeline-step span,
+body.light-mode .dash-grid span,
+body.light-mode .power-prestige span,
+body.light-mode .polish-stats span,
+body.light-mode .polish-road-grid span {
+  color: rgba(17, 17, 17, 0.64) !important;
+}
+
+body.light-mode .elite-section-label,
+body.light-mode .extra-label,
+body.light-mode .power-copy p,
+body.light-mode .power-flow p,
+body.light-mode .polish-roadmap p,
+body.light-mode .elite-product small {
+  color: #b45309 !important;
+}
+
+body.light-mode .power-ticker {
+  background: rgba(255, 255, 255, 0.68) !important;
+  border-color: rgba(17, 17, 17, 0.08) !important;
+}
+
+body.light-mode .power-ticker div {
+  color: #b45309 !important;
+}
+
+body.light-mode .elite-main-card {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.28), transparent 22%),
+    linear-gradient(145deg, #1f2937 0%, #7f1d1d 45%, #f59e0b 100%) !important;
+  box-shadow:
+    0 45px 100px rgba(120, 53, 15, 0.28),
+    0 0 70px rgba(245, 158, 11, 0.28) !important;
+}
+
+body.light-mode .elite-card-top p,
+body.light-mode .elite-card-top h3,
+body.light-mode .elite-number,
+body.light-mode .elite-tag,
+body.light-mode .elite-card-bottom span,
+body.light-mode .elite-card-bottom b {
+  color: #ffffff !important;
+  text-shadow: 0 2px 14px rgba(0,0,0,.55) !important;
+}
+
+body.light-mode .polish-footer,
+body.light-mode .extra-footer {
+  border-top-color: rgba(17, 17, 17, 0.1) !important;
+}
+
+body.light-mode .polish-footer a,
+body.light-mode .extra-footer a {
+  color: rgba(17, 17, 17, 0.72) !important;
+}
