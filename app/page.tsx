@@ -3,11 +3,13 @@ import HeroCard from "../components/HeroCard";
 import ExtraSections from "../components/ExtraSections";
 import PowerSections from "../components/PowerSections";
 import FinalPolish from "../components/FinalPolish";
+import WalletBadge from "../components/WalletBadge";
 
 export default function HomePage() {
   return (
     <main className="elite-home">
       <HamburgerMenu />
+      <WalletBadge />
 
       <section className="elite-hero">
         <div className="elite-bg-grid" />
