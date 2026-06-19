@@ -4,6 +4,7 @@ import HeroCard from "../components/HeroCard";
 export default function HomePage() {
   return (
     <main className="v-home">
+      <div className="cursor-glow" />
       <HamburgerMenu />
 
       <section className="v-hero">
@@ -18,7 +19,7 @@ export default function HomePage() {
           </h1>
 
           <p className="v-desc">
-            Viltrum delivers a premium finance-grade card experience for Web3:
+            Viltrum delivers a premium finance-grade crypto card experience with
             virtual cards, physical card orders, free mint access, NFT ownership,
             reload controls, withdrawals, rewards, and Telegram verification.
           </p>
@@ -48,6 +49,7 @@ export default function HomePage() {
       </section>
 
       <section id="cards" className="v-products">
+        <p className="v-section-tag">Card Collection</p>
         <h2>Choose your Viltrum Card</h2>
 
         <div className="v-product-grid">
@@ -57,7 +59,7 @@ export default function HomePage() {
             <p>$5 demo card with NFT ownership. First 1000 buyers receive a $5 bonus.</p>
           </a>
 
-          <a href="/checkout/physical" className="v-product">
+          <a href="/checkout/physical" className="v-product v-product-hot">
             <small>02 • PHYSICAL</small>
             <h3>Physical Card</h3>
             <p>$60 premium order with $15 bonus, virtual card access, NFT, and shipment tracking.</p>
@@ -68,6 +70,34 @@ export default function HomePage() {
             <h3>Free Mint</h3>
             <p>Free inactive card with NFT. Activate after minimum reload set by admin.</p>
           </a>
+        </div>
+      </section>
+
+      <section className="v-dashboard-section">
+        <div className="v-dashboard">
+          <div>
+            <p className="v-section-tag">Vault Dashboard</p>
+            <h2>Control reloads, withdrawals, status and rewards.</h2>
+          </div>
+
+          <div className="v-dashboard-grid">
+            <div className="v-dash-box">
+              <span>Balance</span>
+              <b>$150.00</b>
+            </div>
+            <div className="v-dash-box">
+              <span>NFT Status</span>
+              <b>Verified</b>
+            </div>
+            <div className="v-dash-box">
+              <span>Card Status</span>
+              <b>Active</b>
+            </div>
+            <div className="v-dash-box">
+              <span>Shipment</span>
+              <b>Manual Track</b>
+            </div>
+          </div>
         </div>
       </section>
     </main>
