@@ -1,6 +1,6 @@
 "use client";
 
-import HamburgerMenu from "@/components/HamburgerMenu";
+import HamburgerMenu from "../../components/HamburgerMenu";
 
 export default function LoginPage() {
   const botName = process.env.NEXT_PUBLIC_TELEGRAM_BOT_NAME || "";
