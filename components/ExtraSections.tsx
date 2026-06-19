@@ -36,22 +36,60 @@ export default function ExtraSections() {
         </div>
       </section>
 
-      <section className="extra-showcase">
-        <div>
-          <p className="extra-label left">Physical Card Preview</p>
-          <h2>Designed for a premium future card experience</h2>
-          <p>
-            Physical card buyers receive shipment tracking inside the Telegram bot.
-            You can manually update shipment status from the admin dashboard.
-          </p>
+      <section className="extra-showcase premium-device-section">
+  <div className="device-copy">
+    <p className="extra-label left">Physical Card Preview</p>
+    <h2>Crypto cards built for a premium wallet experience</h2>
+    <p>
+      A modern card interface designed for virtual access, future physical
+      delivery, Telegram tracking, vault controls, reloads, withdrawals, and NFT
+      ownership proof.
+    </p>
+
+    <div className="device-points">
+      <span>Shipment tracking</span>
+      <span>Vault controls</span>
+      <span>NFT verified</span>
+    </div>
+  </div>
+
+  <div className="device-scene">
+    <div className="phone-mockup">
+      <div className="phone-top" />
+      <div className="phone-screen">
+        <p>Total Balance</p>
+        <h3>$6,432.43</h3>
+
+        <div className="mini-chart">
+          <i />
+          <i />
+          <i />
+          <i />
+          <i />
         </div>
 
-        <div className="showcase-cards">
-          <div className="show-card show-one">FRONT</div>
-          <div className="show-card show-two">BACK</div>
-          <div className="show-card show-three">ANGLED</div>
+        <div className="phone-card-small">
+          <span>Viltrum</span>
+          <b>•••• 1234</b>
         </div>
-      </section>
+      </div>
+    </div>
+
+    <div className="floating-card card-front">
+      <span>VILTRUM</span>
+      <b>Sovereign Black</b>
+    </div>
+
+    <div className="floating-card card-back">
+      <div className="mag-strip" />
+      <span>VAULT READY</span>
+    </div>
+
+    <div className="floating-card card-gold-side">
+      <span>NFT VERIFIED</span>
+    </div>
+  </div>
+</section>
 
       <section className="extra-security">
         <p className="extra-label">Security Layer</p>
