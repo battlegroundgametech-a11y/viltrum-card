@@ -1,49 +1,59 @@
 "use client";
 
-import { useState } from "react";
-import { supabase } from "../../lib/supabaseClient";
+import { useEffect } from "react";
 import HamburgerMenu from "../../components/HamburgerMenu";
 
-export default function LoginPage() {
-  const [loading, setLoading] = useState(false);
-
-  async function handleLogin(e: any) {
-    e.preventDefault();
-    setLoading(true);
-
-    const form = new FormData(e.target);
-    const telegram_username = String(form.get("telegram_username") || "").replace("@", "");
-    const telegram_name = String(form.get("telegram_name") || "");
-    const phone_number = String(form.get("phone_number") || "");
-
-    const telegram_id = telegram_username.toLowerCase();
-
-    const { error } = await supabase
-  .from("profiles")
-  .upsert(
-    {
-      telegram_id,
-      telegram_username,
-      telegram_name,
-      phone_number,
-      telegram_verified: true
-    },
-    {
-      onConflict: "telegram_id"
-    }
-  );
-
-    if (error) {
-      alert(error.message);
-      setLoading(false);
-      return;
-    }
-
-    localStorage.setItem("viltrum_user", telegram_id);
-    localStorage.setItem("viltrum_telegram_username", telegram_username);
-
-    window.location.href = "/connect-wallet";
+declare global {
+  interface Window {
+    onTelegramAuth?: (user: any) => void;
   }
+}
+
+export default function LoginPage() {
+  useEffect(() => {
+    const botName = process.env.NEXT_PUBLIC_TELEGRAM_BOT_NAME;
+
+    window.onTelegramAuth = async function (user: any) {
+      const res = await fetch("/api/telegram-login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(user)
+      });
+
+      const data = await res.json();
+
+      if (!data.success) {
+        alert(data.error || "Telegram login failed");
+        return;
+      }
+
+      localStorage.setItem("viltrum_user", data.telegram_id);
+      localStorage.setItem("viltrum_telegram_username", data.telegram_username);
+      localStorage.setItem("viltrum_telegram_name", data.telegram_name);
+
+      alert("Telegram connected successfully");
+
+      window.location.href = "/connect-wallet";
+    };
+
+    const container = document.getElementById("telegram-login-widget");
+    if (!container || !botName) return;
+
+    container.innerHTML = "";
+
+    const script = document.createElement("script");
+    script.src = "https://telegram.org/js/telegram-widget.js?22";
+    script.async = true;
+    script.setAttribute("data-telegram-login", botName);
+    script.setAttribute("data-size", "large");
+    script.setAttribute("data-userpic", "false");
+    script.setAttribute("data-request-access", "write");
+    script.setAttribute("data-onauth", "onTelegramAuth(user)");
+
+    container.appendChild(script);
+  }, []);
 
   return (
     <main className="checkout-premium">
@@ -55,18 +65,14 @@ export default function LoginPage() {
         <p>VERIFY • CONNECT • PURCHASE</p>
       </div>
 
-      <div className="checkout-form-box">
+      <div className="checkout-form-box text-center">
         <h1>Sign Up / Login</h1>
 
-        <form onSubmit={handleLogin}>
-          <input name="phone_number" required placeholder="Phone Number" />
-          <input name="telegram_name" required placeholder="Telegram Name" />
-          <input name="telegram_username" required placeholder="Telegram Username" />
+        <p className="mt-3 text-white/60">
+          Continue with Telegram to verify your Viltrum account.
+        </p>
 
-          <button disabled={loading}>
-            {loading ? "Saving..." : "Continue to Wallet"}
-          </button>
-        </form>
+        <div className="mt-8 flex justify-center" id="telegram-login-widget" />
       </div>
     </main>
   );
