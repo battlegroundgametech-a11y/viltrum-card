@@ -1990,3 +1990,201 @@ body.light-mode .polish-footer a,
 body.light-mode .extra-footer a {
   color: rgba(17, 17, 17, 0.72) !important;
 }
+
+.purchase-premium {
+  min-height: 100vh;
+  padding: 110px 26px;
+  background:
+    radial-gradient(circle at 15% 18%, rgba(220,38,38,.28), transparent 28%),
+    radial-gradient(circle at 85% 10%, rgba(250,204,21,.2), transparent 28%),
+    linear-gradient(135deg,#030305,#090910 60%,#030305);
+  color: white;
+}
+
+.purchase-hero {
+  max-width: 860px;
+  margin: 0 auto 60px;
+  text-align: center;
+}
+
+.purchase-label {
+  color: #facc15;
+  font-weight: 950;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+.purchase-hero h1 {
+  margin: 18px 0;
+  font-size: clamp(46px,7vw,86px);
+  line-height: .95;
+  font-weight: 950;
+  letter-spacing: -.06em;
+}
+
+.purchase-hero p {
+  color: rgba(255,255,255,.68);
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.purchase-grid {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 24px;
+}
+
+.purchase-option {
+  padding: 24px;
+  border-radius: 36px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.065);
+  backdrop-filter: blur(22px);
+  box-shadow: 0 35px 100px rgba(0,0,0,.32);
+  transition: .3s ease;
+}
+
+.purchase-option:hover {
+  transform: translateY(-10px);
+  border-color: rgba(250,204,21,.48);
+}
+
+.featured-option {
+  background:
+    radial-gradient(circle at top right, rgba(250,204,21,.16), transparent 35%),
+    rgba(255,255,255,.075);
+}
+
+.purchase-card {
+  aspect-ratio: 1.62 / 1;
+  border-radius: 28px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 28px 70px rgba(0,0,0,.38);
+  overflow: hidden;
+  position: relative;
+}
+
+.purchase-card::after {
+  content: "";
+  position: absolute;
+  top: -80%;
+  left: -90%;
+  width: 45%;
+  height: 260%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.32), transparent);
+  transform: rotate(25deg);
+  animation: purchaseShine 4.5s infinite;
+}
+
+@keyframes purchaseShine {
+  45%,100% { left: 145%; }
+}
+
+.purchase-card span {
+  letter-spacing: .38em;
+  font-size: 12px;
+  color: rgba(255,255,255,.6);
+}
+
+.purchase-card b {
+  font-size: 30px;
+  position: relative;
+  z-index: 2;
+}
+
+.purchase-card p {
+  margin: 0;
+  letter-spacing: .16em;
+  color: white;
+  position: relative;
+  z-index: 2;
+}
+
+.virtual-card {
+  background: linear-gradient(135deg,#111827,#164e63,#22d3ee);
+}
+
+.physical-card {
+  background: linear-gradient(135deg,#111827,#7f1d1d,#facc15);
+}
+
+.free-card {
+  background: linear-gradient(135deg,#111827,#312e81,#8b5cf6);
+}
+
+.purchase-option h2 {
+  margin: 26px 0 0;
+  font-size: 30px;
+  font-weight: 950;
+}
+
+.purchase-option h3 {
+  margin: 12px 0;
+  font-size: 38px;
+  background: linear-gradient(90deg,#ef4444,#facc15);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.purchase-option > p {
+  color: rgba(255,255,255,.66);
+  line-height: 1.7;
+  min-height: 86px;
+}
+
+.purchase-option button {
+  margin-top: 22px;
+  width: 100%;
+  border: none;
+  border-radius: 18px;
+  padding: 16px;
+  font-weight: 950;
+  background: linear-gradient(135deg,#dc2626,#facc15);
+  color: #111;
+}
+
+body.light-mode .purchase-premium {
+  background:
+    radial-gradient(circle at 15% 18%, rgba(249,115,22,.2), transparent 28%),
+    radial-gradient(circle at 85% 10%, rgba(250,204,21,.26), transparent 28%),
+    linear-gradient(135deg,#fff7ed,#fffaf0 55%,#eef7f8);
+  color: #111;
+}
+
+body.light-mode .purchase-hero p,
+body.light-mode .purchase-option > p {
+  color: rgba(17,17,17,.68);
+}
+
+body.light-mode .purchase-option {
+  background: rgba(255,255,255,.72);
+  border-color: rgba(17,17,17,.1);
+}
+
+@media (max-width: 950px) {
+  .purchase-grid {
+    grid-template-columns: 1fr;
+    max-width: 560px;
+  }
+}
+
+@media (max-width: 520px) {
+  .purchase-premium {
+    padding: 90px 18px;
+  }
+
+  .purchase-card b {
+    font-size: 24px;
+  }
+
+  .purchase-card p {
+    font-size: 12px;
+    letter-spacing: .1em;
+  }
+}
