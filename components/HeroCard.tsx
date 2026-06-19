@@ -4,8 +4,13 @@ export default function HeroCard() {
   return (
     <div className="v-card-stage">
       <div className="v-card-stack">
-        <div className="v-mini-card v-mini-one" />
-        <div className="v-mini-card v-mini-two" />
+        <div className="v-mini-card v-mini-one">
+          <span>CRIMSON</span>
+        </div>
+
+        <div className="v-mini-card v-mini-two">
+          <span>QUANTUM</span>
+        </div>
 
         <div className="v-card">
           <div className="v-card-inner">
