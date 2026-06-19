@@ -1,5 +1,6 @@
 "use client";
-
+import HamburgerMenu from "../../../components/HamburgerMenu";
+import WalletBadge from "../../../components/WalletBadge";
 import { useState } from "react";
 
 export default function PhysicalCheckoutPage() {
@@ -37,6 +38,8 @@ export default function PhysicalCheckoutPage() {
 
   return (
     <main className="checkout-premium">
+      <HamburgerMenu />
+      <WalletBadge />
       <div className="checkout-card-preview physical-preview">
         <span>VILTRUM</span>
         <h2>Physical Card</h2>
