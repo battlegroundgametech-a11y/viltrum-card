@@ -1,6 +1,7 @@
 import HamburgerMenu from "../components/HamburgerMenu";
 import HeroCard from "../components/HeroCard";
 import ExtraSections from "../components/ExtraSections";
+import PowerSections from "../components/PowerSections";
 
 export default function HomePage() {
   return (
@@ -53,7 +54,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
+      <PowerSections />
       <section id="cards" className="elite-products">
         <p className="elite-section-label">Viltrum Card Collection</p>
         <h2>Choose your access tier</h2>
