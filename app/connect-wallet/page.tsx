@@ -3,8 +3,8 @@
 import { useAccount } from "wagmi";
 import { useEffect } from "react";
 
-import WalletConnect from "@/components/WalletConnect";
-import HamburgerMenu from "@/components/HamburgerMenu";
+import WalletConnect from "../../components/WalletConnect";
+import HamburgerMenu from "../../components/HamburgerMenu";
 
 export default function ConnectWalletPage() {
   const { isConnected } = useAccount();
