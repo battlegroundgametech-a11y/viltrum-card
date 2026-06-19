@@ -2,8 +2,8 @@
 
 export default function HeroCard() {
   return (
-    <div className="animate-float-card w-full max-w-[330px] sm:max-w-[390px] lg:max-w-[430px]">
-      <div className="card-shine animate-card-glow relative aspect-[1.62/1] w-full rounded-[28px] border border-cyan-300/30 bg-gradient-to-br from-purple-500 via-[#111827] to-cyan-400 p-5 sm:p-6">
+    <div className="animate-float-card w-full max-w-[340px] sm:max-w-[420px] md:max-w-[460px] lg:max-w-[480px] xl:max-w-[500px]">
+      <div className="card-shine animate-card-glow relative aspect-[1.62/1] w-full overflow-hidden rounded-[28px] border border-cyan-300/30 bg-gradient-to-br from-purple-500 via-[#111827] to-cyan-400 p-5 sm:p-6 lg:p-7">
         <div className="absolute inset-0 bg-black/20" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_10%,rgba(255,255,255,0.24),transparent_26%),radial-gradient(circle_at_88%_80%,rgba(0,229,255,0.35),transparent_35%)]" />
 
@@ -18,14 +18,14 @@ export default function HeroCard() {
               </h3>
             </div>
 
-            <div className="h-10 w-14 rounded-2xl bg-yellow-400 shadow-xl sm:h-12 sm:w-16" />
+            <div className="h-10 w-14 shrink-0 rounded-2xl bg-yellow-400 shadow-xl sm:h-12 sm:w-16" />
           </div>
 
-          <p className="text-base tracking-[0.2em] text-white sm:text-xl">
+          <p className="text-base tracking-[0.2em] text-white sm:text-xl lg:text-2xl">
             4242 4242 4242 1234
           </p>
 
-          <div className="flex justify-between gap-4 text-[11px] sm:text-sm">
+          <div className="flex items-end justify-between gap-4 text-[11px] sm:text-sm">
             <div>
               <p className="text-white/50">CARD HOLDER</p>
               <p className="font-bold text-white">SATOSHI NAKAMOTO</p>
