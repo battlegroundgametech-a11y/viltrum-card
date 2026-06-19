@@ -18,13 +18,20 @@ export default function LoginPage() {
 
     const telegram_id = telegram_username.toLowerCase();
 
-    const { error } = await supabase.from("profiles").upsert({
+    const { error } = await supabase
+  .from("profiles")
+  .upsert(
+    {
       telegram_id,
       telegram_username,
       telegram_name,
       phone_number,
       telegram_verified: true
-    });
+    },
+    {
+      onConflict: "telegram_id"
+    }
+  );
 
     if (error) {
       alert(error.message);
