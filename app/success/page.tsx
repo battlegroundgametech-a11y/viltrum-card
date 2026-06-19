@@ -1,9 +1,9 @@
 "use client";
 
+import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
 
-export default function SuccessPage() {
+function SuccessContent() {
   const params = useSearchParams();
   const order = params.get("order");
   const secret = params.get("secret");
@@ -58,5 +58,13 @@ export default function SuccessPage() {
         </p>
       </div>
     </main>
+  );
+}
+
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={<main className="v-home min-h-screen" />}>
+      <SuccessContent />
+    </Suspense>
   );
 }
