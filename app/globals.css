@@ -15,6 +15,7 @@ body {
   background: #05060a;
   color: #f8fafc;
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
 }
 
 a {
@@ -22,17 +23,64 @@ a {
   text-decoration: none;
 }
 
-.viltrum-glass {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(18px);
+.viltrum-bg {
+  background:
+    radial-gradient(circle at 12% 12%, rgba(139, 92, 246, 0.35), transparent 28%),
+    radial-gradient(circle at 88% 10%, rgba(0, 229, 255, 0.25), transparent 28%),
+    linear-gradient(135deg, #05060a, #090d18 55%, #041018);
 }
 
-.viltrum-gradient {
-  background:
-    radial-gradient(circle at top left, rgba(139, 92, 246, 0.45), transparent 35%),
-    radial-gradient(circle at top right, rgba(0, 229, 255, 0.25), transparent 30%),
-    linear-gradient(135deg, #05060a, #0b0f1c);
+@keyframes floatCard {
+  0%, 100% {
+    transform: translateY(0) rotate(-1.5deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(1.5deg);
+  }
+}
+
+@keyframes cardGlow {
+  0%, 100% {
+    box-shadow: 0 0 28px rgba(0, 229, 255, 0.18);
+  }
+  50% {
+    box-shadow: 0 0 55px rgba(139, 92, 246, 0.42);
+  }
+}
+
+@keyframes shine {
+  0% {
+    left: -80%;
+  }
+  45% {
+    left: 135%;
+  }
+  100% {
+    left: 135%;
+  }
+}
+
+@keyframes softRise {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-float-card {
+  animation: floatCard 5s ease-in-out infinite;
+}
+
+.animate-card-glow {
+  animation: cardGlow 3.2s ease-in-out infinite;
+}
+
+.animate-soft-rise {
+  animation: softRise 0.8s ease-out both;
 }
 
 .card-shine {
@@ -43,41 +91,16 @@ a {
 .card-shine::after {
   content: "";
   position: absolute;
-  top: -100%;
+  top: -90%;
   left: -80%;
-  width: 60%;
-  height: 300%;
+  width: 45%;
+  height: 280%;
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255,255,255,0.35),
+    rgba(255,255,255,0.32),
     transparent
   );
-  transform: rotate(25deg);
-  animation: shine 4s infinite;
-}
-
-@keyframes shine {
-  0% {
-    left: -80%;
-  }
-  45% {
-    left: 140%;
-  }
-  100% {
-    left: 140%;
-  }
-}
-
-.float-card {
-  animation: floatCard 5s ease-in-out infinite;
-}
-
-@keyframes floatCard {
-  0%, 100% {
-    transform: translateY(0px) rotate(-2deg);
-  }
-  50% {
-    transform: translateY(-18px) rotate(2deg);
-  }
+  transform: rotate(24deg);
+  animation: shine 4.2s ease-in-out infinite;
 }
