@@ -3,80 +3,88 @@ import HeroCard from "../components/HeroCard";
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#05060A] text-white">
+    <main className="viltrum-bg min-h-screen overflow-x-hidden text-white">
       <HamburgerMenu />
 
-      <section className="relative min-h-screen px-5 py-24 sm:px-8 lg:px-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(139,92,246,0.35),transparent_35%),radial-gradient(circle_at_top_right,rgba(0,229,255,0.25),transparent_35%)]" />
-
-        <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-14 lg:min-h-[80vh] lg:grid-cols-2">
-          <div className="text-center lg:text-left">
-            <div className="mx-auto mb-6 inline-flex rounded-full border border-cyan-400/40 bg-cyan-400/10 px-5 py-2 text-sm text-cyan-300 lg:mx-0">
+      <section className="relative flex min-h-screen items-center px-5 py-20 sm:px-8 lg:px-14">
+        <div className="mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-[1fr_0.85fr] lg:gap-16">
+          <div className="animate-soft-rise text-center lg:text-left">
+            <div className="mx-auto mb-5 inline-flex rounded-full border border-cyan-400/40 bg-cyan-400/10 px-5 py-2 text-sm text-cyan-300 lg:mx-0">
               Sepolia Testing Version
             </div>
 
-            <h1 className="text-5xl font-black leading-[1.05] sm:text-6xl lg:text-7xl">
+            <h1 className="text-[44px] font-black leading-[1.02] sm:text-6xl lg:text-[68px]">
               The Future of{" "}
               <span className="block bg-gradient-to-r from-purple-400 via-cyan-300 to-yellow-300 bg-clip-text text-transparent">
                 Crypto Cards
               </span>
             </h1>
 
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white/70 lg:mx-0">
+            <p className="mx-auto mt-5 max-w-xl text-base leading-8 text-white/70 sm:text-lg lg:mx-0">
               Viltrum Card is a premium demo crypto card platform built for
               virtual cards, physical cards, free mint cards, reload features,
-              withdrawals, NFT ownership, Telegram verification, and wallet connection.
+              withdrawals, NFT ownership, Telegram verification, and wallet
+              connection.
             </p>
 
-            <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start">
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start">
               <a
                 href="/login"
-                className="rounded-2xl bg-purple-500 px-8 py-4 text-center text-lg font-bold shadow-xl shadow-purple-500/30"
+                className="rounded-2xl bg-purple-500 px-8 py-4 text-center font-bold shadow-xl shadow-purple-500/30 transition duration-300 hover:-translate-y-1 hover:scale-105"
               >
                 Sign Up
               </a>
 
               <a
                 href="#cards"
-                className="rounded-2xl border border-white/15 bg-white/10 px-8 py-4 text-center text-lg font-bold backdrop-blur-xl"
+                className="rounded-2xl border border-white/15 bg-white/10 px-8 py-4 text-center font-bold backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:scale-105"
               >
                 Explore Cards
               </a>
             </div>
           </div>
 
-          <div className="flex justify-center lg:justify-end">
+          <div className="animate-soft-rise flex justify-center lg:justify-end">
             <HeroCard />
           </div>
         </div>
       </section>
 
-      <section id="cards" className="mx-auto max-w-7xl px-5 py-24">
+      <section id="cards" className="mx-auto max-w-6xl px-5 py-20">
         <h2 className="text-center text-4xl font-black sm:text-5xl">
           Choose Your Viltrum Card
         </h2>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          <div className="rounded-3xl border border-white/10 bg-white/[0.07] p-7 backdrop-blur-xl">
+        <div className="mt-10 grid gap-6 md:grid-cols-3">
+          <a
+            href="/checkout/virtual"
+            className="rounded-3xl border border-white/10 bg-white/[0.07] p-7 backdrop-blur-xl transition duration-300 hover:-translate-y-2 hover:border-cyan-300/40"
+          >
             <h3 className="text-2xl font-bold">Virtual Card</h3>
             <p className="mt-3 text-white/70">
-              Price: $5. First 1000 buyers get a $5 bonus. Includes virtual card and NFT.
+              $5 card. First 1000 buyers get a $5 bonus.
             </p>
-          </div>
+          </a>
 
-          <div className="rounded-3xl border border-purple-400/30 bg-purple-500/10 p-7 backdrop-blur-xl">
+          <a
+            href="/checkout/physical"
+            className="rounded-3xl border border-purple-400/30 bg-purple-500/10 p-7 backdrop-blur-xl transition duration-300 hover:-translate-y-2 hover:border-purple-300/60"
+          >
             <h3 className="text-2xl font-bold">Physical Card</h3>
             <p className="mt-3 text-white/70">
-              Price: $60. Every buyer gets $15 bonus, virtual card, future physical card, and NFT.
+              $60 card. Includes $15 bonus and shipment tracking.
             </p>
-          </div>
+          </a>
 
-          <div className="rounded-3xl border border-white/10 bg-white/[0.07] p-7 backdrop-blur-xl">
+          <a
+            href="/checkout/free"
+            className="rounded-3xl border border-white/10 bg-white/[0.07] p-7 backdrop-blur-xl transition duration-300 hover:-translate-y-2 hover:border-cyan-300/40"
+          >
             <h3 className="text-2xl font-bold">Free Mint</h3>
             <p className="mt-3 text-white/70">
-              Free inactive demo card and NFT. Activate after minimum reload set by admin.
+              Free inactive card. Activate with minimum reload.
             </p>
-          </div>
+          </a>
         </div>
       </section>
     </main>
