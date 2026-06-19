@@ -1770,3 +1770,71 @@ body.light-mode .extra-footer a {
     padding: 70px 18px;
   }
 }
+
+/* LIGHT MODE READABILITY FIX */
+
+body.light-mode .elite-kicker,
+body.light-mode .v-kicker {
+  color: #7c2d12 !important;
+  border-color: rgba(234, 88, 12, 0.35) !important;
+  background: rgba(255, 247, 237, 0.9) !important;
+}
+
+body.light-mode .elite-metrics span,
+body.light-mode .v-stat p,
+body.light-mode .power-prestige span,
+body.light-mode .polish-stats span {
+  color: rgba(0, 0, 0, 0.72) !important;
+}
+
+body.light-mode .elite-card-top p,
+body.light-mode .elite-card-top h3,
+body.light-mode .elite-number,
+body.light-mode .elite-tag,
+body.light-mode .elite-card-bottom span,
+body.light-mode .elite-card-bottom b,
+body.light-mode .v-brand,
+body.light-mode .v-number,
+body.light-mode .v-tag,
+body.light-mode .v-label,
+body.light-mode .v-value {
+  color: white !important;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
+}
+
+body.light-mode .elite-main-card {
+  filter: contrast(1.08) saturate(1.12);
+}
+
+body.light-mode .elite-section-label,
+body.light-mode .extra-label,
+body.light-mode .power-copy p,
+body.light-mode .power-flow p,
+body.light-mode .polish-roadmap p {
+  color: #c2410c !important;
+}
+
+body.light-mode .elite-product small,
+body.light-mode .v-product small {
+  color: #c2410c !important;
+}
+
+body.light-mode .elite-product p,
+body.light-mode .extra-faq p,
+body.light-mode .power-copy,
+body.light-mode .dash-grid span,
+body.light-mode .extra-stat span,
+body.light-mode .timeline-step span,
+body.light-mode .security-grid div,
+body.light-mode .roadmap-grid span {
+  color: rgba(0, 0, 0, 0.68) !important;
+}
+
+body.light-mode .elite-secondary {
+  color: #111 !important;
+}
+
+body.light-mode .hamburger-menu,
+body.light-mode .menu-panel {
+  color: white !important;
+}
