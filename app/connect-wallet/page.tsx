@@ -2,30 +2,50 @@
 
 import { useAccount } from "wagmi";
 import { useEffect } from "react";
-
+import { supabase } from "../../lib/supabaseClient";
 import WalletConnect from "../../components/WalletConnect";
 import HamburgerMenu from "../../components/HamburgerMenu";
 
 export default function ConnectWalletPage() {
-  const { isConnected } = useAccount();
+  const { isConnected, address } = useAccount();
 
   useEffect(() => {
-    if (isConnected) {
-      window.location.href = "/purchase";
+    async function saveWallet() {
+      const telegram_id = localStorage.getItem("viltrum_user");
+
+      if (!telegram_id) {
+        window.location.href = "/login";
+        return;
+      }
+
+      if (isConnected && address) {
+        await supabase
+          .from("profiles")
+          .update({ wallet_address: address })
+          .eq("telegram_id", telegram_id);
+
+        localStorage.setItem("viltrum_wallet", address);
+        window.location.href = "/purchase";
+      }
     }
-  }, [isConnected]);
+
+    saveWallet();
+  }, [isConnected, address]);
 
   return (
-    <main className="viltrum-gradient flex min-h-screen items-center justify-center px-5">
+    <main className="checkout-premium">
       <HamburgerMenu />
 
-      <div className="viltrum-glass max-w-xl rounded-3xl p-8 text-center">
-        <h1 className="text-4xl font-black">
-          Connect Wallet
-        </h1>
+      <div className="checkout-card-preview virtual-preview">
+        <span>VILTRUM</span>
+        <h2>Connect Wallet</h2>
+        <p>SEPOLIA • RAINBOWKIT • READY</p>
+      </div>
 
-        <p className="mt-4 text-white/70">
-          Connect your Sepolia wallet to continue.
+      <div className="checkout-form-box text-center">
+        <h1>Connect Wallet</h1>
+        <p className="mt-3 text-white/60">
+          Connect your Sepolia wallet to continue to purchase.
         </p>
 
         <div className="mt-8">
