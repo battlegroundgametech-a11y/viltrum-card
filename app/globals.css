@@ -597,3 +597,125 @@ a {
     font-size: 10px;
   }
 }
+
+/* FINAL CARD FIX — iPad + mobile safe */
+
+.elite-main-card {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  height: auto !important;
+}
+
+.elite-card-top {
+  position: relative !important;
+  flex-shrink: 0 !important;
+}
+
+.elite-card-center {
+  position: relative !important;
+  margin-top: 34px !important;
+  flex-shrink: 0 !important;
+}
+
+.elite-number {
+  margin: 0 !important;
+  font-size: clamp(16px, 2vw, 24px) !important;
+  letter-spacing: clamp(0.12em, 1vw, 0.22em) !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+}
+
+.elite-tag {
+  margin-top: 14px !important;
+  font-size: clamp(7px, 0.9vw, 11px) !important;
+  letter-spacing: clamp(0.12em, 0.9vw, 0.22em) !important;
+  line-height: 1.4 !important;
+  white-space: nowrap !important;
+}
+
+.elite-card-bottom {
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  margin-top: 34px !important;
+  flex-shrink: 0 !important;
+  display: grid !important;
+  grid-template-columns: 1.4fr 0.45fr 0.45fr !important;
+  gap: 12px !important;
+  align-items: end !important;
+}
+
+.elite-card-bottom span {
+  display: block !important;
+  font-size: clamp(7px, 0.8vw, 10px) !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+}
+
+.elite-card-bottom b {
+  display: block !important;
+  margin-top: 6px !important;
+  font-size: clamp(10px, 1vw, 14px) !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 900px) {
+  .elite-stack {
+    height: 390px !important;
+  }
+
+  .elite-main-card {
+    top: 70px !important;
+    padding: 24px !important;
+  }
+
+  .elite-card-center {
+    margin-top: 38px !important;
+  }
+
+  .elite-card-bottom {
+    margin-top: 32px !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .elite-stack {
+    height: 335px !important;
+  }
+
+  .elite-main-card {
+    top: 58px !important;
+    padding: 20px !important;
+  }
+
+  .elite-card-center {
+    margin-top: 32px !important;
+  }
+
+  .elite-number {
+    font-size: 16px !important;
+    letter-spacing: 0.13em !important;
+  }
+
+  .elite-tag {
+    margin-top: 10px !important;
+    font-size: 7px !important;
+    letter-spacing: 0.11em !important;
+  }
+
+  .elite-card-bottom {
+    margin-top: 26px !important;
+    gap: 8px !important;
+  }
+
+  .elite-card-bottom span {
+    font-size: 7px !important;
+  }
+
+  .elite-card-bottom b {
+    font-size: 10px !important;
+  }
+}
