@@ -2,35 +2,39 @@
 
 export default function HeroCard() {
   return (
-    <div className="card-3d-wrap w-full max-w-[350px] sm:max-w-[440px] lg:max-w-[520px]">
-      <div className="premium-v-card">
-        <div className="card-content">
-          <div className="card-row">
+    <div className="v-card-stage">
+      <div className="v-orbit" />
+
+      <div className="v-card">
+        <div className="v-card-inner">
+          <div className="v-card-top">
             <div>
-              <p className="card-brand">VILTRUM</p>
-              <h3 className="card-title">Crypto Black</h3>
+              <p className="v-brand">VILTRUM</p>
+              <h3>Vault Black</h3>
             </div>
 
-            <div className="card-chip" />
+            <div className="v-chip" />
           </div>
 
-          <p className="card-number">4242 4242 4242 1234</p>
-          <p className="card-mini">SEPOLIA DEMO • NFT VERIFIED • VAULT READY</p>
+          <div className="v-card-mid">
+            <p className="v-number">4242 4242 4242 1234</p>
+            <p className="v-tag">NFT VERIFIED • SEPOLIA • VAULT READY</p>
+          </div>
 
-          <div className="card-bottom">
+          <div className="v-card-bottom">
             <div>
-              <p className="card-label">CARD HOLDER</p>
-              <p className="card-value">SATOSHI NAKAMOTO</p>
+              <p className="v-label">CARD HOLDER</p>
+              <p className="v-value">SATOSHI NAKAMOTO</p>
             </div>
 
             <div>
-              <p className="card-label">CVV</p>
-              <p className="card-value">123</p>
+              <p className="v-label">CVV</p>
+              <p className="v-value">123</p>
             </div>
 
             <div>
-              <p className="card-label">EXP</p>
-              <p className="card-value">12/30</p>
+              <p className="v-label">EXP</p>
+              <p className="v-value">12/30</p>
             </div>
           </div>
         </div>
