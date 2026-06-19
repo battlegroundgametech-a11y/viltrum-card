@@ -107,10 +107,24 @@ export default function LoginPage() {
         )}
 
         {showTelegram && (
-          <div className="mt-8">
-            <p className="mb-4 text-white/50">Complete Telegram verification:</p>
-            <div className="flex justify-center" id="telegram-login-widget" />
-          </div>
+  <div className="mt-8">
+    <p className="mb-4 text-white/50">
+      Complete Telegram verification:
+    </p>
+
+    <div
+      className="flex justify-center"
+      id="telegram-login-widget"
+    />
+
+    <a
+      href={`https://t.me/${process.env.NEXT_PUBLIC_TELEGRAM_BOT_NAME}`}
+      className="mt-5 inline-block rounded-2xl bg-gradient-to-r from-red-600 to-yellow-400 px-6 py-4 font-black text-black"
+    >
+      Open Telegram Bot
+    </a>
+  </div>
+)}
         )}
       </div>
     </main>
