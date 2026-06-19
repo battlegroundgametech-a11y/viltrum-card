@@ -59,7 +59,10 @@ export default function LoginPage() {
     script.setAttribute("data-size", "large");
     script.setAttribute("data-userpic", "false");
     script.setAttribute("data-request-access", "write");
-    script.setAttribute("data-onauth", "onTelegramAuth(user)");
+    script.setAttribute(
+  "data-auth-url",
+  `${window.location.origin}/api/telegram-callback`
+);
 
     container.appendChild(script);
   }, [showTelegram, phone]);
