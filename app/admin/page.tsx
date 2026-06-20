@@ -54,13 +54,13 @@ export default function AdminPage() {
 }
 
   useEffect(() => {
-    const saved = localStorage.getItem("viltrum_admin");
-    if (saved) {
-      setSecret(saved);
-      setLoggedIn(true);
-      loadOrders();
-    }
-  }, []);
+  const saved = localStorage.getItem("viltrum_admin");
+
+  if (saved === "authorized") {
+    setLoggedIn(true);
+    loadOrders();
+  }
+}, []);
 
   if (!loggedIn) {
     return (
@@ -85,6 +85,14 @@ export default function AdminPage() {
   return (
     <main className="admin-page">
       <div className="admin-header">
+        <button
+  onClick={() => {
+    localStorage.removeItem("viltrum_admin");
+    location.reload();
+  }}
+>
+  Logout
+</button>
         <div>
           <p>Viltrum Control Center</p>
           <h1>Admin Orders</h1>
