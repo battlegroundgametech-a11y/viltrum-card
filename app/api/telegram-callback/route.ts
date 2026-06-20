@@ -1,8 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
 function verifyTelegram(data: Record<string, string>) {
   const hash = data.hash;
+
   const checkString = Object.keys(data)
     .filter((key) => key !== "hash")
     .sort()
@@ -31,13 +38,23 @@ export async function GET(req: NextRequest) {
   });
 
   if (!verifyTelegram(data)) {
-    return NextResponse.redirect(new URL("/login?telegram=failed", req.url));
+    return NextResponse.redirect(new URL("/login?error=telegram", req.url));
   }
 
-  const redirect = new URL("/connect-wallet", req.url);
-  redirect.searchParams.set("telegram_id", data.id || "");
-  redirect.searchParams.set("telegram_username", data.username || "");
-  redirect.searchParams.set("telegram_name", data.first_name || "");
+  await supabase.from("profiles").upsert(
+    {
+      telegram_id: String(data.id),
+      telegram_username: data.username || "",
+      telegram_name: `${data.first_name || ""} ${data.last_name || ""}`.trim(),
+      telegram_verified: true
+    },
+    { onConflict: "telegram_id" }
+  );
+
+  const redirect = new URL("/telegram-success", req.url);
+  redirect.searchParams.set("id", data.id || "");
+  redirect.searchParams.set("username", data.username || "");
+  redirect.searchParams.set("name", data.first_name || "");
 
   return NextResponse.redirect(redirect);
 }
