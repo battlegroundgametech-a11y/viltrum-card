@@ -81,7 +81,7 @@ export async function POST(req: NextRequest) {
           [
             {
               text: "Return To Signup",
-              url: `${process.env.NEXT_PUBLIC_SITE_URL}/signup`
+              url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://viltrum-card-kappa.vercel.app"}/signup`
             }
           ]
         ]
