@@ -1,42 +1,50 @@
 "use client";
 
-import { useState } from "react";
 import HamburgerMenu from "../../../components/HamburgerMenu";
 import WalletBadge from "../../../components/WalletBadge";
+import { useEffect, useState } from "react";
 
 export default function FreeMintPage() {
   const [loading, setLoading] = useState(false);
 
-  async function submitOrder(e: React.FormEvent<HTMLFormElement>) {
+  useEffect(() => {
+    const user = localStorage.getItem("viltrum_user");
+    const wallet = localStorage.getItem("viltrum_wallet");
+
+    if (!user) {
+      window.location.href = "/login";
+      return;
+    }
+
+    if (!wallet) {
+      window.location.href = "/connect-wallet";
+    }
+  }, []);
+
+  async function submitOrder(e: any) {
     e.preventDefault();
+
     setLoading(true);
 
-    const form = new FormData(e.currentTarget);
+    const form = new FormData(e.target);
 
     const res = await fetch("/api/create-order", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
       body: JSON.stringify({
         card_type: "free",
         full_name: form.get("full_name"),
-        telegram_username: form.get("telegram_username"),
-        wallet_address: localStorage.getItem("viltrum_wallet") || "",
-        telegram_id: localStorage.getItem("viltrum_user") || ""
+        telegram_username: form.get("telegram_username")
       })
     });
 
     const data = await res.json();
 
-    if (!data.success) {
-      alert(data.error || "Order failed");
-      setLoading(false);
-      return;
+    if (data.success) {
+      window.location.href =
+        `/success?order=${data.order_id}&secret=${data.secret_code}`;
     }
 
-    window.location.href =
-      `/success?order=${data.order_id}&secret=${data.secret_code}`;
+    setLoading(false);
   }
 
   return (
@@ -62,7 +70,7 @@ export default function FreeMintPage() {
             placeholder="Telegram Username"
           />
 
-          <button disabled={loading}>
+          <button>
             {loading ? "Processing..." : "Mint Free Card"}
           </button>
         </form>
