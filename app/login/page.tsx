@@ -34,7 +34,7 @@ export default function LoginPage() {
       <div className="checkout-card-preview physical-preview">
         <span>VILTRUM</span>
         <h2>Telegram Login</h2>
-        <p>FRAGMENT STYLE • SECURE ACCESS</p>
+        <p>VERIFY • CONNECT • PURCHASE</p>
       </div>
 
       <div className="checkout-form-box text-center">
