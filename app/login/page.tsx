@@ -1,50 +1,67 @@
+
 "use client";
 
-import { useEffect } from "react";
+import { useState } from "react";
 import HamburgerMenu from "../../components/HamburgerMenu";
 
 export default function LoginPage() {
-  useEffect(() => {
-    const botName = process.env.NEXT_PUBLIC_TELEGRAM_BOT_NAME;
-    const container = document.getElementById("telegram-login-widget");
+  const [loading, setLoading] = useState(false);
 
-    if (!container || !botName) return;
+  async function login(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoading(true);
 
-    container.innerHTML = "";
+    const form = new FormData(e.currentTarget);
 
-    const script = document.createElement("script");
-    script.src = "https://telegram.org/js/telegram-widget.js?22";
-    script.async = true;
-    script.setAttribute("data-telegram-login", botName);
-    script.setAttribute("data-size", "large");
-    script.setAttribute("data-userpic", "true");
-    script.setAttribute("data-request-access", "write");
-    script.setAttribute(
-      "data-auth-url",
-      `${window.location.origin}/api/telegram-callback`
-    );
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        telegram_username: form.get("telegram_username"),
+        password: form.get("password")
+      })
+    });
 
-    container.appendChild(script);
-  }, []);
+    const data = await res.json();
+
+    if (!data.success) {
+      alert(data.error || "Login failed");
+      setLoading(false);
+      return;
+    }
+
+    localStorage.setItem("viltrum_user", data.telegram_id);
+    localStorage.setItem("viltrum_telegram_username", data.telegram_username);
+    localStorage.setItem("viltrum_telegram_name", data.telegram_name || "");
+
+    window.location.href = "/connect-wallet";
+  }
 
   return (
     <main className="checkout-premium">
       <HamburgerMenu />
 
-      <div className="checkout-card-preview physical-preview">
+      <div className="checkout-card-preview virtual-preview">
         <span>VILTRUM</span>
-        <h2>Telegram Login</h2>
-        <p>VERIFY • CONNECT • PURCHASE</p>
+        <h2>Account Login</h2>
+        <p>USERNAME • PASSWORD • WALLET</p>
       </div>
 
       <div className="checkout-form-box text-center">
-        <h1>Sign Up / Login</h1>
+        <h1>Login</h1>
 
-        <p className="mt-3 text-white/60">
-          Continue with Telegram to access Viltrum Card.
-        </p>
+        <form onSubmit={login} className="mt-6 flex flex-col gap-4">
+          <input name="telegram_username" required placeholder="Telegram Username" />
+          <input name="password" required type="password" placeholder="Password" />
 
-        <div className="mt-8 flex justify-center" id="telegram-login-widget" />
+          <button disabled={loading}>
+            {loading ? "Logging in..." : "Login"}
+          </button>
+        </form>
+
+        <a href="/signup" className="mt-5 block text-white/60">
+          New user? Create account with Telegram OTP
+        </a>
       </div>
     </main>
   );
