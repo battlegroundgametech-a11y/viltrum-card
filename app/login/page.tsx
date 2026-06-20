@@ -3,40 +3,10 @@
 import { useEffect } from "react";
 import HamburgerMenu from "../../components/HamburgerMenu";
 
-declare global {
-  interface Window {
-    onTelegramAuth?: (user: any) => void;
-  }
-}
-
 export default function LoginPage() {
   useEffect(() => {
-    window.onTelegramAuth = async function (user: any) {
-      const res = await fetch("/api/telegram-login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(user)
-      });
-
-      const data = await res.json();
-
-      if (!data.success) {
-        alert(data.error || "Telegram login failed");
-        return;
-      }
-
-      localStorage.setItem("viltrum_user", data.telegram_id);
-      localStorage.setItem("viltrum_telegram_username", data.telegram_username || "");
-      localStorage.setItem("viltrum_telegram_name", data.telegram_name || "");
-
-      alert("Telegram connected successfully");
-      window.location.href = "/connect-wallet";
-    };
-
-    const container = document.getElementById("telegram-login-widget");
     const botName = process.env.NEXT_PUBLIC_TELEGRAM_BOT_NAME;
+    const container = document.getElementById("telegram-login-widget");
 
     if (!container || !botName) return;
 
@@ -49,7 +19,10 @@ export default function LoginPage() {
     script.setAttribute("data-size", "large");
     script.setAttribute("data-userpic", "true");
     script.setAttribute("data-request-access", "write");
-    script.setAttribute("data-onauth", "onTelegramAuth(user)");
+    script.setAttribute(
+      "data-auth-url",
+      `${window.location.origin}/api/telegram-callback`
+    );
 
     container.appendChild(script);
   }, []);
