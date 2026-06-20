@@ -22,22 +22,30 @@ export default function AdminPage() {
     setOrders(data || []);
   }
 
-  async function approveOrder(order: any) {
-    const { error } = await supabase
-      .from("orders")
-      .update({
-        status: "approved"
-      })
-      .eq("id", order.id);
+ async function approveOrder(order: any) {
+  const adminPassword = localStorage.getItem("viltrum_admin_password") || secret;
 
-    if (error) {
-      alert(error.message);
-      return;
-    }
+  const res = await fetch("/api/admin/approve-order", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      secret: process.env.NEXT_PUBLIC_ADMIN_PASSWORD,
+      order_id: order.id
+    })
+  });
 
-    alert("Card approved. User can now view card in Telegram bot.");
-    loadOrders();
+  const data = await res.json();
+
+  if (!data.success) {
+    alert(data.error || "Approval failed");
+    return;
   }
+
+  alert("Card approved and user notified on Telegram.");
+  loadOrders();
+}
 
   function loginAdmin() {
   const adminPassword =
@@ -49,6 +57,7 @@ export default function AdminPage() {
   }
 
   localStorage.setItem("viltrum_admin", "authorized");
+  localStorage.setItem("viltrum_admin_password", secret);
   setLoggedIn(true);
   loadOrders();
 }
