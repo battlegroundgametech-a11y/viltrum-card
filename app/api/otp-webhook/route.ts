@@ -6,18 +6,12 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-async function sendMessage(
-  chatId: number | string,
-  text: string,
-  keyboard?: any
-) {
-  await fetch(
+async function sendMessage(chatId: number | string, text: string, keyboard?: any) {
+  const res = await fetch(
     `https://api.telegram.org/bot${process.env.OTP_BOT_TOKEN}/sendMessage`,
     {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         chat_id: chatId,
         text,
@@ -26,43 +20,43 @@ async function sendMessage(
       })
     }
   );
+
+  const data = await res.json();
+  console.log("OTP BOT SEND RESPONSE:", data);
+  return data;
 }
 
 function generateOTP() {
-  return String(
-    Math.floor(100000 + Math.random() * 900000)
-  );
+  return String(Math.floor(100000 + Math.random() * 900000));
 }
 
 export async function POST(req: NextRequest) {
-  const update = await req.json();
+  try {
+    const update = await req.json();
+    console.log("OTP UPDATE:", JSON.stringify(update));
 
-  const message = update.message;
+    const message = update.message;
 
-  const chatId = message?.chat?.id;
-  const text = message?.text?.trim();
+    if (!message) {
+      return NextResponse.json({ ok: true });
+    }
 
-  if (!chatId || !text) {
-    return NextResponse.json({ ok: true });
-  }
+    const chatId = message.chat?.id;
+    const text = message.text?.trim() || "";
 
-  const telegramId = String(message.from?.id);
-  const username =
-    (message.from?.username || "")
+    if (!chatId) {
+      return NextResponse.json({ ok: true });
+    }
+
+    const telegramId = String(message.from?.id || chatId);
+    const username = String(message.from?.username || "")
       .toLowerCase()
       .replace("@", "");
 
-  if (
-    text === "/start" ||
-    text === "/start signup"
-  ) {
     const otp = generateOTP();
+    const expiresAt = new Date(Date.now() + 60 * 1000).toISOString();
 
-    const expiresAt = new Date(
-      Date.now() + 60 * 1000
-    ).toISOString();
-
-    await supabase.from("signup_otps").insert({
+    const { error } = await supabase.from("signup_otps").insert({
       telegram_id: telegramId,
       telegram_username: username,
       otp,
@@ -70,19 +64,24 @@ export async function POST(req: NextRequest) {
       expires_at: expiresAt
     });
 
+    if (error) {
+      console.log("OTP SUPABASE ERROR:", error.message);
+      await sendMessage(chatId, `Database error: ${error.message}`);
+      return NextResponse.json({ ok: true });
+    }
+
     await sendMessage(
       chatId,
       `🔐 <b>Viltrum Signup OTP</b>\n\n` +
-        `OTP:\n<code>${otp}</code>\n\n` +
-        `Valid for 1 minute only.`,
+        `Your OTP is:\n\n` +
+        `<code>${otp}</code>\n\n` +
+        `This OTP is valid for <b>1 minute</b>.`,
       {
         inline_keyboard: [
           [
             {
               text: "Return To Signup",
-              url:
-                `${process.env.NEXT_PUBLIC_SITE_URL}` +
-                `/signup`
+              url: `${process.env.NEXT_PUBLIC_SITE_URL}/signup`
             }
           ]
         ]
@@ -90,12 +89,8 @@ export async function POST(req: NextRequest) {
     );
 
     return NextResponse.json({ ok: true });
+  } catch (err: any) {
+    console.log("OTP WEBHOOK ERROR:", err.message);
+    return NextResponse.json({ ok: true });
   }
-
-  await sendMessage(
-    chatId,
-    "Press /start to generate a signup OTP."
-  );
-
-  return NextResponse.json({ ok: true });
 }
