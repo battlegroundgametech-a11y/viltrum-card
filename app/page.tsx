@@ -37,7 +37,7 @@ export default function HomePage() {
           </p>
 
           <div className="elite-actions">
-            <a href="/login" className="elite-primary">Sign Up</a>
+            <a href="/signup" className="elite-primary">Sign Up</a>
             <a href="#cards" className="elite-secondary">Explore Cards</a>
           </div>
 
