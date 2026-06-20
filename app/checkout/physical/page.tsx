@@ -1,20 +1,24 @@
 "use client";
+
+import { useState } from "react";
 import HamburgerMenu from "../../../components/HamburgerMenu";
 import WalletBadge from "../../../components/WalletBadge";
-import { useState } from "react";
 
 export default function PhysicalCheckoutPage() {
   const [loading, setLoading] = useState(false);
 
-  async function submitOrder(e: any) {
+  async function submitOrder(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     setLoading(true);
 
-    const form = new FormData(e.target);
+    const form = new FormData(e.currentTarget);
 
     const res = await fetch("/api/create-order", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
         card_type: "physical",
         full_name: form.get("full_name"),
@@ -22,24 +26,29 @@ export default function PhysicalCheckoutPage() {
         shipping_address: form.get("shipping_address"),
         city: form.get("city"),
         country: form.get("country"),
-        coupon_code: form.get("coupon_code")
+        coupon_code: form.get("coupon_code"),
+        wallet_address: localStorage.getItem("viltrum_wallet") || "",
+        telegram_id: localStorage.getItem("viltrum_user") || ""
       })
     });
 
     const data = await res.json();
 
-    if (data.success) {
-      window.location.href =
-        `/success?order=${data.order_id}&secret=${data.secret_code}`;
+    if (!data.success) {
+      alert(data.error || "Order failed");
+      setLoading(false);
+      return;
     }
 
-    setLoading(false);
+    window.location.href =
+      `/success?order=${data.order_id}&secret=${data.secret_code}`;
   }
 
   return (
     <main className="checkout-premium">
       <HamburgerMenu />
       <WalletBadge />
+
       <div className="checkout-card-preview physical-preview">
         <span>VILTRUM</span>
         <h2>Physical Card</h2>
@@ -50,25 +59,42 @@ export default function PhysicalCheckoutPage() {
         <h1>Physical Card Purchase</h1>
 
         <form onSubmit={submitOrder}>
-          <input name="full_name" required placeholder="Full Name" />
+          <input
+            name="full_name"
+            required
+            placeholder="Full Name"
+          />
+
           <input
             name="telegram_username"
             required
             placeholder="Telegram Username"
           />
+
           <input
             name="shipping_address"
             required
             placeholder="Shipping Address"
           />
-          <input name="city" required placeholder="City" />
-          <input name="country" required placeholder="Country" />
+
+          <input
+            name="city"
+            required
+            placeholder="City"
+          />
+
+          <input
+            name="country"
+            required
+            placeholder="Country"
+          />
+
           <input
             name="coupon_code"
             placeholder="Coupon Code (Optional)"
           />
 
-          <button>
+          <button disabled={loading}>
             {loading ? "Processing..." : "Purchase Physical Card"}
           </button>
         </form>
