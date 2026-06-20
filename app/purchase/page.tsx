@@ -1,11 +1,29 @@
+"use client";
+
+import { useEffect } from "react";
 import HamburgerMenu from "../../components/HamburgerMenu";
 import WalletBadge from "../../components/WalletBadge";
 
 export default function PurchasePage() {
+  useEffect(() => {
+    const user = localStorage.getItem("viltrum_user");
+    const wallet = localStorage.getItem("viltrum_wallet");
+
+    if (!user) {
+      window.location.href = "/login";
+      return;
+    }
+
+    if (!wallet) {
+      window.location.href = "/connect-wallet";
+    }
+  }, []);
+
   return (
     <main className="purchase-premium">
       <HamburgerMenu />
       <WalletBadge />
+
       <section className="purchase-hero">
         <p className="purchase-label">Viltrum Access Tiers</p>
         <h1>Choose your card</h1>
