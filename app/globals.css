@@ -2513,3 +2513,38 @@ body.light-mode .checkout-form-box input {
     grid-template-columns: 1fr;
   }
 }
+
+.wallet-badge {
+  position: fixed;
+  top: 22px;
+  right: 88px;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(10,10,14,.72);
+  padding: 10px 12px;
+  color: white;
+  font-weight: 800;
+  backdrop-filter: blur(18px);
+}
+
+.wallet-disconnect {
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg,#dc2626,#facc15);
+  color: #080808;
+  padding: 7px 10px;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+@media (max-width: 640px) {
+  .wallet-badge {
+    top: 76px;
+    right: 16px;
+    font-size: 12px;
+  }
+}
