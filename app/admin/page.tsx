@@ -40,15 +40,18 @@ export default function AdminPage() {
   }
 
   function loginAdmin() {
-    if (!secret.trim()) {
-      alert("Enter admin password");
-      return;
-    }
+  const adminPassword =
+    process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
 
-    localStorage.setItem("viltrum_admin", secret);
-    setLoggedIn(true);
-    loadOrders();
+  if (secret !== adminPassword) {
+    alert("Incorrect password");
+    return;
   }
+
+  localStorage.setItem("viltrum_admin", "authorized");
+  setLoggedIn(true);
+  loadOrders();
+}
 
   useEffect(() => {
     const saved = localStorage.getItem("viltrum_admin");
