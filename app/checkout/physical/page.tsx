@@ -1,24 +1,35 @@
 "use client";
 
-import { useState } from "react";
 import HamburgerMenu from "../../../components/HamburgerMenu";
 import WalletBadge from "../../../components/WalletBadge";
+import { useEffect, useState } from "react";
 
 export default function PhysicalCheckoutPage() {
   const [loading, setLoading] = useState(false);
 
-  async function submitOrder(e: React.FormEvent<HTMLFormElement>) {
+  useEffect(() => {
+    const user = localStorage.getItem("viltrum_user");
+    const wallet = localStorage.getItem("viltrum_wallet");
+
+    if (!user) {
+      window.location.href = "/login";
+      return;
+    }
+
+    if (!wallet) {
+      window.location.href = "/connect-wallet";
+    }
+  }, []);
+
+  async function submitOrder(e: any) {
     e.preventDefault();
 
     setLoading(true);
 
-    const form = new FormData(e.currentTarget);
+    const form = new FormData(e.target);
 
     const res = await fetch("/api/create-order", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
       body: JSON.stringify({
         card_type: "physical",
         full_name: form.get("full_name"),
@@ -26,22 +37,18 @@ export default function PhysicalCheckoutPage() {
         shipping_address: form.get("shipping_address"),
         city: form.get("city"),
         country: form.get("country"),
-        coupon_code: form.get("coupon_code"),
-        wallet_address: localStorage.getItem("viltrum_wallet") || "",
-        telegram_id: localStorage.getItem("viltrum_user") || ""
+        coupon_code: form.get("coupon_code")
       })
     });
 
     const data = await res.json();
 
-    if (!data.success) {
-      alert(data.error || "Order failed");
-      setLoading(false);
-      return;
+    if (data.success) {
+      window.location.href =
+        `/success?order=${data.order_id}&secret=${data.secret_code}`;
     }
 
-    window.location.href =
-      `/success?order=${data.order_id}&secret=${data.secret_code}`;
+    setLoading(false);
   }
 
   return (
@@ -59,11 +66,7 @@ export default function PhysicalCheckoutPage() {
         <h1>Physical Card Purchase</h1>
 
         <form onSubmit={submitOrder}>
-          <input
-            name="full_name"
-            required
-            placeholder="Full Name"
-          />
+          <input name="full_name" required placeholder="Full Name" />
 
           <input
             name="telegram_username"
@@ -94,7 +97,7 @@ export default function PhysicalCheckoutPage() {
             placeholder="Coupon Code (Optional)"
           />
 
-          <button disabled={loading}>
+          <button>
             {loading ? "Processing..." : "Purchase Physical Card"}
           </button>
         </form>
