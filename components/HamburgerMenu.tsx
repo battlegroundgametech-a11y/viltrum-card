@@ -49,7 +49,8 @@ export default function HamburgerMenu() {
                 Theme: {light ? "Light" : "Dark"}
               </button>
 
-              <a className="rounded-2xl bg-viltrumPurple px-5 py-4 text-center font-bold" href="/login">Sign Up / Login</a>
+              <a className="rounded-2xl bg-yellow-400 px-5 py-4 text-center font-black text-black" href="/signup">Sign Up</a>
+              <a className="rounded-2xl bg-white/10 px-5 py-4 text-center font-bold text-white" href="/login">Login</a>
               <a className="rounded-2xl bg-white/10 px-5 py-4 text-white" href="/">Home</a>
               <a className="rounded-2xl bg-white/10 px-5 py-4 text-white" href="/dashboard">Dashboard</a>
               <a className="rounded-2xl bg-white/10 px-5 py-4 text-white" href="/#about">About Us</a>
