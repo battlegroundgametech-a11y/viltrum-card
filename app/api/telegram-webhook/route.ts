@@ -27,14 +27,13 @@ async function sendMessage(chatId: number | string, text: string, keyboard?: any
 function mainKeyboard() {
   return {
     inline_keyboard: [
-      [{ text: "📦 My Orders", callback_data: "my_orders" }],
       [{ text: "💳 My Card", callback_data: "my_card" }],
-      [{ text: "🎟 Access Codes", callback_data: "access_codes" }],
-      [{ text: "📦 Track Shipment", callback_data: "track_shipment" }],
+      [{ text: "📦 My Orders", callback_data: "my_orders" }],
+      [{ text: "🚚 Track Shipment", callback_data: "track_shipment" }],
       [{ text: "💰 Check Balance", callback_data: "check_balance" }],
       [{ text: "➕ Reload Balance", callback_data: "reload_balance" }],
       [{ text: "➖ Withdraw", callback_data: "withdraw" }],
-      [{ text: "🆘 Support", callback_data: "support" }]
+      [{ text: "🆘 Help & Support", callback_data: "support" }]
     ]
   };
 }
@@ -43,14 +42,6 @@ function hiddenCardKeyboard() {
   return {
     inline_keyboard: [
       [{ text: "👁 Show Full Card", callback_data: "show_full_card" }],
-      [{ text: "⬅️ Back", callback_data: "back_home" }]
-    ]
-  };
-}
-
-function backKeyboard() {
-  return {
-    inline_keyboard: [
       [{ text: "⬅️ Back", callback_data: "back_home" }]
     ]
   };
@@ -192,12 +183,7 @@ export async function POST(req: NextRequest) {
       }
 
       if (order.status !== "approved" && order.status !== "active") {
-        await sendMessage(
-          chatId,
-          "Your card is not approved yet.",
-          mainKeyboard()
-        );
-
+        await sendMessage(chatId, "Your card is not approved yet.", mainKeyboard());
         return NextResponse.json({ ok: true });
       }
 
@@ -212,31 +198,6 @@ export async function POST(req: NextRequest) {
         mainKeyboard()
       );
 
-      return NextResponse.json({ ok: true });
-    }
-
-    if (action === "access_codes") {
-      const { data: codes } = await supabase
-        .from("access_codes")
-        .select("*")
-        .eq("telegram_id", telegramId)
-        .order("created_at", { ascending: false });
-
-      if (!codes || codes.length === 0) {
-        await sendMessage(chatId, "No access codes found.", mainKeyboard());
-        return NextResponse.json({ ok: true });
-      }
-
-      let text = "🎟 <b>Your Access Codes</b>\n\n";
-
-      codes.forEach((code: any) => {
-        text +=
-          `<code>${code.code}</code>\n` +
-          `Card: ${code.card_type}\n` +
-          `Used: ${code.used ? "Yes" : "No"}\n\n`;
-      });
-
-      await sendMessage(chatId, text, mainKeyboard());
       return NextResponse.json({ ok: true });
     }
 
@@ -325,8 +286,9 @@ export async function POST(req: NextRequest) {
     if (action === "support") {
       await sendMessage(
         chatId,
-        `🆘 <b>Support</b>\n\n` +
-          `Send your issue here, or contact the Viltrum admin team.`,
+        `🆘 <b>Help & Support</b>\n\n` +
+          `For help, send your issue in this chat.\n\n` +
+          `Support team will review your message and respond as soon as possible.`,
         mainKeyboard()
       );
 
@@ -349,7 +311,9 @@ export async function POST(req: NextRequest) {
   if (text === "/start") {
     await sendMessage(
       chatId,
-      `Welcome to <b>Viltrum Card</b>.\n\nSend your secret activation code to verify your order.\n\nExample:\n<code>VT-ABCD-1234-WXYZ</code>`,
+      `Welcome to <b>Viltrum Card</b>.\n\n` +
+        `Send your secret activation code to verify your order.\n\n` +
+        `Example:\n<code>VT-ABCD-1234-WXYZ</code>`,
       mainKeyboard()
     );
 
@@ -375,12 +339,7 @@ export async function POST(req: NextRequest) {
   }
 
   if (accessCode.used) {
-    await sendMessage(
-      chatId,
-      "This activation code has already been used.",
-      mainKeyboard()
-    );
-
+    await sendMessage(chatId, "This activation code has already been used.", mainKeyboard());
     return NextResponse.json({ ok: true });
   }
 
@@ -413,7 +372,10 @@ export async function POST(req: NextRequest) {
 
   await sendMessage(
     chatId,
-    `✅ <b>Activation Successful</b>\n\nWelcome to Viltrum.\n\nChoose an option below:`,
+    `✅ <b>Activation Successful</b>\n\n` +
+      `Welcome to <b>Viltrum Card</b>.\n\n` +
+      `Your order has been verified and is now waiting for admin approval.\n\n` +
+      `Once approved, you will receive a notification here automatically.`,
     mainKeyboard()
   );
 
