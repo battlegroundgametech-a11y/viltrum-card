@@ -7,16 +7,21 @@ const supabase = createClient(
 );
 
 async function sendMessage(chatId: number | string, text: string, keyboard?: any) {
-  await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      chat_id: chatId,
-      text,
-      parse_mode: "HTML",
-      reply_markup: keyboard
-    })
-  });
+  await fetch(
+    `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text,
+        parse_mode: "HTML",
+        reply_markup: keyboard
+      })
+    }
+  );
 }
 
 function mainKeyboard() {
@@ -25,9 +30,43 @@ function mainKeyboard() {
       [{ text: "📦 My Orders", callback_data: "my_orders" }],
       [{ text: "💳 My Card", callback_data: "my_card" }],
       [{ text: "🎟 Access Codes", callback_data: "access_codes" }],
+      [{ text: "📦 Track Shipment", callback_data: "track_shipment" }],
+      [{ text: "💰 Check Balance", callback_data: "check_balance" }],
+      [{ text: "➕ Reload Balance", callback_data: "reload_balance" }],
+      [{ text: "➖ Withdraw", callback_data: "withdraw" }],
       [{ text: "🆘 Support", callback_data: "support" }]
     ]
   };
+}
+
+function hiddenCardKeyboard() {
+  return {
+    inline_keyboard: [
+      [{ text: "👁 Show Full Card", callback_data: "show_full_card" }],
+      [{ text: "⬅️ Back", callback_data: "back_home" }]
+    ]
+  };
+}
+
+function backKeyboard() {
+  return {
+    inline_keyboard: [
+      [{ text: "⬅️ Back", callback_data: "back_home" }]
+    ]
+  };
+}
+
+function generateCardNumber() {
+  return "4242 4242 4242 " + Math.floor(1000 + Math.random() * 9000);
+}
+
+function generateCvv() {
+  return String(Math.floor(100 + Math.random() * 900));
+}
+
+function maskCardNumber(cardNumber: string) {
+  const last4 = cardNumber.slice(-4);
+  return `xxxx xxxx xxxx ${last4}`;
 }
 
 export async function POST(req: NextRequest) {
@@ -38,6 +77,16 @@ export async function POST(req: NextRequest) {
     const chatId = callback.message.chat.id;
     const telegramId = String(callback.from.id);
     const action = callback.data;
+
+    if (action === "back_home") {
+      await sendMessage(
+        chatId,
+        "Welcome back to <b>Viltrum Card</b>.\n\nChoose an option below:",
+        mainKeyboard()
+      );
+
+      return NextResponse.json({ ok: true });
+    }
 
     if (action === "my_orders") {
       const { data: orders } = await supabase
@@ -58,7 +107,7 @@ export async function POST(req: NextRequest) {
           `🧾 <b>${order.order_id}</b>\n` +
           `Card: ${order.card_type}\n` +
           `Status: ${order.status}\n` +
-          `Shipment: ${order.shipment_status}\n\n`;
+          `Shipment: ${order.shipment_status || "Not started"}\n\n`;
       });
 
       await sendMessage(chatId, text, mainKeyboard());
@@ -75,18 +124,91 @@ export async function POST(req: NextRequest) {
         .single();
 
       if (!order) {
-        await sendMessage(chatId, "No verified card found.", mainKeyboard());
+        await sendMessage(chatId, "No card found.", mainKeyboard());
         return NextResponse.json({ ok: true });
+      }
+
+      if (order.status !== "approved" && order.status !== "active") {
+        await sendMessage(
+          chatId,
+          `💳 <b>Your Viltrum Card</b>\n\n` +
+            `<b>Card Type:</b> ${order.card_type}\n` +
+            `<b>Status:</b> ${order.status}\n` +
+            `<b>Token ID:</b> ${order.token_id || "Pending"}\n\n` +
+            `Your card is verified but waiting for admin approval.`,
+          mainKeyboard()
+        );
+
+        return NextResponse.json({ ok: true });
+      }
+
+      let cardNumber = order.card_number;
+      let cardExp = order.card_exp;
+      let cardCvv = order.card_cvv;
+
+      if (!cardNumber || !cardExp || !cardCvv) {
+        cardNumber = generateCardNumber();
+        cardExp = "12/30";
+        cardCvv = generateCvv();
+
+        await supabase
+          .from("orders")
+          .update({
+            card_number: cardNumber,
+            card_exp: cardExp,
+            card_cvv: cardCvv,
+            status: "active"
+          })
+          .eq("id", order.id);
       }
 
       await sendMessage(
         chatId,
         `💳 <b>Your Viltrum Card</b>\n\n` +
-          `<b>Card Type:</b> ${order.card_type}\n` +
-          `<b>Status:</b> ${order.status}\n` +
-          `<b>Token ID:</b> ${order.token_id || "Pending"}\n` +
-          `<b>Card Holder:</b> ${order.full_name || "Not set"}\n\n` +
-          `Card details will unlock after admin approval.`,
+          `<b>Card Holder:</b> ${order.full_name || "Not set"}\n` +
+          `<b>Card Number:</b> <code>${maskCardNumber(cardNumber)}</code>\n` +
+          `<b>CVV:</b> <code>xxx</code>\n` +
+          `<b>Expiry:</b> <code>xx/xx</code>\n` +
+          `<b>Status:</b> Active\n\n` +
+          `Tap below to reveal full card details.`,
+        hiddenCardKeyboard()
+      );
+
+      return NextResponse.json({ ok: true });
+    }
+
+    if (action === "show_full_card") {
+      const { data: order } = await supabase
+        .from("orders")
+        .select("*")
+        .eq("telegram_id", telegramId)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .single();
+
+      if (!order) {
+        await sendMessage(chatId, "No card found.", mainKeyboard());
+        return NextResponse.json({ ok: true });
+      }
+
+      if (order.status !== "approved" && order.status !== "active") {
+        await sendMessage(
+          chatId,
+          "Your card is not approved yet.",
+          mainKeyboard()
+        );
+
+        return NextResponse.json({ ok: true });
+      }
+
+      await sendMessage(
+        chatId,
+        `🔓 <b>Full Card Details</b>\n\n` +
+          `<b>Card Holder:</b> ${order.full_name || "Not set"}\n` +
+          `<b>Card Number:</b> <code>${order.card_number}</code>\n` +
+          `<b>CVV:</b> <code>${order.card_cvv}</code>\n` +
+          `<b>Expiry:</b> <code>${order.card_exp}</code>\n` +
+          `<b>Status:</b> Active`,
         mainKeyboard()
       );
 
@@ -118,10 +240,93 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: true });
     }
 
+    if (action === "track_shipment") {
+      const { data: order } = await supabase
+        .from("orders")
+        .select("*")
+        .eq("telegram_id", telegramId)
+        .eq("card_type", "physical")
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .single();
+
+      if (!order) {
+        await sendMessage(
+          chatId,
+          "📦 Track Shipment is available only for physical card buyers.",
+          mainKeyboard()
+        );
+
+        return NextResponse.json({ ok: true });
+      }
+
+      await sendMessage(
+        chatId,
+        `📦 <b>Shipment Tracking</b>\n\n` +
+          `<b>Order:</b> ${order.order_id}\n` +
+          `<b>Status:</b> ${order.shipment_status || "Not started"}\n` +
+          `<b>Note:</b> ${order.tracking_note || "Tracking will be updated manually."}`,
+        mainKeyboard()
+      );
+
+      return NextResponse.json({ ok: true });
+    }
+
+    if (action === "check_balance") {
+      const { data: order } = await supabase
+        .from("orders")
+        .select("*")
+        .eq("telegram_id", telegramId)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .single();
+
+      if (!order) {
+        await sendMessage(chatId, "No card found.", mainKeyboard());
+        return NextResponse.json({ ok: true });
+      }
+
+      await sendMessage(
+        chatId,
+        `💰 <b>Card Balance</b>\n\n` +
+          `<b>Balance:</b> $0.00\n` +
+          `<b>Status:</b> ${order.status}\n\n` +
+          `Balance updates will be connected to the vault contract later.`,
+        mainKeyboard()
+      );
+
+      return NextResponse.json({ ok: true });
+    }
+
+    if (action === "reload_balance") {
+      await sendMessage(
+        chatId,
+        `➕ <b>Reload Balance</b>\n\n` +
+          `Reload will be handled through the Viltrum vault contract.\n\n` +
+          `This feature will be enabled after vault deployment.`,
+        mainKeyboard()
+      );
+
+      return NextResponse.json({ ok: true });
+    }
+
+    if (action === "withdraw") {
+      await sendMessage(
+        chatId,
+        `➖ <b>Withdraw</b>\n\n` +
+          `Withdrawals will be handled through the Viltrum vault contract.\n\n` +
+          `This feature will be enabled after vault deployment.`,
+        mainKeyboard()
+      );
+
+      return NextResponse.json({ ok: true });
+    }
+
     if (action === "support") {
       await sendMessage(
         chatId,
-        `🆘 <b>Support</b>\n\nSend your issue here, or contact the Viltrum admin team.`,
+        `🆘 <b>Support</b>\n\n` +
+          `Send your issue here, or contact the Viltrum admin team.`,
         mainKeyboard()
       );
 
@@ -160,19 +365,32 @@ export async function POST(req: NextRequest) {
     .single();
 
   if (!accessCode) {
-    await sendMessage(chatId, "Invalid activation code. Please check your code and send it again.", mainKeyboard());
+    await sendMessage(
+      chatId,
+      "Invalid activation code. Please check your code and send it again.",
+      mainKeyboard()
+    );
+
     return NextResponse.json({ ok: true });
   }
 
   if (accessCode.used) {
-    await sendMessage(chatId, "This activation code has already been used.", mainKeyboard());
+    await sendMessage(
+      chatId,
+      "This activation code has already been used.",
+      mainKeyboard()
+    );
+
     return NextResponse.json({ ok: true });
   }
 
-  await supabase.from("access_codes").update({
-    telegram_id: telegramId,
-    used: true
-  }).eq("code", code);
+  await supabase
+    .from("access_codes")
+    .update({
+      telegram_id: telegramId,
+      used: true
+    })
+    .eq("code", code);
 
   await supabase.from("bot_users").upsert({
     telegram_id: telegramId,
@@ -184,11 +402,14 @@ export async function POST(req: NextRequest) {
     verified: true
   });
 
-  await supabase.from("orders").update({
-    telegram_id: telegramId,
-    telegram_username: username,
-    status: "verified"
-  }).eq("id", accessCode.order_id);
+  await supabase
+    .from("orders")
+    .update({
+      telegram_id: telegramId,
+      telegram_username: username,
+      status: "verified"
+    })
+    .eq("id", accessCode.order_id);
 
   await sendMessage(
     chatId,
