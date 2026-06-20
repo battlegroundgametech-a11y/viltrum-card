@@ -28,6 +28,14 @@ export default function HamburgerMenu() {
     }
   }
 
+  function logout() {
+    localStorage.removeItem("viltrum_user");
+    localStorage.removeItem("viltrum_telegram_username");
+    localStorage.removeItem("viltrum_telegram_name");
+    localStorage.removeItem("viltrum_wallet");
+    window.location.href = "/login";
+  }
+
   return (
     <>
       <button onClick={() => setOpen(true)} className="fixed right-5 top-5 z-50 rounded-full border border-white/20 bg-white/10 p-3 text-white backdrop-blur-xl">
@@ -51,8 +59,10 @@ export default function HamburgerMenu() {
 
               <a className="rounded-2xl bg-yellow-400 px-5 py-4 text-center font-black text-black" href="/signup">Sign Up</a>
               <a className="rounded-2xl bg-white/10 px-5 py-4 text-center font-bold text-white" href="/login">Login</a>
+              <button onClick={logout} className="rounded-2xl bg-red-500 px-5 py-4 text-center font-black text-white">Logout</button>
+
               <a className="rounded-2xl bg-white/10 px-5 py-4 text-white" href="/">Home</a>
-              <a className="rounded-2xl bg-white/10 px-5 py-4 text-white" href="/dashboard">Dashboard</a>
+              <a className="rounded-2xl bg-white/10 px-5 py-4 text-white" href="/purchase">Purchase</a>
               <a className="rounded-2xl bg-white/10 px-5 py-4 text-white" href="/#about">About Us</a>
               <a className="rounded-2xl bg-white/10 px-5 py-4 text-white" href="/#support">Help & Support</a>
               <a className="rounded-2xl bg-white/10 px-5 py-4 text-white" href="/#faq">FAQ</a>
