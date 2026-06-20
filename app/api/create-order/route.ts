@@ -1,90 +1,77 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
-import {
-  generateOrderId,
-  generateSecretCode,
-  generateDemoCard
-} from "../../../lib/orderHelpers";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
+function makeSecretCode() {
+  const part1 = Math.random().toString(36).substring(2, 6).toUpperCase();
+  const part2 = Math.random().toString(36).substring(2, 6).toUpperCase();
+  const part3 = Math.random().toString(36).substring(2, 6).toUpperCase();
+  return `VT-${part1}-${part2}-${part3}`;
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    const {
-      card_type,
-      full_name,
-      telegram_username,
-      wallet_address,
-      shipping_address,
-      city,
-      country,
-      coupon_code
-    } = body;
+    const secretCode = makeSecretCode();
+    const orderId = `ORDER-${Date.now()}`;
 
-    if (!card_type || !full_name || !telegram_username) {
+    const { data: order, error: orderError } = await supabase
+      .from("orders")
+      .insert({
+        order_id: orderId,
+        profile_id: body.profile_id || null,
+        telegram_id: body.telegram_id || null,
+        wallet_address: body.wallet_address || "",
+        card_type: body.card_type,
+        full_name: body.full_name || "",
+        telegram_username: body.telegram_username || "",
+        shipping_address: body.shipping_address || "",
+        city: body.city || "",
+        country: body.country || "",
+        coupon_code: body.coupon_code || "",
+        secret_code: secretCode,
+        status: "pending",
+        shipment_status: "not_started",
+        tracking_note: ""
+      })
+      .select()
+      .single();
+
+    if (orderError) {
       return NextResponse.json(
-        { error: "Missing required fields" },
+        { success: false, error: orderError.message },
         { status: 400 }
       );
     }
 
-    const order_id = generateOrderId();
-    const secret_code = generateSecretCode();
-    const demoCard = generateDemoCard();
-
-    const { error: orderError } = await supabase.from("orders").insert({
-      order_id,
-      card_type,
-      full_name,
-      telegram_username,
-      wallet_address,
-      shipping_address,
-      city,
-      country,
-      coupon_code,
-      secret_code,
-      status: "pending",
-      shipment_status:
-        card_type === "physical" ? "Order received" : "Not applicable",
-      tracking_note:
-        card_type === "physical"
-          ? "Shipment tracking will be updated manually after approval."
-          : "Tracking is only available for physical card buyers."
+    const { error: codeError } = await supabase.from("access_codes").insert({
+      code: secretCode,
+      order_id: order.id,
+      telegram_id: body.telegram_id || null,
+      card_type: body.card_type,
+      used: false
     });
 
-    if (orderError) {
-      return NextResponse.json({ error: orderError.message }, { status: 500 });
-    }
-
-    const cardStatus = card_type === "free" ? "inactive" : "pending";
-
-    const { error: cardError } = await supabase.from("cards").insert({
-      order_id,
-      holder_name: full_name,
-      card_number: demoCard.card_number,
-      cvv: demoCard.cvv,
-      expiry: demoCard.expiry,
-      status: cardStatus,
-      balance: 0
-    });
-
-    if (cardError) {
-      return NextResponse.json({ error: cardError.message }, { status: 500 });
+    if (codeError) {
+      return NextResponse.json(
+        { success: false, error: codeError.message },
+        { status: 400 }
+      );
     }
 
     return NextResponse.json({
       success: true,
-      order_id,
-      secret_code
+      order_id: order.id,
+      secret_code: secretCode
     });
-  } catch (error: any) {
+  } catch (err: any) {
     return NextResponse.json(
-      { error: error.message || "Something went wrong" },
+      { success: false, error: err.message || "Server error" },
       { status: 500 }
     );
   }
