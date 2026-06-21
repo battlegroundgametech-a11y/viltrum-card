@@ -119,18 +119,14 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ ok: true });
       }
 
-      if (
-  order.card_type === "physical" &&
-  order.status !== "approved" &&
-  order.status !== "active"
-) {
+      if (order.status !== "active") {
         await sendMessage(
           chatId,
           `💳 <b>Your Viltrum Card</b>\n\n` +
             `<b>Card Type:</b> ${order.card_type}\n` +
             `<b>Status:</b> ${order.status}\n` +
             `<b>Token ID:</b> ${order.token_id || "Pending"}\n\n` +
-            `Your card is verified but waiting for admin approval.`,
+            `Your card is not active yet. Please send your activation code first.`,
           mainKeyboard()
         );
 
@@ -376,27 +372,17 @@ await supabase
   .update({
     telegram_id: telegramId,
     telegram_username: username,
-    status: currentOrder?.card_type === "physical" ? "verified" : "active"
+    status: "active"
   })
   .eq("id", accessCode.order_id);
 
-if (currentOrder?.card_type === "physical") {
-  await sendMessage(
-    chatId,
-    `✅ <b>Activation Successful</b>\n\n` +
-      `Your physical card has been verified.\n\n` +
-      `It is now awaiting admin approval and shipment.`,
-    mainKeyboard()
-  );
-} else {
-  await sendMessage(
-    chatId,
-    `🎉 <b>Card Activated Successfully</b>\n\n` +
-      `Your ${currentOrder?.card_type} card is now ACTIVE.\n\n` +
-      `Open My Card to view it.`,
-    mainKeyboard()
-  );
-}
+await sendMessage(
+  chatId,
+  `🎉 <b>Card Activated Successfully</b>\n\n` +
+    `Your ${currentOrder?.card_type || ""} card is now ACTIVE.\n\n` +
+    `Open My Card to view it.`,
+  mainKeyboard()
+);
 
   return NextResponse.json({ ok: true });
 }
