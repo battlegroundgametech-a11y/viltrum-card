@@ -4,19 +4,21 @@ import { useAccount, useDisconnect } from "wagmi";
 import { useEffect, useState } from "react";
 
 export default function WalletBadge() {
-  const { address, isConnected } = useAccount();
   const { disconnect } = useDisconnect();
+  const { address } = useAccount();
   const [wallet, setWallet] = useState("");
 
   useEffect(() => {
-    const addr = address || localStorage.getItem("viltrum_wallet");
+    const user = localStorage.getItem("viltrum_user");
+    const savedWallet = localStorage.getItem("viltrum_wallet");
 
-    if (addr) {
-      setWallet(`${addr.slice(0, 6)}...${addr.slice(-4)}`);
-    } else {
+    if (!user || !savedWallet) {
       setWallet("");
+      return;
     }
-  }, [address, isConnected]);
+
+    setWallet(`${savedWallet.slice(0, 6)}...${savedWallet.slice(-4)}`);
+  }, [address]);
 
   if (!wallet) return null;
 
