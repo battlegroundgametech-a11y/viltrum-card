@@ -10,27 +10,34 @@ export default function ConnectWalletPage() {
   const { isConnected, address } = useAccount();
 
   useEffect(() => {
-    async function saveWallet() {
-      const telegram_id = localStorage.getItem("viltrum_user");
+    const telegram_id = localStorage.getItem("viltrum_user");
 
-      if (!telegram_id) {
-        window.location.href = "/login";
-        return;
-      }
+    if (!telegram_id) {
+      window.location.href = "/login";
+    }
+  }, []);
 
-      if (isConnected && address) {
-        await supabase
-          .from("profiles")
-          .update({ wallet_address: address })
-          .eq("telegram_id", telegram_id);
+  async function useWallet() {
+    const telegram_id = localStorage.getItem("viltrum_user");
 
-        localStorage.setItem("viltrum_wallet", address);
-        window.location.href = "/purchase";
-      }
+    if (!telegram_id) {
+      window.location.href = "/login";
+      return;
     }
 
-    saveWallet();
-  }, [isConnected, address]);
+    if (!isConnected || !address) {
+      alert("Please connect your wallet first.");
+      return;
+    }
+
+    await supabase
+      .from("profiles")
+      .update({ wallet_address: address })
+      .eq("telegram_id", telegram_id);
+
+    localStorage.setItem("viltrum_wallet", address);
+    window.location.href = "/purchase";
+  }
 
   return (
     <main className="checkout-premium">
@@ -39,18 +46,25 @@ export default function ConnectWalletPage() {
       <div className="checkout-card-preview virtual-preview">
         <span>VILTRUM</span>
         <h2>Connect Wallet</h2>
-        <p>SEPOLIA • RAINBOWKIT • READY</p>
+        <p>SEPOLIA • WALLET • READY</p>
       </div>
 
       <div className="checkout-form-box text-center">
         <h1>Connect Wallet</h1>
+
         <p className="mt-3 text-white/60">
-          Connect your Sepolia wallet to continue to purchase.
+          Connect your wallet, then confirm it manually.
         </p>
 
         <div className="mt-8">
           <WalletConnect />
         </div>
+
+        {isConnected && address && (
+          <button onClick={useWallet} className="mt-6">
+            Use This Wallet
+          </button>
+        )}
       </div>
     </main>
   );
