@@ -119,7 +119,11 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ ok: true });
       }
 
-      if (order.status !== "approved" && order.status !== "active") {
+      if (
+  order.card_type === "physical" &&
+  order.status !== "approved" &&
+  order.status !== "active"
+) {
         await sendMessage(
           chatId,
           `💳 <b>Your Viltrum Card</b>\n\n` +
@@ -361,21 +365,41 @@ export async function POST(req: NextRequest) {
     verified: true
   });
 
-  await supabase
-    .from("orders")
-    .update({
-      telegram_id: telegramId,
-      telegram_username: username,
-      status: "verified"
-    })
-    .eq("id", accessCode.order_id);
+  const { data: currentOrder } = await supabase
+  .from("orders")
+  .select("card_type")
+  .eq("id", accessCode.order_id)
+  .single();
 
+await supabase
+  .from("orders")
+  .update({
+    telegram_id: telegramId,
+    telegram_username: username,
+    status:
+      currentOrder?.card_type === "physical"
+        ? "verified"
+        : "active"
+  })
+  .eq("id", accessCode.order_id);
+
+  if (currentOrder?.card_type === "physical") {
   await sendMessage(
     chatId,
     `✅ <b>Activation Successful</b>\n\n` +
-      `Welcome to <b>Viltrum Card</b>.\n\n` +
-      `Your order has been verified and is now waiting for admin approval.\n\n` +
-      `Once approved, you will receive a notification here automatically.`,
+      `Your physical card has been verified.\n\n` +
+      `It is now awaiting admin approval and shipment.`,
+    mainKeyboard()
+  );
+} else {
+  await sendMessage(
+    chatId,
+    `🎉 <b>Card Activated Successfully</b>\n\n` +
+      `Your ${currentOrder?.card_type} card is now ACTIVE.\n\n` +
+      `Open My Card to view it.`,
+    mainKeyboard()
+  );
+}
     mainKeyboard()
   );
 
