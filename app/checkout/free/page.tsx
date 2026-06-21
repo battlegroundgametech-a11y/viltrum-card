@@ -53,11 +53,25 @@ export default function FreeMintPage() {
   const data = await res.json();
 
   if (data.success) {
-    window.location.href =
-      `/success?order=${data.order_id}&secret=${data.secret_code}`;
+  if (Number(data.discount_amount || 0) > 0) {
+    alert(
+      `Coupon applied successfully.\n\n` +
+      `Original Price: $${data.original_price}\n` +
+      `Discount: $${data.discount_amount}\n` +
+      `Final Price: $${data.final_price}`
+    );
   } else {
-    alert(data.error || "Order failed");
+    alert(
+      `Order created successfully.\n\n` +
+      `Final Price: $${data.final_price}`
+    );
   }
+
+  window.location.href =
+    `/success?order=${data.order_id}&secret=${data.secret_code}`;
+} else {
+  alert(data.error || "Order failed");
+}
 
   setLoading(false);
 }
