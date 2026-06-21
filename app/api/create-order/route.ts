@@ -7,15 +7,118 @@ const supabase = createClient(
 );
 
 function makeSecretCode() {
-  const part1 = Math.random().toString(36).substring(2, 6).toUpperCase();
-  const part2 = Math.random().toString(36).substring(2, 6).toUpperCase();
-  const part3 = Math.random().toString(36).substring(2, 6).toUpperCase();
-  return `VT-${part1}-${part2}-${part3}`;
+  const a = Math.random().toString(36).substring(2, 6).toUpperCase();
+  const b = Math.random().toString(36).substring(2, 6).toUpperCase();
+  const c = Math.random().toString(36).substring(2, 6).toUpperCase();
+  return `VT-${a}-${b}-${c}`;
 }
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
+
+    const cardType = String(body.card_type || "").toLowerCase();
+    const wallet = String(body.wallet_address || "").toLowerCase();
+    const couponCode = String(body.coupon_code || "").trim().toUpperCase();
+
+    if (!["virtual", "physical", "free"].includes(cardType)) {
+      return NextResponse.json({ success: false, error: "Invalid card type" }, { status: 400 });
+    }
+
+    if (!wallet) {
+      return NextResponse.json({ success: false, error: "Wallet not connected" }, { status: 400 });
+    }
+
+    const [{ data: pricing }, { data: limits }, { data: inventory }] =
+      await Promise.all([
+        supabase.from("pricing").select("*").eq("id", 1).single(),
+        supabase.from("purchase_limits").select("*").eq("id", 1).single(),
+        supabase.from("card_inventory").select("*").eq("id", 1).single()
+      ]);
+
+    if (!pricing || !limits || !inventory) {
+      return NextResponse.json({ success: false, error: "Platform settings missing" }, { status: 400 });
+    }
+
+    const priceMap: any = {
+      virtual: Number(pricing.virtual_price),
+      physical: Number(pricing.physical_price),
+      free: Number(pricing.free_price)
+    };
+
+    const supplyMap: any = {
+      virtual: Number(inventory.virtual_supply),
+      physical: Number(inventory.physical_supply),
+      free: Number(inventory.free_supply)
+    };
+
+    const limitMap: any = {
+      virtual: Number(limits.virtual_limit_per_wallet),
+      physical: Number(limits.physical_limit_per_wallet),
+      free: Number(limits.free_limit_per_wallet)
+    };
+
+    if (supplyMap[cardType] <= 0) {
+      return NextResponse.json({ success: false, error: "This card type is sold out" }, { status: 400 });
+    }
+
+    const { count } = await supabase
+      .from("orders")
+      .select("*", { count: "exact", head: true })
+      .eq("wallet_address", wallet)
+      .eq("card_type", cardType);
+
+    if ((count || 0) >= limitMap[cardType]) {
+      return NextResponse.json(
+        { success: false, error: `Wallet limit reached for ${cardType} card` },
+        { status: 400 }
+      );
+    }
+
+    let originalPrice = priceMap[cardType];
+    let discountAmount = 0;
+    let finalPrice = originalPrice;
+    let appliedCouponId: string | null = null;
+
+    if (couponCode && cardType !== "free") {
+      const { data: coupon } = await supabase
+        .from("coupon_codes")
+        .select("*")
+        .eq("code", couponCode)
+        .eq("active", true)
+        .maybeSingle();
+
+      if (!coupon) {
+        return NextResponse.json({ success: false, error: "Invalid coupon code" }, { status: 400 });
+      }
+
+      if (coupon.expires_at && new Date(coupon.expires_at) < new Date()) {
+        return NextResponse.json({ success: false, error: "Coupon expired" }, { status: 400 });
+      }
+
+      if (Number(coupon.used_count) >= Number(coupon.max_uses)) {
+        return NextResponse.json({ success: false, error: "Coupon usage limit reached" }, { status: 400 });
+      }
+
+      if (cardType === "virtual" && !coupon.applies_virtual) {
+        return NextResponse.json({ success: false, error: "Coupon not valid for virtual card" }, { status: 400 });
+      }
+
+      if (cardType === "physical" && !coupon.applies_physical) {
+        return NextResponse.json({ success: false, error: "Coupon not valid for physical card" }, { status: 400 });
+      }
+
+      if (coupon.discount_type === "percent") {
+        discountAmount = originalPrice * (Number(coupon.discount_value) / 100);
+      } else {
+        discountAmount = Number(coupon.discount_value);
+      }
+
+      if (discountAmount > originalPrice) discountAmount = originalPrice;
+
+      finalPrice = originalPrice - discountAmount;
+      appliedCouponId = coupon.id;
+    }
 
     const secretCode = makeSecretCode();
     const orderId = `ORDER-${Date.now()}`;
@@ -26,14 +129,14 @@ export async function POST(req: NextRequest) {
         order_id: orderId,
         profile_id: body.profile_id || null,
         telegram_id: body.telegram_id || null,
-        wallet_address: body.wallet_address || "",
-        card_type: body.card_type,
+        wallet_address: wallet,
+        card_type: cardType,
         full_name: body.full_name || "",
         telegram_username: body.telegram_username || "",
         shipping_address: body.shipping_address || "",
         city: body.city || "",
         country: body.country || "",
-        coupon_code: body.coupon_code || "",
+        coupon_code: couponCode || "",
         secret_code: secretCode,
         status: "pending",
         shipment_status: "not_started",
@@ -43,31 +146,65 @@ export async function POST(req: NextRequest) {
       .single();
 
     if (orderError) {
-      return NextResponse.json(
-        { success: false, error: orderError.message },
-        { status: 400 }
-      );
+      return NextResponse.json({ success: false, error: orderError.message }, { status: 400 });
     }
 
-    const { error: codeError } = await supabase.from("access_codes").insert({
+    await supabase.from("access_codes").insert({
       code: secretCode,
       order_id: order.id,
       telegram_id: body.telegram_id || null,
-      card_type: body.card_type,
+      card_type: cardType,
       used: false
     });
 
-    if (codeError) {
-      return NextResponse.json(
-        { success: false, error: codeError.message },
-        { status: 400 }
-      );
+    if (cardType === "virtual") {
+      await supabase.from("card_inventory").update({
+        virtual_supply: supplyMap.virtual - 1
+      }).eq("id", 1);
     }
+
+    if (cardType === "physical") {
+      await supabase.from("card_inventory").update({
+        physical_supply: supplyMap.physical - 1
+      }).eq("id", 1);
+    }
+
+    if (cardType === "free") {
+      await supabase.from("card_inventory").update({
+        free_supply: supplyMap.free - 1
+      }).eq("id", 1);
+    }
+
+    if (appliedCouponId) {
+      const { data: couponNow } = await supabase
+        .from("coupon_codes")
+        .select("used_count")
+        .eq("id", appliedCouponId)
+        .single();
+
+      await supabase
+        .from("coupon_codes")
+        .update({ used_count: Number(couponNow?.used_count || 0) + 1 })
+        .eq("id", appliedCouponId);
+    }
+
+    await supabase.from("card_transactions").insert({
+      order_id: orderId,
+      wallet_address: wallet,
+      transaction_type: "purchase",
+      amount: finalPrice,
+      balance_after: 0,
+      tx_hash: body.tx_hash || ""
+    });
 
     return NextResponse.json({
       success: true,
       order_id: order.id,
-      secret_code: secretCode
+      display_order_id: orderId,
+      secret_code: secretCode,
+      original_price: originalPrice,
+      discount_amount: discountAmount,
+      final_price: finalPrice
     });
   } catch (err: any) {
     return NextResponse.json(
