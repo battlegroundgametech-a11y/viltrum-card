@@ -22,31 +22,43 @@ export default function VirtualCheckoutPage() {
   }, []);
 
   async function submitOrder(e: any) {
-    e.preventDefault();
+  e.preventDefault();
+  setLoading(true);
 
-    setLoading(true);
+  const wallet = localStorage.getItem("viltrum_wallet");
+  const telegramId = localStorage.getItem("viltrum_user");
 
-    const form = new FormData(e.target);
-
-    const res = await fetch("/api/create-order", {
-      method: "POST",
-      body: JSON.stringify({
-        card_type: "virtual",
-        full_name: form.get("full_name"),
-        telegram_username: form.get("telegram_username"),
-        coupon_code: form.get("coupon_code")
-      })
-    });
-
-    const data = await res.json();
-
-    if (data.success) {
-      window.location.href =
-        `/success?order=${data.order_id}&secret=${data.secret_code}`;
-    }
-
-    setLoading(false);
+  if (!wallet) {
+    alert("Please connect wallet first.");
+    window.location.href = "/connect-wallet";
+    return;
   }
+
+  const form = new FormData(e.target);
+
+  const res = await fetch("/api/create-order", {
+    method: "POST",
+    body: JSON.stringify({
+      card_type: "virtual",
+      full_name: form.get("full_name"),
+      telegram_username: form.get("telegram_username"),
+      coupon_code: form.get("coupon_code"),
+      wallet_address: wallet,
+      telegram_id: telegramId
+    })
+  });
+
+  const data = await res.json();
+
+  if (data.success) {
+    window.location.href =
+      `/success?order=${data.order_id}&secret=${data.secret_code}`;
+  } else {
+    alert(data.error || "Order failed");
+  }
+
+  setLoading(false);
+}
 
   return (
     <main className="checkout-premium">
