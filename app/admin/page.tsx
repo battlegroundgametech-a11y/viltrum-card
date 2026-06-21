@@ -341,6 +341,54 @@ export default function AdminPage() {
             </div>
 
             <div>
+  <span>Virtual Sales Enabled</span>
+  <select
+    value={settings.virtual_sales_enabled ? "true" : "false"}
+    onChange={(e) =>
+      setSettings({
+        ...settings,
+        virtual_sales_enabled: e.target.value === "true"
+      })
+    }
+  >
+    <option value="true">Enabled</option>
+    <option value="false">Disabled</option>
+  </select>
+</div>
+
+<div>
+  <span>Physical Sales Enabled</span>
+  <select
+    value={settings.physical_sales_enabled ? "true" : "false"}
+    onChange={(e) =>
+      setSettings({
+        ...settings,
+        physical_sales_enabled: e.target.value === "true"
+      })
+    }
+  >
+    <option value="true">Enabled</option>
+    <option value="false">Disabled</option>
+  </select>
+</div>
+
+<div>
+  <span>Free Mint Enabled</span>
+  <select
+    value={settings.free_mint_enabled ? "true" : "false"}
+    onChange={(e) =>
+      setSettings({
+        ...settings,
+        free_mint_enabled: e.target.value === "true"
+      })
+    }
+  >
+    <option value="true">Enabled</option>
+    <option value="false">Disabled</option>
+  </select>
+</div>
+
+            <div>
               <span>Min Deposit</span>
               <input value={settings.min_deposit} onChange={(e) => setSettings({ ...settings, min_deposit: e.target.value })} />
             </div>
@@ -546,7 +594,9 @@ export default function AdminPage() {
               </div>
             </div>
 
-            {order.status !== "approved" && order.status !== "active" ? (
+            {order.card_type === "physical" &&
+             order.status !== "approved" &&
+             order.status !== "active" ? (
               <button onClick={() => approveOrder(order)} className="approve-btn">
                 Approve Card
               </button>
