@@ -29,15 +29,28 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: "Wallet not connected" }, { status: 400 });
     }
 
-    const [{ data: pricing }, { data: limits }, { data: inventory }] =
+    const [{ data: settings }, { data: pricing }, { data: limits }, { data: inventory }] =
       await Promise.all([
+        supabase.from("platform_settings").select("*").eq("id", 1).single(),
         supabase.from("pricing").select("*").eq("id", 1).single(),
         supabase.from("purchase_limits").select("*").eq("id", 1).single(),
         supabase.from("card_inventory").select("*").eq("id", 1).single()
       ]);
 
-    if (!pricing || !limits || !inventory) {
+    if (!settings || !pricing || !limits || !inventory) {
       return NextResponse.json({ success: false, error: "Platform settings missing" }, { status: 400 });
+    }
+
+    if (cardType === "virtual" && !settings.virtual_sales_enabled) {
+      return NextResponse.json({ success: false, error: "Virtual card purchase is currently disabled" }, { status: 400 });
+    }
+
+    if (cardType === "physical" && !settings.physical_sales_enabled) {
+      return NextResponse.json({ success: false, error: "Physical card purchase is currently disabled" }, { status: 400 });
+    }
+
+    if (cardType === "free" && !settings.free_mint_enabled) {
+      return NextResponse.json({ success: false, error: "Free mint is currently disabled" }, { status: 400 });
     }
 
     const priceMap: any = {
@@ -123,6 +136,11 @@ export async function POST(req: NextRequest) {
     const secretCode = makeSecretCode();
     const orderId = `ORDER-${Date.now()}`;
 
+    const status =
+      cardType === "physical"
+        ? "pending"
+        : "approved";
+
     const { data: order, error: orderError } = await supabase
       .from("orders")
       .insert({
@@ -138,7 +156,7 @@ export async function POST(req: NextRequest) {
         country: body.country || "",
         coupon_code: couponCode || "",
         secret_code: secretCode,
-        status: "pending",
+        status,
         shipment_status: "not_started",
         tracking_note: ""
       })
@@ -157,23 +175,16 @@ export async function POST(req: NextRequest) {
       used: false
     });
 
-    if (cardType === "virtual") {
-      await supabase.from("card_inventory").update({
-        virtual_supply: supplyMap.virtual - 1
-      }).eq("id", 1);
-    }
+    const updateInventory: any = {};
 
-    if (cardType === "physical") {
-      await supabase.from("card_inventory").update({
-        physical_supply: supplyMap.physical - 1
-      }).eq("id", 1);
-    }
+    if (cardType === "virtual") updateInventory.virtual_supply = supplyMap.virtual - 1;
+    if (cardType === "physical") updateInventory.physical_supply = supplyMap.physical - 1;
+    if (cardType === "free") updateInventory.free_supply = supplyMap.free - 1;
 
-    if (cardType === "free") {
-      await supabase.from("card_inventory").update({
-        free_supply: supplyMap.free - 1
-      }).eq("id", 1);
-    }
+    await supabase
+      .from("card_inventory")
+      .update(updateInventory)
+      .eq("id", 1);
 
     if (appliedCouponId) {
       const { data: couponNow } = await supabase
@@ -204,7 +215,8 @@ export async function POST(req: NextRequest) {
       secret_code: secretCode,
       original_price: originalPrice,
       discount_amount: discountAmount,
-      final_price: finalPrice
+      final_price: finalPrice,
+      status
     });
   } catch (err: any) {
     return NextResponse.json(
