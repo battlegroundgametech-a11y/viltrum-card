@@ -376,14 +376,11 @@ await supabase
   .update({
     telegram_id: telegramId,
     telegram_username: username,
-    status:
-      currentOrder?.card_type === "physical"
-        ? "verified"
-        : "active"
+    status: currentOrder?.card_type === "physical" ? "verified" : "active"
   })
   .eq("id", accessCode.order_id);
 
-  if (currentOrder?.card_type === "physical") {
+if (currentOrder?.card_type === "physical") {
   await sendMessage(
     chatId,
     `✅ <b>Activation Successful</b>\n\n` +
@@ -400,8 +397,6 @@ await supabase
     mainKeyboard()
   );
 }
-    mainKeyboard()
-  );
 
   return NextResponse.json({ ok: true });
 }
