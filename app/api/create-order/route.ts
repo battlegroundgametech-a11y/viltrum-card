@@ -136,10 +136,7 @@ export async function POST(req: NextRequest) {
     const secretCode = makeSecretCode();
     const orderId = `ORDER-${Date.now()}`;
 
-    const status =
-      cardType === "physical"
-        ? "pending"
-        : "approved";
+    const status = "active";
 
     const { data: order, error: orderError } = await supabase
       .from("orders")
