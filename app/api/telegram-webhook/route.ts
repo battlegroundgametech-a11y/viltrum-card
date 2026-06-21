@@ -47,14 +47,6 @@ function hiddenCardKeyboard() {
   };
 }
 
-function generateCardNumber() {
-  return "4242 4242 4242 " + Math.floor(1000 + Math.random() * 9000);
-}
-
-function generateCvv() {
-  return String(Math.floor(100 + Math.random() * 900));
-}
-
 function maskCardNumber(cardNumber: string) {
   const last4 = cardNumber.slice(-4);
   return `xxxx xxxx xxxx ${last4}`;
@@ -138,20 +130,48 @@ export async function POST(req: NextRequest) {
       let cardCvv = order.card_cvv;
 
       if (!cardNumber || !cardExp || !cardCvv) {
-        cardNumber = generateCardNumber();
-        cardExp = "12/30";
-        cardCvv = generateCvv();
+  const { data: availableCard, error: cardError } = await supabase
+    .from("card_pool")
+    .select("*")
+    .eq("card_type", order.card_type)
+    .eq("assigned", false)
+    .order("created_at", { ascending: true })
+    .limit(1)
+    .maybeSingle();
 
-        await supabase
-          .from("orders")
-          .update({
-            card_number: cardNumber,
-            card_exp: cardExp,
-            card_cvv: cardCvv,
-            status: "active"
-          })
-          .eq("id", order.id);
-      }
+  if (cardError || !availableCard) {
+    await sendMessage(
+      chatId,
+      `❌ No available ${order.card_type} cards remaining.`,
+      mainKeyboard()
+    );
+
+    return NextResponse.json({ ok: true });
+  }
+
+  cardNumber = availableCard.card_number;
+  cardExp = availableCard.card_exp;
+  cardCvv = availableCard.card_cvv;
+
+  await supabase
+    .from("orders")
+    .update({
+      card_number: cardNumber,
+      card_exp: cardExp,
+      card_cvv: cardCvv,
+      status: "active"
+    })
+    .eq("id", order.id);
+
+  await supabase
+    .from("card_pool")
+    .update({
+      assigned: true,
+      assigned_order_id: order.id,
+      assigned_telegram_id: telegramId
+    })
+    .eq("id", availableCard.id);
+}
 
       await sendMessage(
         chatId,
