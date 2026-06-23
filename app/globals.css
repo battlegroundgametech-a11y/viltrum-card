@@ -2571,3 +2571,282 @@ body.light-mode .admin-grid select {
   color: #111;
   border-color: rgba(0,0,0,.12);
 }
+
+/* =========================
+   MANAGE CARD PAGE
+========================= */
+
+.manage-page {
+  min-height: 100vh;
+  background: #06070b;
+  color: white;
+  padding: 110px 20px 40px;
+}
+
+.manage-unlock {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.manage-unlock-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  padding: 30px;
+}
+
+.manage-eyebrow {
+  color: #f8b400;
+  margin-bottom: 10px;
+}
+
+.manage-unlock h1 {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.manage-unlock form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.manage-unlock input {
+  background: #111318;
+  border: 1px solid #222;
+  border-radius: 14px;
+  padding: 16px;
+  color: white;
+}
+
+.manage-unlock button {
+  background: linear-gradient(
+    90deg,
+    #ff4d00,
+    #f8b400
+  );
+  color: black;
+  font-weight: 700;
+  border: 0;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+/* Header */
+
+.manage-header {
+  max-width: 1200px;
+  margin: 0 auto 30px;
+}
+
+.manage-header p {
+  color: #f8b400;
+}
+
+.manage-header h1 {
+  font-size: 42px;
+  margin: 8px 0;
+}
+
+.manage-header span {
+  color: rgba(255,255,255,0.6);
+}
+
+/* Layout */
+
+.manage-bank-layout {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr;
+  gap: 24px;
+}
+
+/* Card */
+
+.manage-card {
+  background: linear-gradient(
+    135deg,
+    #11141c,
+    #191f2d
+  );
+  border-radius: 30px;
+  padding: 30px;
+  min-height: 240px;
+  border: 1px solid rgba(255,255,255,0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.manage-card::before {
+  content: "";
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  background: rgba(255,180,0,0.12);
+  border-radius: 50%;
+  top: -100px;
+  right: -60px;
+}
+
+.manage-card-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.manage-card-top span {
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.manage-card h2 {
+  margin-top: 30px;
+  margin-bottom: 24px;
+}
+
+.manage-card-number {
+  font-size: 28px;
+  letter-spacing: 4px;
+  margin-bottom: 40px;
+}
+
+.manage-card-bottom {
+  display: flex;
+  justify-content: space-between;
+}
+
+.manage-card-blur {
+  filter: blur(6px);
+}
+
+.inactive-card-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+  font-weight: 900;
+  color: #ff4d4d;
+}
+
+/* Balance Box */
+
+.manage-money-panel {
+  background: rgba(255,255,255,0.04);
+  border-radius: 24px;
+  padding: 30px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.manage-money-panel p {
+  color: rgba(255,255,255,0.6);
+}
+
+.manage-money-panel h2 {
+  font-size: 48px;
+  margin: 10px 0;
+}
+
+.manage-mini-stats {
+  display: grid;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.manage-mini-stats div {
+  background: rgba(255,255,255,0.05);
+  padding: 16px;
+  border-radius: 16px;
+}
+
+.manage-mini-stats small {
+  display: block;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 4px;
+}
+
+/* Status */
+
+.manage-status-box {
+  margin-top: 20px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 20px;
+  padding: 20px;
+}
+
+/* Actions */
+
+.manage-actions {
+  max-width: 1200px;
+  margin: 24px auto;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 16px;
+}
+
+.manage-actions button {
+  background: rgba(255,255,255,0.05);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 18px;
+  padding: 18px;
+  font-weight: 700;
+}
+
+/* Details */
+
+.manage-details {
+  max-width: 1200px;
+  margin: auto;
+  background: rgba(255,255,255,0.04);
+  border-radius: 24px;
+  padding: 24px;
+}
+
+.manage-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 16px;
+}
+
+.manage-detail-grid p {
+  background: rgba(255,255,255,0.05);
+  padding: 16px;
+  border-radius: 16px;
+}
+
+.manage-detail-grid span {
+  display: block;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 8px;
+}
+
+/* Mobile */
+
+@media (max-width: 900px) {
+  .manage-bank-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .manage-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .manage-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .manage-header h1 {
+    font-size: 32px;
+  }
+
+  .manage-card-number {
+    font-size: 20px;
+  }
+
+  .manage-money-panel h2 {
+    font-size: 36px;
+  }
+}
