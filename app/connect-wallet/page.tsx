@@ -1,23 +1,37 @@
 "use client";
 
 import { useAccount } from "wagmi";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
 import WalletConnect from "../../components/WalletConnect";
 import HamburgerMenu from "../../components/HamburgerMenu";
 
 export default function ConnectWalletPage() {
   const { isConnected, address } = useAccount();
+  const [hasOrders, setHasOrders] = useState(false);
 
   useEffect(() => {
     const telegram_id = localStorage.getItem("viltrum_user");
 
     if (!telegram_id) {
       window.location.href = "/login";
+      return;
     }
+
+    async function checkOldOrders() {
+      const { data } = await supabase
+        .from("orders")
+        .select("id")
+        .eq("telegram_id", telegram_id)
+        .limit(1);
+
+      setHasOrders(!!data && data.length > 0);
+    }
+
+    checkOldOrders();
   }, []);
 
-  async function useWallet() {
+  async function saveWallet() {
     const telegram_id = localStorage.getItem("viltrum_user");
 
     if (!telegram_id) {
@@ -36,7 +50,16 @@ export default function ConnectWalletPage() {
       .eq("telegram_id", telegram_id);
 
     localStorage.setItem("viltrum_wallet", address);
+  }
+
+  async function useWallet() {
+    await saveWallet();
     window.location.href = "/purchase";
+  }
+
+  async function manageCards() {
+    await saveWallet();
+    window.location.href = "/manage-card";
   }
 
   return (
@@ -53,7 +76,7 @@ export default function ConnectWalletPage() {
         <h1>Connect Wallet</h1>
 
         <p className="mt-3 text-white/60">
-          Connect your wallet, then confirm it manually.
+          Connect your wallet, then choose what you want to do.
         </p>
 
         <div className="mt-8">
@@ -61,9 +84,17 @@ export default function ConnectWalletPage() {
         </div>
 
         {isConnected && address && (
-          <button onClick={useWallet} className="mt-6">
-            Use This Wallet
-          </button>
+          <div className="mt-6 flex flex-col gap-4">
+            <button onClick={useWallet}>
+              Use Wallet
+            </button>
+
+            {hasOrders && (
+              <button onClick={manageCards}>
+                Manage Cards
+              </button>
+            )}
+          </div>
         )}
       </div>
     </main>
