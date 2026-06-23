@@ -12,12 +12,35 @@ export default function ManageCardPage() {
   const [activeModal, setActiveModal] = useState("");
 
   useEffect(() => {
-    const user = localStorage.getItem("viltrum_user");
+  const user = localStorage.getItem("viltrum_user");
 
-    if (!user) {
-      window.location.href = "/login";
-    }
-  }, []);
+  if (!user) {
+    window.location.href = "/login";
+    return;
+  }
+
+  const savedSecret = localStorage.getItem("viltrum_manage_secret");
+
+  if (savedSecret) {
+    setSecret(savedSecret);
+
+    fetch("/api/manage-card/verify", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        secret_code: savedSecret
+      })
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setOrder(data.order);
+        }
+      });
+  }
+}, []);
 
   async function unlockCard(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -42,7 +65,11 @@ export default function ManageCardPage() {
     }
 
     setOrder(data.order);
-    setLoading(false);
+
+localStorage.setItem("viltrum_manage_order_id", data.order.id);
+localStorage.setItem("viltrum_manage_secret", secret);
+
+setLoading(false);
   }
 
   function depositAction() {
