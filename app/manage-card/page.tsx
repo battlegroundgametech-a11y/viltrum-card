@@ -9,6 +9,7 @@ export default function ManageCardPage() {
   const [order, setOrder] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
+  const [activeModal, setActiveModal] = useState("");
 
   useEffect(() => {
     const user = localStorage.getItem("viltrum_user");
@@ -200,46 +201,126 @@ export default function ManageCardPage() {
     </button>
   )}
 
-  <button onClick={depositAction}>
+  <button onClick={() => setActiveModal("deposit")}>
     Deposit
   </button>
 
   {!(isFree && order.status !== "active") && (
-    <button onClick={() => alert("Withdraw will connect to your vault contract.")}>
+    <button onClick={() => setActiveModal("withdraw")}>
       Withdraw
     </button>
   )}
 
   {!(isFree && order.status !== "active") && (
-    <button onClick={() => alert("Balance: $0.00")}>
+    <button onClick={() => setActiveModal("balance")}>
       Check Balance
     </button>
   )}
 
   {!(isFree && order.status !== "active") && (
-    <button onClick={() => alert("Transaction history will be shown here.")}>
+    <button onClick={() => setActiveModal("transactions")}>
       Transaction History
     </button>
   )}
 
   {isPhysical && (
-    <button
-      onClick={() =>
-        alert(
-          `Shipment Status: ${order.shipment_status || "Not started"}\n\n` +
-            `${order.tracking_note || "Tracking details will appear here once available."}`
-        )
-      }
-    >
+    <button onClick={() => setActiveModal("shipment")}>
       Track Shipment
     </button>
   )}
 
-  <button onClick={() => alert("Support system will be added here.")}>
+  <button onClick={() => setActiveModal("support")}>
     Help & Support
   </button>
 </section>
 
+     {activeModal && (
+  <div className="manage-modal-backdrop">
+    <div className="manage-modal">
+      <button
+        className="manage-modal-close"
+        onClick={() => setActiveModal("")}
+      >
+        ×
+      </button>
+
+      {activeModal === "deposit" && (
+        <>
+          <h2>Deposit</h2>
+          <p>
+            Deposits will connect to your Viltrum vault contract.
+          </p>
+
+          {isFree && order.status !== "active" && (
+            <div className="manage-modal-note">
+              Deposit request received. Please wait up to 2 hours while your
+              activation request is verified and processed.
+            </div>
+          )}
+
+          <button onClick={() => setActiveModal("")}>
+            Continue
+          </button>
+        </>
+      )}
+
+      {activeModal === "withdraw" && (
+        <>
+          <h2>Withdraw</h2>
+          <p>
+            Withdrawals will connect to your Viltrum vault contract.
+          </p>
+          <button onClick={() => setActiveModal("")}>
+            Continue
+          </button>
+        </>
+      )}
+
+      {activeModal === "balance" && (
+        <>
+          <h2>Card Balance</h2>
+          <p className="manage-modal-balance">$0.00</p>
+          <span>Vault contract balance will appear here.</span>
+        </>
+      )}
+
+      {activeModal === "transactions" && (
+        <>
+          <h2>Transaction History</h2>
+          <div className="manage-tx-empty">
+            No transactions yet.
+          </div>
+        </>
+      )}
+
+      {activeModal === "shipment" && (
+        <>
+          <h2>Shipment Tracking</h2>
+          <p>
+            <b>Status:</b> {order.shipment_status || "Not started"}
+          </p>
+          <p>
+            {order.tracking_note ||
+              "Tracking details will appear here once available."}
+          </p>
+        </>
+      )}
+
+      {activeModal === "support" && (
+        <>
+          <h2>Help & Support</h2>
+          <p>
+            For support, contact the Viltrum support team with your Order ID.
+          </p>
+          <div className="manage-modal-note">
+            Order ID: {order.order_id}
+          </div>
+        </>
+      )}
+    </div>
+  </div>
+)}
+      
       {showDetails && (
         <section className="manage-details">
           <h2>Card Details</h2>
