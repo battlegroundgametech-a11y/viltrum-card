@@ -194,30 +194,51 @@ export default function ManageCardPage() {
       </section>
 
       <section className="manage-actions">
-        <button onClick={() => setShowDetails(!showDetails)}>
-          {showDetails ? "Hide Details" : "Card Details"}
-        </button>
+  {!(isFree && order.status !== "active") && (
+    <button onClick={() => setShowDetails(!showDetails)}>
+      {showDetails ? "Hide Details" : "Card Details"}
+    </button>
+  )}
 
-        <button onClick={depositAction}>
-          Deposit
-        </button>
+  <button onClick={depositAction}>
+    Deposit
+  </button>
 
-        <button onClick={() => alert("Withdraw will connect to your vault contract.")}>
-          Withdraw
-        </button>
+  {!(isFree && order.status !== "active") && (
+    <button onClick={() => alert("Withdraw will connect to your vault contract.")}>
+      Withdraw
+    </button>
+  )}
 
-        <button onClick={() => alert("Balance: $0.00")}>
-          Check Balance
-        </button>
+  {!(isFree && order.status !== "active") && (
+    <button onClick={() => alert("Balance: $0.00")}>
+      Check Balance
+    </button>
+  )}
 
-        <button onClick={() => alert("Transaction history will be shown here.")}>
-          Transaction History
-        </button>
+  {!(isFree && order.status !== "active") && (
+    <button onClick={() => alert("Transaction history will be shown here.")}>
+      Transaction History
+    </button>
+  )}
 
-        <button onClick={() => alert("Support system will be added here.")}>
-          Help & Support
-        </button>
-      </section>
+  {isPhysical && (
+    <button
+      onClick={() =>
+        alert(
+          `Shipment Status: ${order.shipment_status || "Not started"}\n\n` +
+            `${order.tracking_note || "Tracking details will appear here once available."}`
+        )
+      }
+    >
+      Track Shipment
+    </button>
+  )}
+
+  <button onClick={() => alert("Support system will be added here.")}>
+    Help & Support
+  </button>
+</section>
 
       {showDetails && (
         <section className="manage-details">
