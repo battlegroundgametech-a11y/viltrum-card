@@ -9,8 +9,6 @@ function SuccessContent() {
   const secret = params.get("secret");
   const [showSecret, setShowSecret] = useState(false);
 
-  const botName = process.env.NEXT_PUBLIC_TELEGRAM_BOT_NAME || "";
-
   return (
     <main className="v-home flex min-h-screen items-center justify-center px-5 py-24 text-white">
       <div className="max-w-xl rounded-[36px] border border-white/10 bg-white/[0.07] p-8 text-center backdrop-blur-xl">
@@ -47,14 +45,14 @@ function SuccessContent() {
         </div>
 
         <a
-          href={`https://t.me/${botName}`}
+          href="/manage-card"
           className="mt-8 inline-block w-full rounded-2xl bg-gradient-to-r from-red-600 to-yellow-400 p-4 font-black text-black"
         >
-          Open Telegram Bot
+          Manage Card
         </a>
 
         <p className="mt-4 text-sm text-white/45">
-          Send this secret code to the bot to view your order status.
+          Use your secret code to unlock your card dashboard.
         </p>
       </div>
     </main>
