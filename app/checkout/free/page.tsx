@@ -3,9 +3,19 @@
 import HamburgerMenu from "../../../components/HamburgerMenu";
 import WalletBadge from "../../../components/WalletBadge";
 import { useEffect, useState } from "react";
+import { useWriteContract, useReadContract } from "wagmi";
+import { FREE_MINT_ADDRESS, FREE_MINT_ABI } from "../../../lib/freeMintContract";
 
 export default function FreeMintPage() {
   const [loading, setLoading] = useState(false);
+
+const { writeContractAsync } = useWriteContract();
+
+const { data: mintEnabled } = useReadContract({
+  address: FREE_MINT_ADDRESS as `0x${string}`,
+  abi: FREE_MINT_ABI,
+  functionName: "freeMintEnabled"
+});
 
   useEffect(() => {
     const user = localStorage.getItem("viltrum_user");
@@ -36,6 +46,31 @@ export default function FreeMintPage() {
 
   const form = new FormData(e.target);
 
+  if (!mintEnabled) {
+  alert("Free mint is currently disabled.");
+  setLoading(false);
+  return;
+}
+
+try {
+  await writeContractAsync({
+    address: FREE_MINT_ADDRESS as `0x${string}`,
+    abi: FREE_MINT_ABI,
+    functionName: "freeMint"
+  });
+
+  alert("NFT minted successfully.");
+} catch (err) {
+  console.error(err);
+
+  alert(
+    "Mint failed.\n\nYou may already have minted your NFT or the transaction was rejected."
+  );
+
+  setLoading(false);
+  return;
+}
+    
   const res = await fetch("/api/create-order", {
     method: "POST",
     headers: {
