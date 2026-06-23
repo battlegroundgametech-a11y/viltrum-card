@@ -44,27 +44,43 @@ export default function ManageCardPage() {
     setLoading(false);
   }
 
+  function depositAction() {
+    if (order?.card_type === "free" && order?.status !== "active") {
+      alert(
+        "Deposit request received.\n\nPlease wait up to 2 hours while your activation request is verified and processed."
+      );
+      return;
+    }
+
+    alert("Deposit will connect to your vault contract.");
+  }
+
   if (!order) {
     return (
       <main className="manage-page">
         <HamburgerMenu />
 
         <div className="manage-unlock">
-          <h1>Manage My Card</h1>
-          <p>Enter your secret code to unlock your card dashboard.</p>
+          <div className="manage-unlock-card">
+            <p className="manage-eyebrow">Viltrum Secure Access</p>
+            <h1>Manage My Card</h1>
+            <p>
+              Enter your secret code to unlock your private card dashboard.
+            </p>
 
-          <form onSubmit={unlockCard}>
-            <input
-              value={secret}
-              onChange={(e) => setSecret(e.target.value)}
-              placeholder="Enter Secret Code"
-              required
-            />
+            <form onSubmit={unlockCard}>
+              <input
+                value={secret}
+                onChange={(e) => setSecret(e.target.value)}
+                placeholder="Enter Secret Code"
+                required
+              />
 
-            <button disabled={loading}>
-              {loading ? "Checking..." : "Unlock Card"}
-            </button>
-          </form>
+              <button disabled={loading}>
+                {loading ? "Checking..." : "Unlock Card"}
+              </button>
+            </form>
+          </div>
         </div>
       </main>
     );
@@ -73,6 +89,10 @@ export default function ManageCardPage() {
   const isFree = order.card_type === "free";
   const isPhysical = order.card_type === "physical";
   const isVirtual = order.card_type === "virtual";
+  const isInactiveFree = isFree && order.status !== "active";
+
+  const maskedNumber =
+    "**** **** **** " + String(order.card_number || "0000").slice(-4);
 
   return (
     <main className="manage-page">
@@ -82,88 +102,107 @@ export default function ManageCardPage() {
       <section className="manage-header">
         <p>Viltrum Banking Console</p>
         <h1>Manage My Card</h1>
+        <span>Private card controls secured by your secret code.</span>
       </section>
 
-      <section className="manage-card-wrap">
-        <div
-          className={`manage-card ${
-            isFree ? "manage-card-blur" : ""
-          }`}
-        >
-          <span>VILTRUM</span>
+      <section className="manage-bank-layout">
+        <div className="manage-card-panel">
+          <div
+            className={`manage-card ${
+              isInactiveFree ? "manage-card-blur" : ""
+            }`}
+          >
+            <div className="manage-card-top">
+              <span>VILTRUM</span>
+              <small>{order.status || "active"}</small>
+            </div>
 
-          <h2>
-            {isVirtual && "Virtual Card"}
-            {isPhysical && "Physical Card"}
-            {isFree && "Free Mint Card"}
-          </h2>
+            <h2>
+              {isVirtual && "Virtual Card"}
+              {isPhysical && "Physical Card"}
+              {isFree && "Free Mint Card"}
+            </h2>
 
-          <p className="manage-card-number">
-            {showDetails && order.card_number
-              ? order.card_number
-              : "**** **** **** " +
-                String(order.card_number || "0000").slice(-4)}
-          </p>
+            <p className="manage-card-number">
+              {showDetails && order.card_number
+                ? order.card_number
+                : maskedNumber}
+            </p>
 
-          <div className="manage-card-bottom">
-            <b>{order.full_name || "Card Holder"}</b>
-            <b>
-              {showDetails && order.card_exp
-                ? order.card_exp
-                : "**/**"}
-            </b>
+            <div className="manage-card-bottom">
+              <b>{order.full_name || "Card Holder"}</b>
+              <b>
+                {showDetails && order.card_exp ? order.card_exp : "**/**"}
+              </b>
+            </div>
+
+            {isInactiveFree && (
+              <div className="inactive-card-label">
+                INACTIVE
+              </div>
+            )}
           </div>
+
+          {isPhysical && (
+            <div className="manage-status-box">
+              <h2>
+                {order.status === "active"
+                  ? "Card Approved"
+                  : "Card Request Submitted"}
+              </h2>
+              <p>
+                {order.status === "active"
+                  ? "Dispatching soon."
+                  : "Your physical card request has been submitted."}
+              </p>
+            </div>
+          )}
+
+          {isFree && (
+            <div className="manage-status-box">
+              <h2>
+                {order.status === "active"
+                  ? "Free Card Active"
+                  : "Card Inactive"}
+              </h2>
+              <p>
+                {order.status === "active"
+                  ? "Your free mint card is active and ready."
+                  : "Deposit the minimum required balance to activate this card."}
+              </p>
+            </div>
+          )}
         </div>
 
-        {isPhysical && (
-          <div className="manage-status-box">
-            <h2>
-              {order.status === "active"
-                ? "Card Approved"
-                : "Card Request Submitted"}
-            </h2>
-            <p>
-              {order.status === "active"
-                ? "Dispatching soon."
-                : "Your physical card request is being processed."}
-            </p>
-          </div>
-        )}
+        <div className="manage-money-panel">
+          <p>Current Balance</p>
+          <h2>$0.00</h2>
+          <span>Vault contract balance will appear here.</span>
 
-        {isFree && (
-          <div className="manage-status-box">
-            <h2>
-              {order.status === "active"
-                ? "Free Card Active"
-                : "Card Inactive"}
-            </h2>
-            <p>
-              {order.status === "active"
-                ? "Your free mint card is active."
-                : "Deposit the minimum required balance to activate this card."}
-            </p>
+          <div className="manage-mini-stats">
+            <div>
+              <small>Total Deposits</small>
+              <b>$0.00</b>
+            </div>
+
+            <div>
+              <small>Total Withdrawals</small>
+              <b>$0.00</b>
+            </div>
           </div>
-        )}
+        </div>
       </section>
 
       <section className="manage-actions">
         <button onClick={() => setShowDetails(!showDetails)}>
-          Card Details
+          {showDetails ? "Hide Details" : "Card Details"}
         </button>
 
-        <button
-          onClick={() =>
-            alert("Deposit will connect to your vault contract.")
-          }
-        >
+        <button onClick={depositAction}>
           Deposit
         </button>
 
-        <button
-          onClick={() =>
-            alert("Withdraw will connect to your vault contract.")
-          }
-        >
+        <button onClick={() => alert("Withdraw will connect to your vault contract.")}>
           Withdraw
         </button>
 
@@ -171,19 +210,11 @@ export default function ManageCardPage() {
           Check Balance
         </button>
 
-        <button
-          onClick={() =>
-            alert("Transaction history will be shown here.")
-          }
-        >
+        <button onClick={() => alert("Transaction history will be shown here.")}>
           Transaction History
         </button>
 
-        <button
-          onClick={() =>
-            alert("Support system will be added here.")
-          }
-        >
+        <button onClick={() => alert("Support system will be added here.")}>
           Help & Support
         </button>
       </section>
@@ -191,10 +222,28 @@ export default function ManageCardPage() {
       {showDetails && (
         <section className="manage-details">
           <h2>Card Details</h2>
-          <p>Card Number: {order.card_number || "Not assigned"}</p>
-          <p>Expiry: {order.card_exp || "Not assigned"}</p>
-          <p>CVV: {order.card_cvv || "***"}</p>
-          <p>Status: {order.status}</p>
+
+          <div className="manage-detail-grid">
+            <p>
+              <span>Card Number</span>
+              <b>{order.card_number || "Not assigned"}</b>
+            </p>
+
+            <p>
+              <span>Expiry</span>
+              <b>{order.card_exp || "Not assigned"}</b>
+            </p>
+
+            <p>
+              <span>CVV</span>
+              <b>{order.card_cvv || "***"}</b>
+            </p>
+
+            <p>
+              <span>Status</span>
+              <b>{order.status}</b>
+            </p>
+          </div>
         </section>
       )}
     </main>
