@@ -3,6 +3,13 @@
 import { useEffect, useState } from "react";
 import HamburgerMenu from "../../components/HamburgerMenu";
 import WalletBadge from "../../components/WalletBadge";
+import { useAccount, useReadContract, useWriteContract } from "wagmi";
+import { parseEther, formatEther } from "viem";
+import {
+  VAULT_BANK_ADDRESS,
+  VAULT_BANK_ABI,
+  getCardTypeId
+} from "../../lib/vaultBank";
 
 export default function ManageCardPage() {
   const [secret, setSecret] = useState("");
@@ -10,7 +17,19 @@ export default function ManageCardPage() {
   const [loading, setLoading] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [activeModal, setActiveModal] = useState("");
+  const { address } = useAccount();
+  const { writeContractAsync } = useWriteContract();
+
+  const cardTypeId = order ? getCardTypeId(order.card_type) : 1;
+
+  const { data: vaultBalance, refetch: refetchBalance } = useReadContract({
+  address: VAULT_BANK_ADDRESS,
+  abi: VAULT_BANK_ABI,
+  functionName: "getBalance",
+  args: address && order ? [address, cardTypeId] : undefined
+});
   const [transactions, setTransactions] = useState<any[]>([]);
+  
 
   useEffect(() => {
   const user = localStorage.getItem("viltrum_user");
@@ -82,16 +101,58 @@ if (txData.success) {
 setLoading(false);
   }
 
-  function depositAction() {
-    if (order?.card_type === "free" && order?.status !== "active") {
-      alert(
-        "Deposit request received.\n\nPlease wait up to 2 hours while your activation request is verified and processed."
-      );
-      return;
-    }
-
-    alert("Deposit will connect to your vault contract.");
+  async function depositAction() {
+  if (!order || !address) {
+    alert("Connect wallet first.");
+    return;
   }
+
+  const amount = prompt("Enter deposit amount in ETH");
+
+  if (!amount) return;
+
+  try {
+    await writeContractAsync({
+      address: VAULT_BANK_ADDRESS,
+      abi: VAULT_BANK_ABI,
+      functionName: "deposit",
+      args: [getCardTypeId(order.card_type)],
+      value: parseEther(amount)
+    });
+
+    alert("Deposit successful.");
+    refetchBalance();
+    setActiveModal("");
+  } catch (err: any) {
+    alert(err?.shortMessage || err?.message || "Deposit failed");
+  }
+}
+
+  async function withdrawAction() {
+  if (!order || !address) {
+    alert("Connect wallet first.");
+    return;
+  }
+
+  const amount = prompt("Enter withdrawal amount in ETH");
+
+  if (!amount) return;
+
+  try {
+    await writeContractAsync({
+      address: VAULT_BANK_ADDRESS,
+      abi: VAULT_BANK_ABI,
+      functionName: "withdraw",
+      args: [getCardTypeId(order.card_type), parseEther(amount)]
+    });
+
+    alert("Withdrawal successful.");
+    refetchBalance();
+    setActiveModal("");
+  } catch (err: any) {
+    alert(err?.shortMessage || err?.message || "Withdrawal failed");
+  }
+}
 
   if (!order) {
     return (
@@ -214,7 +275,9 @@ setLoading(false);
 
         <div className="manage-money-panel">
           <p>Current Balance</p>
-          <h2>$0.00</h2>
+          <h2>
+  {vaultBalance ? `${formatEther(vaultBalance)} ETH` : "0 ETH"}
+</h2>
           <span>Vault contract balance will appear here.</span>
 
           <div className="manage-mini-stats">
@@ -295,9 +358,9 @@ setLoading(false);
             </div>
           )}
 
-          <button onClick={() => setActiveModal("")}>
-            Continue
-          </button>
+          <button onClick={depositAction}>
+  Deposit Now
+</button>
         </>
       )}
 
@@ -307,16 +370,19 @@ setLoading(false);
           <p>
             Withdrawals will connect to your Viltrum vault contract.
           </p>
-          <button onClick={() => setActiveModal("")}>
-            Continue
-          </button>
+          <button onClick={withdrawAction}>
+  Withdraw Now
+</button>
+          
         </>
       )}
 
       {activeModal === "balance" && (
         <>
           <h2>Card Balance</h2>
-          <p className="manage-modal-balance">$0.00</p>
+          <p className="manage-modal-balance">
+  {vaultBalance ? `${formatEther(vaultBalance)} ETH` : "0 ETH"}
+</p>
           <span>Vault contract balance will appear here.</span>
         </>
       )}
