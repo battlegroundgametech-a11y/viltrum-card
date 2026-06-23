@@ -17,6 +17,7 @@ export default function ManageCardPage() {
   const [loading, setLoading] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [activeModal, setActiveModal] = useState("");
+  const [unlockedCards, setUnlockedCards] = useState<any[]>([]);
   const { address } = useAccount();
   const { writeContractAsync } = useWriteContract<any>();
 
