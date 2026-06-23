@@ -1,7 +1,7 @@
 export const VAULT_BANK_ADDRESS =
   "0xBe8582a58312146a1CD2AE430FF0D3200D3AFC1c";
 
-export const VAULT_BANK_ABI = [
+export const VAULT_BANK_ABI: any = [
   {
     inputs: [{ internalType: "enum ViltrumVaultBank.CardType", name: "cardType", type: "uint8" }],
     name: "deposit",
@@ -43,7 +43,7 @@ export const VAULT_BANK_ABI = [
     stateMutability: "view",
     type: "function"
   }
-] as const;
+];
 
 export function getCardTypeId(cardType: string) {
   if (cardType === "free") return 0;
