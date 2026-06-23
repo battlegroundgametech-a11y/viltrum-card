@@ -45,7 +45,7 @@ function SuccessContent() {
         </div>
 
         <a
-          href="/manage-card"
+          href="/manage-card?new=1"
           className="mt-8 inline-block w-full rounded-2xl bg-gradient-to-r from-red-600 to-yellow-400 p-4 font-black text-black"
         >
           Manage Card
