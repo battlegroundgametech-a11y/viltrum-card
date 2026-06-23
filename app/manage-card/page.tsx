@@ -10,6 +10,7 @@ export default function ManageCardPage() {
   const [loading, setLoading] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [activeModal, setActiveModal] = useState("");
+  const [transactions, setTransactions] = useState<any[]>([]);
 
   useEffect(() => {
   const user = localStorage.getItem("viltrum_user");
@@ -68,6 +69,15 @@ export default function ManageCardPage() {
 
 localStorage.setItem("viltrum_manage_order_id", data.order.id);
 localStorage.setItem("viltrum_manage_secret", secret);
+    const txRes = await fetch(
+  `/api/manage-card/transactions?order_id=${data.order.id}`
+);
+
+const txData = await txRes.json();
+
+if (txData.success) {
+  setTransactions(txData.transactions || []);
+}
 
 setLoading(false);
   }
@@ -312,13 +322,34 @@ setLoading(false);
       )}
 
       {activeModal === "transactions" && (
-        <>
-          <h2>Transaction History</h2>
-          <div className="manage-tx-empty">
-            No transactions yet.
+  <>
+    <h2>Transaction History</h2>
+
+    {transactions.length === 0 ? (
+      <div className="manage-tx-empty">
+        No transactions yet.
+      </div>
+    ) : (
+      <div className="manage-tx-list">
+        {transactions.map((tx) => (
+          <div
+            key={tx.id}
+            className="manage-tx-item"
+          >
+            <div>
+              <b>{tx.type}</b>
+              <p>{tx.status}</p>
+            </div>
+
+            <div>
+              ${tx.amount}
+            </div>
           </div>
-        </>
-      )}
+        ))}
+      </div>
+    )}
+  </>
+)}
 
       {activeModal === "shipment" && (
         <>
