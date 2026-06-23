@@ -276,7 +276,9 @@ setLoading(false);
         <div className="manage-money-panel">
           <p>Current Balance</p>
           <h2>
-  {vaultBalance ? `${formatEther(vaultBalance)} ETH` : "0 ETH"}
+  {vaultBalance
+    ? `${formatEther(vaultBalance as bigint)} ETH`
+    : "0 ETH"}
 </h2>
           <span>Vault contract balance will appear here.</span>
 
@@ -381,7 +383,9 @@ setLoading(false);
         <>
           <h2>Card Balance</h2>
           <p className="manage-modal-balance">
-  {vaultBalance ? `${formatEther(vaultBalance)} ETH` : "0 ETH"}
+  {vaultBalance
+    ? `${formatEther(vaultBalance as bigint)} ETH`
+    : "0 ETH"}
 </p>
           <span>Vault contract balance will appear here.</span>
         </>
