@@ -31,8 +31,7 @@ export default function ManageCardPage() {
 });
   const [transactions, setTransactions] = useState<any[]>([]);
   
-
-  useEffect(() => {
+useEffect(() => {
   const user = localStorage.getItem("viltrum_user");
 
   if (!user) {
@@ -43,20 +42,29 @@ export default function ManageCardPage() {
   const params = new URLSearchParams(window.location.search);
   const isNewUnlock = params.get("new") === "1";
 
-  const savedCards = JSON.parse(
-    localStorage.getItem("viltrum_unlocked_cards") || "[]"
-  );
+  fetch("/api/manage-card/my-cards", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      telegram_id: user
+    })
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.success) {
+        setUnlockedCards(data.cards || []);
 
-  setUnlockedCards(savedCards);
+        if (!isNewUnlock && data.cards?.length === 1) {
+          setOrder(data.cards[0]);
+        }
+      }
+    });
 
   if (isNewUnlock) {
     setOrder(null);
     setSecret("");
-    return;
-  }
-
-  if (savedCards.length === 1) {
-    setOrder(savedCards[0]);
   }
 }, []);
 
