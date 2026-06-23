@@ -38,6 +38,25 @@ export default function ManageCardPage() {
     window.location.href = "/login";
     return;
   }
+
+  const params = new URLSearchParams(window.location.search);
+  const isNewUnlock = params.get("new") === "1";
+
+  const savedCards = JSON.parse(
+    localStorage.getItem("viltrum_unlocked_cards") || "[]"
+  );
+
+  setUnlockedCards(savedCards);
+
+  if (isNewUnlock) {
+    setOrder(null);
+    setSecret("");
+    return;
+  }
+
+  if (savedCards.length === 1) {
+    setOrder(savedCards[0]);
+  }
 }, []);
 
   async function unlockCard(e: React.FormEvent<HTMLFormElement>) {
@@ -80,6 +99,8 @@ localStorage.setItem(
   "viltrum_unlocked_cards",
   JSON.stringify(updatedCards)
 );
+
+setUnlockedCards(updatedCards);
 
 localStorage.setItem(
   "viltrum_selected_card",
@@ -152,35 +173,63 @@ setLoading(false);
 }
 
   if (!order) {
-    return (
-      <main className="manage-page">
-        <HamburgerMenu />
+  return (
+    <main className="manage-page">
+      <HamburgerMenu />
 
+      {unlockedCards.length > 0 && (
         <div className="manage-unlock">
           <div className="manage-unlock-card">
-            <p className="manage-eyebrow">Viltrum Secure Access</p>
-            <h1>Manage My Card</h1>
-            <p>
-              Enter your secret code to unlock your private card dashboard.
-            </p>
+            <p className="manage-eyebrow">Viltrum Cards</p>
+            <h1>Your Cards</h1>
+            <p>Select a card to manage or unlock a new card below.</p>
 
-            <form onSubmit={unlockCard}>
-              <input
-                value={secret}
-                onChange={(e) => setSecret(e.target.value)}
-                placeholder="Enter Secret Code"
-                required
-              />
-
-              <button disabled={loading}>
-                {loading ? "Checking..." : "Unlock Card"}
-              </button>
-            </form>
+            <div className="manage-card-list">
+              {unlockedCards.map((card: any) => (
+                <button
+                  key={card.id}
+                  onClick={() => {
+                    setOrder(card);
+                    localStorage.setItem(
+                      "viltrum_selected_card",
+                      JSON.stringify(card)
+                    );
+                  }}
+                  className="manage-card-list-item"
+                >
+                  <span>{card.card_type}</span>
+                  <b>{card.order_id}</b>
+                  <small>{card.status}</small>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
-      </main>
-    );
-  }
+      )}
+
+      <div className="manage-unlock">
+        <div className="manage-unlock-card">
+          <p className="manage-eyebrow">Viltrum Secure Access</p>
+          <h1>Unlock New Card</h1>
+          <p>Enter your secret code once to add this card to your dashboard.</p>
+
+          <form onSubmit={unlockCard}>
+            <input
+              value={secret}
+              onChange={(e) => setSecret(e.target.value)}
+              placeholder="Enter Secret Code"
+              required
+            />
+
+            <button disabled={loading}>
+              {loading ? "Checking..." : "Unlock Card"}
+            </button>
+          </form>
+        </div>
+      </div>
+    </main>
+  );
+}
 
   const isFree = order.card_type === "free";
   const isPhysical = order.card_type === "physical";
@@ -196,6 +245,16 @@ setLoading(false);
       <WalletBadge />
 
       <section className="manage-header">
+        <button
+  onClick={() => {
+    setOrder(null);
+    setShowDetails(false);
+    setActiveModal("");
+  }}
+  className="manage-back-btn"
+>
+  ← Back to My Cards
+</button>
         <p>Viltrum Banking Console</p>
         <h1>Manage My Card</h1>
         <span>Private card controls secured by your secret code.</span>
