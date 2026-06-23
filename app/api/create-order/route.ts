@@ -41,18 +41,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: "Platform settings missing" }, { status: 400 });
     }
 
-    if (cardType === "virtual" && !settings.virtual_sales_enabled) {
-      return NextResponse.json({ success: false, error: "Virtual card purchase is currently disabled" }, { status: 400 });
-    }
-
-    if (cardType === "physical" && !settings.physical_sales_enabled) {
-      return NextResponse.json({ success: false, error: "Physical card purchase is currently disabled" }, { status: 400 });
-    }
-
-    if (cardType === "free" && !settings.free_mint_enabled) {
-      return NextResponse.json({ success: false, error: "Free mint is currently disabled" }, { status: 400 });
-    }
-
     const priceMap: any = {
       virtual: Number(pricing.virtual_price),
       physical: Number(pricing.physical_price),
