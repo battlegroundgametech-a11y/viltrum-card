@@ -7,7 +7,7 @@ export default function HamburgerMenu() {
   const [open, setOpen] = useState(false);
   const [light, setLight] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
-
+ 
   useEffect(() => {
     const saved = localStorage.getItem("viltrum_theme");
 
@@ -107,6 +107,17 @@ export default function HamburgerMenu() {
 
               <a className="rounded-2xl bg-white/10 px-5 py-4 text-white" href="/purchase">
                 Purchase
+              </a>
+
+              <a
+               className="rounded-2xl bg-white/10 px-5 py-4 text-white"
+               href={
+                 localStorage.getItem("viltrum_user")
+                   ? "/manage-card"
+                   : "/login"
+               }
+              >
+                 Manage Card
               </a>
 
               <a className="rounded-2xl bg-white/10 px-5 py-4 text-white" href="/#about">
