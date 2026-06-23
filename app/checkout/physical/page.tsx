@@ -49,7 +49,7 @@ export default function PhysicalCheckoutPage() {
         address: CARD_SALE_ADDRESS as `0x${string}`,
         abi: CARD_SALE_ABI as any,
         functionName: "purchasePhysical",
-        args: [1n, couponCode],
+        args: [1, couponCode],
         value: parseEther("0.036")
       } as any);
     } catch (err: any) {
