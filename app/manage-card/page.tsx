@@ -113,12 +113,12 @@ setLoading(false);
 
   try {
     await writeContractAsync({
-      address: VAULT_BANK_ADDRESS,
-      abi: VAULT_BANK_ABI,
-      functionName: "deposit",
-      args: [getCardTypeId(order.card_type)],
-      value: parseEther(amount)
-    });
+  address: VAULT_BANK_ADDRESS as `0x${string}`,
+  abi: VAULT_BANK_ABI as any,
+  functionName: "deposit",
+  args: [getCardTypeId(order.card_type)],
+  value: parseEther(amount)
+} as any);
 
     alert("Deposit successful.");
     refetchBalance();
@@ -140,11 +140,11 @@ setLoading(false);
 
   try {
     await writeContractAsync({
-      address: VAULT_BANK_ADDRESS,
-      abi: VAULT_BANK_ABI,
-      functionName: "withdraw",
-      args: [getCardTypeId(order.card_type), parseEther(amount)]
-    });
+  address: VAULT_BANK_ADDRESS as `0x${string}`,
+  abi: VAULT_BANK_ABI as any,
+  functionName: "withdraw",
+  args: [getCardTypeId(order.card_type), parseEther(amount)]
+} as any);
 
     alert("Withdrawal successful.");
     refetchBalance();
