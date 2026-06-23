@@ -49,7 +49,7 @@ export default function VirtualCheckoutPage() {
         address: CARD_SALE_ADDRESS as `0x${string}`,
         abi: CARD_SALE_ABI as any,
         functionName: "purchaseVirtual",
-        args: [1n, couponCode],
+        args: [1, couponCode],
         value: parseEther("0.003")
       } as any);
     } catch (err: any) {
