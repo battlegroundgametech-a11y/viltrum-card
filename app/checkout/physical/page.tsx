@@ -3,9 +3,16 @@
 import HamburgerMenu from "../../../components/HamburgerMenu";
 import WalletBadge from "../../../components/WalletBadge";
 import { useEffect, useState } from "react";
+import { useWriteContract } from "wagmi";
+import { parseEther } from "viem";
+import {
+  CARD_SALE_ADDRESS,
+  CARD_SALE_ABI
+} from "../../../lib/cardSale";
 
 export default function PhysicalCheckoutPage() {
   const [loading, setLoading] = useState(false);
+  const { writeContractAsync } = useWriteContract<any>();
 
   useEffect(() => {
     const user = localStorage.getItem("viltrum_user");
@@ -22,63 +29,64 @@ export default function PhysicalCheckoutPage() {
   }, []);
 
   async function submitOrder(e: any) {
-  e.preventDefault();
-  setLoading(true);
+    e.preventDefault();
+    setLoading(true);
 
-  const wallet = localStorage.getItem("viltrum_wallet");
-  const telegramId = localStorage.getItem("viltrum_user");
+    const wallet = localStorage.getItem("viltrum_wallet");
+    const telegramId = localStorage.getItem("viltrum_user");
 
-  if (!wallet) {
-    alert("Please connect wallet first.");
-    window.location.href = "/connect-wallet";
-    return;
+    if (!wallet) {
+      alert("Please connect wallet first.");
+      window.location.href = "/connect-wallet";
+      return;
+    }
+
+    const form = new FormData(e.target);
+    const couponCode = String(form.get("coupon_code") || "");
+
+    try {
+      await writeContractAsync({
+        address: CARD_SALE_ADDRESS as `0x${string}`,
+        abi: CARD_SALE_ABI as any,
+        functionName: "purchasePhysical",
+        args: [1n, couponCode],
+        value: parseEther("0.036")
+      } as any);
+    } catch (err: any) {
+      alert(err?.shortMessage || err?.message || "Payment failed");
+      setLoading(false);
+      return;
+    }
+
+    const res = await fetch("/api/create-order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        card_type: "physical",
+        full_name: form.get("full_name"),
+        telegram_username: form.get("telegram_username"),
+        shipping_address: form.get("shipping_address"),
+        city: form.get("city"),
+        country: form.get("country"),
+        coupon_code: couponCode,
+        wallet_address: wallet,
+        telegram_id: telegramId
+      })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      window.location.href =
+        `/success?order=${data.order_id}&secret=${data.secret_code}`;
+    } else {
+      alert(data.error || "Order failed");
+    }
+
+    setLoading(false);
   }
-
-  const form = new FormData(e.target);
-
-  const res = await fetch("/api/create-order", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      card_type: "physical",
-      full_name: form.get("full_name"),
-      telegram_username: form.get("telegram_username"),
-      shipping_address: form.get("shipping_address"),
-      city: form.get("city"),
-      country: form.get("country"),
-      coupon_code: form.get("coupon_code"),
-      wallet_address: wallet,
-      telegram_id: telegramId
-    })
-  });
-
-  const data = await res.json();
-
-  if (data.success) {
-  if (Number(data.discount_amount || 0) > 0) {
-    alert(
-      `Coupon applied successfully.\n\n` +
-      `Original Price: $${data.original_price}\n` +
-      `Discount: $${data.discount_amount}\n` +
-      `Final Price: $${data.final_price}`
-    );
-  } else {
-    alert(
-      `Order created successfully.\n\n` +
-      `Final Price: $${data.final_price}`
-    );
-  }
-
-  window.location.href =
-    `/success?order=${data.order_id}&secret=${data.secret_code}`;
-} else {
-  alert(data.error || "Order failed");
-}
-
-  setLoading(false);
-}
 
   return (
     <main className="checkout-premium">
@@ -96,35 +104,11 @@ export default function PhysicalCheckoutPage() {
 
         <form onSubmit={submitOrder}>
           <input name="full_name" required placeholder="Full Name" />
-
-          <input
-            name="telegram_username"
-            required
-            placeholder="Telegram Username"
-          />
-
-          <input
-            name="shipping_address"
-            required
-            placeholder="Shipping Address"
-          />
-
-          <input
-            name="city"
-            required
-            placeholder="City"
-          />
-
-          <input
-            name="country"
-            required
-            placeholder="Country"
-          />
-
-          <input
-            name="coupon_code"
-            placeholder="Coupon Code (Optional)"
-          />
+          <input name="telegram_username" required placeholder="Telegram Username" />
+          <input name="shipping_address" required placeholder="Shipping Address" />
+          <input name="city" required placeholder="City" />
+          <input name="country" required placeholder="Country" />
+          <input name="coupon_code" placeholder="Coupon Code (Optional)" />
 
           <button>
             {loading ? "Processing..." : "Purchase Physical Card"}
