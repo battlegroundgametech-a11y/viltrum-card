@@ -54,10 +54,10 @@ const { data: mintEnabled } = useReadContract({
 
 try {
   await writeContractAsync({
-    address: FREE_MINT_ADDRESS as `0x${string}`,
-    abi: FREE_MINT_ABI,
-    functionName: "freeMint"
-  });
+  address: FREE_MINT_ADDRESS as `0x${string}`,
+  abi: FREE_MINT_ABI as any,
+  functionName: "freeMint"
+} as any);
 
   alert("NFT minted successfully.");
 } catch (err) {
