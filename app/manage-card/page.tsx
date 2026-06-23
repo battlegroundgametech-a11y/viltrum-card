@@ -38,28 +38,6 @@ export default function ManageCardPage() {
     window.location.href = "/login";
     return;
   }
-
-  const savedSecret = localStorage.getItem("viltrum_manage_secret");
-
-  if (savedSecret) {
-    setSecret(savedSecret);
-
-    fetch("/api/manage-card/verify", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        secret_code: savedSecret
-      })
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          setOrder(data.order);
-        }
-      });
-  }
 }, []);
 
   async function unlockCard(e: React.FormEvent<HTMLFormElement>) {
@@ -86,8 +64,27 @@ export default function ManageCardPage() {
 
     setOrder(data.order);
 
-localStorage.setItem("viltrum_manage_order_id", data.order.id);
-localStorage.setItem("viltrum_manage_secret", secret);
+const savedCards = JSON.parse(
+  localStorage.getItem("viltrum_unlocked_cards") || "[]"
+);
+
+const alreadySaved = savedCards.some(
+  (item: any) => item.id === data.order.id
+);
+
+const updatedCards = alreadySaved
+  ? savedCards
+  : [...savedCards, data.order];
+
+localStorage.setItem(
+  "viltrum_unlocked_cards",
+  JSON.stringify(updatedCards)
+);
+
+localStorage.setItem(
+  "viltrum_selected_card",
+  JSON.stringify(data.order)
+);
     const txRes = await fetch(
   `/api/manage-card/transactions?order_id=${data.order.id}`
 );
