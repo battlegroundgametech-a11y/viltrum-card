@@ -18,7 +18,7 @@ export default function ManageCardPage() {
   const [showDetails, setShowDetails] = useState(false);
   const [activeModal, setActiveModal] = useState("");
   const { address } = useAccount();
-  const { writeContractAsync } = useWriteContract();
+  const { writeContractAsync } = useWriteContract<any>();
 
   const cardTypeId = order ? getCardTypeId(order.card_type) : 1;
 
