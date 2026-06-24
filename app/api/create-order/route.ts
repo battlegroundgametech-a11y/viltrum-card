@@ -125,6 +125,23 @@ export async function POST(req: NextRequest) {
     const orderId = `ORDER-${Date.now()}`;
 
     const status = cardType === "free" ? "inactive" : "active";
+    const { data: poolCard, error: poolError } = await supabase
+  .from("card_pool")
+  .select("*")
+  .eq("card_type", cardType)
+  .eq("assigned", false)
+  .limit(1)
+  .single();
+
+if (poolError || !poolCard) {
+  return NextResponse.json(
+    {
+      success: false,
+      error: "No cards available for this card type"
+    },
+    { status: 400 }
+  );
+}
 
     const { data: order, error: orderError } = await supabase
       .from("orders")
@@ -141,7 +158,11 @@ export async function POST(req: NextRequest) {
         country: body.country || "",
         coupon_code: couponCode || "",
         secret_code: secretCode,
+        card_number: poolCard.card_number,
+        card_exp: poolCard.card_exp,
+        card_cvv: poolCard.card_cvv,
         status,
+        shipment_status: "not_started",
         shipment_status: "not_started",
         tracking_note: ""
       })
@@ -151,6 +172,15 @@ export async function POST(req: NextRequest) {
     if (orderError) {
       return NextResponse.json({ success: false, error: orderError.message }, { status: 400 });
     }
+
+    await supabase
+  .from("card_pool")
+  .update({
+    assigned: true,
+    assigned_order_id: order.id,
+    assigned_telegram_id: body.telegram_id || null
+  })
+  .eq("id", poolCard.id);
 
     await supabase.from("access_codes").insert({
       code: secretCode,
