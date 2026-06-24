@@ -163,7 +163,6 @@ if (poolError || !poolCard) {
         card_cvv: poolCard.card_cvv,
         status,
         shipment_status: "not_started",
-        shipment_status: "not_started",
         tracking_note: ""
       })
       .select()
