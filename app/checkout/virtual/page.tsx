@@ -3,7 +3,8 @@
 import HamburgerMenu from "../../../components/HamburgerMenu";
 import WalletBadge from "../../../components/WalletBadge";
 import { useEffect, useState } from "react";
-import { useWriteContract } from "wagmi";
+import { useWriteContract, useReadContract } from "wagmi";
+import { formatEther } from "viem";
 import { parseEther } from "viem";
 import {
   CARD_SALE_ADDRESS,
@@ -13,6 +14,11 @@ import {
 export default function VirtualCheckoutPage() {
   const [loading, setLoading] = useState(false);
   const { writeContractAsync } = useWriteContract<any>();
+  const { data: virtualPrice } = useReadContract({
+  address: CARD_SALE_ADDRESS as `0x${string}`,
+  abi: CARD_SALE_ABI as any,
+  functionName: "virtualPrice"
+});
 
   useEffect(() => {
     const user = localStorage.getItem("viltrum_user");
@@ -50,7 +56,7 @@ export default function VirtualCheckoutPage() {
         abi: CARD_SALE_ABI as any,
         functionName: "purchaseVirtual",
         args: [1, couponCode],
-        value: parseEther("0.003")
+        value: virtualPrice as bigint
       } as any);
     } catch (err: any) {
       alert(err?.shortMessage || err?.message || "Payment failed");
@@ -98,6 +104,10 @@ export default function VirtualCheckoutPage() {
 
       <div className="checkout-form-box">
         <h1>Virtual Card Purchase</h1>
+
+<p className="checkout-price">
+  Price: {virtualPrice ? formatEther(virtualPrice as bigint) : "0"} ETH
+</p>
 
         <form onSubmit={submitOrder}>
           <input name="full_name" required placeholder="Full Name" />
