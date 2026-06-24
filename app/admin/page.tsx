@@ -282,27 +282,41 @@ export default function AdminPage() {
             Processing
           </button>
 
-          <button
-            onClick={() =>
-              updateOrder(
-                order.id,
-                "shipped"
-              )
-            }
-          >
-            Shipped
-          </button>
+          <button onClick={() => updateOrder(order.id, "card_printing")}>
+  Card Printing
+</button>
 
-          <button
-            onClick={() =>
-              updateOrder(
-                order.id,
-                "delivered"
-              )
-            }
-          >
-            Delivered
-          </button>
+<button onClick={() => updateOrder(order.id, "quality_check")}>
+  Quality Check
+</button>
+
+<button onClick={() => updateOrder(order.id, "packaging")}>
+  Packaging
+</button>
+
+<button onClick={() => updateOrder(order.id, "processing")}>
+  Processing
+</button>
+
+<button onClick={() => updateOrder(order.id, "dispatched")}>
+  Dispatched
+</button>
+
+<button onClick={() => updateOrder(order.id, "in_transit")}>
+  In Transit
+</button>
+
+<button onClick={() => updateOrder(order.id, "out_for_delivery")}>
+  Out for Delivery
+</button>
+
+<button onClick={() => updateOrder(order.id, "delivered")}>
+  Delivered
+</button>
+
+<button onClick={() => updateOrder(order.id, "delivery_failed")}>
+  Delivery Failed
+</button>
         </div>
       )}
     </div>
