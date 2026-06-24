@@ -76,50 +76,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    let originalPrice = priceMap[cardType];
-    let discountAmount = 0;
-    let finalPrice = originalPrice;
-    let appliedCouponId: string | null = null;
-
-    if (couponCode && cardType !== "free") {
-      const { data: coupon } = await supabase
-        .from("coupon_codes")
-        .select("*")
-        .eq("code", couponCode)
-        .eq("active", true)
-        .maybeSingle();
-
-      if (!coupon) {
-        return NextResponse.json({ success: false, error: "Invalid coupon code" }, { status: 400 });
-      }
-
-      if (coupon.expires_at && new Date(coupon.expires_at) < new Date()) {
-        return NextResponse.json({ success: false, error: "Coupon expired" }, { status: 400 });
-      }
-
-      if (Number(coupon.used_count) >= Number(coupon.max_uses)) {
-        return NextResponse.json({ success: false, error: "Coupon usage limit reached" }, { status: 400 });
-      }
-
-      if (cardType === "virtual" && !coupon.applies_virtual) {
-        return NextResponse.json({ success: false, error: "Coupon not valid for virtual card" }, { status: 400 });
-      }
-
-      if (cardType === "physical" && !coupon.applies_physical) {
-        return NextResponse.json({ success: false, error: "Coupon not valid for physical card" }, { status: 400 });
-      }
-
-      if (coupon.discount_type === "percent") {
-        discountAmount = originalPrice * (Number(coupon.discount_value) / 100);
-      } else {
-        discountAmount = Number(coupon.discount_value);
-      }
-
-      if (discountAmount > originalPrice) discountAmount = originalPrice;
-
-      finalPrice = originalPrice - discountAmount;
-      appliedCouponId = coupon.id;
-    }
+    const originalPrice = priceMap[cardType];
+    const discountAmount = 0;
+    const finalPrice = originalPrice;
 
     const secretCode = makeSecretCode();
     const orderId = `ORDER-${Date.now()}`;
@@ -199,19 +158,6 @@ if (poolError || !poolCard) {
       .from("card_inventory")
       .update(updateInventory)
       .eq("id", 1);
-
-    if (appliedCouponId) {
-      const { data: couponNow } = await supabase
-        .from("coupon_codes")
-        .select("used_count")
-        .eq("id", appliedCouponId)
-        .single();
-
-      await supabase
-        .from("coupon_codes")
-        .update({ used_count: Number(couponNow?.used_count || 0) + 1 })
-        .eq("id", appliedCouponId);
-    }
 
     await supabase.from("card_transactions").insert({
       order_id: orderId,
