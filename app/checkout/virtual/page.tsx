@@ -19,15 +19,16 @@ export default function VirtualCheckoutPage() {
   const [couponCode, setCouponCode] = useState("");
   const { writeContractAsync } = useWriteContract<any>();
   const { data: virtualPrice } = useReadContract({
-  const { data: finalPrice } = useReadContract({
+  address: CARD_SALE_ADDRESS as `0x${string}`,
+  abi: CARD_SALE_ABI as any,
+  functionName: "virtualPrice"
+});
+
+const { data: finalPrice } = useReadContract({
   address: CARD_SALE_ADDRESS as `0x${string}`,
   abi: CARD_SALE_ABI as any,
   functionName: "getFinalPrice",
   args: [0, 1, couponCode]
-});
-  address: CARD_SALE_ADDRESS as `0x${string}`,
-  abi: CARD_SALE_ABI as any,
-  functionName: "virtualPrice"
 });
 
   useEffect(() => {
