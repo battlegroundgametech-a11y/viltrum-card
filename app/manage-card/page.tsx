@@ -29,6 +29,13 @@ export default function ManageCardPage() {
   functionName: "getBalance",
   args: address && order ? [address, cardTypeId] : undefined
 });
+
+  const { data: cardLimits } = useReadContract({
+  address: VAULT_BANK_ADDRESS,
+  abi: VAULT_BANK_ABI,
+  functionName: "cardLimits",
+  args: order ? [cardTypeId] : undefined
+});
   const [transactions, setTransactions] = useState<any[]>([]);
   
 useEffect(() => {
@@ -138,13 +145,30 @@ setLoading(false);
 
   if (!amount) return;
 
+  const depositAmount = parseEther(amount);
+  const minDeposit =
+    cardLimits && Array.isArray(cardLimits)
+      ? (cardLimits[0] as bigint)
+      : 0n;
+
+  if (
+    order.card_type === "free" &&
+    order.status !== "active" &&
+    depositAmount < minDeposit
+  ) {
+    alert(
+      `Minimum deposit required is ${formatEther(minDeposit)} ETH.`
+    );
+    return;
+  }
+
   try {
     await writeContractAsync({
       address: VAULT_BANK_ADDRESS as `0x${string}`,
       abi: VAULT_BANK_ABI as any,
       functionName: "deposit",
       args: [getCardTypeId(order.card_type)],
-      value: parseEther(amount)
+      value: depositAmount
     } as any);
 
     if (
@@ -173,14 +197,13 @@ setLoading(false);
     }
 
     alert("Deposit successful.");
-
     refetchBalance();
     setActiveModal("");
   } catch (err: any) {
     alert(
       err?.shortMessage ||
-      err?.message ||
-      "Deposit failed"
+        err?.message ||
+        "Deposit failed"
     );
   }
 }
