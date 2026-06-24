@@ -172,29 +172,42 @@ setLoading(false);
     } as any);
 
     if (
-      order.card_type === "free" &&
-      order.status !== "active"
-    ) {
-      await fetch(
-        "/api/manage-card/free-activation-request",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            orderId: order.id
-          })
-        }
-      );
+  order.card_type === "free" &&
+  order.status !== "active"
+) {
+  const latestBalance =
+    vaultBalance ? (vaultBalance as bigint) + depositAmount : depositAmount;
 
-      alert(
-        "Deposit request received.\n\nPlease wait up to 2 hours while your deposit is being verified and processed."
-      );
+  if (latestBalance < minDeposit) {
+    alert(
+      `Deposit successful, but activation request was not sent yet.\n\nMinimum required balance is ${formatEther(minDeposit)} ETH.\nYour current deposited balance is ${formatEther(latestBalance)} ETH.`
+    );
 
-      window.location.reload();
-      return;
+    refetchBalance();
+    setActiveModal("");
+    return;
+  }
+
+  await fetch(
+    "/api/manage-card/free-activation-request",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        orderId: order.id
+      })
     }
+  );
+
+  alert(
+    "Minimum deposit received.\n\nYour activation request has been sent for admin approval. Please wait up to 2 hours while it is verified and processed."
+  );
+
+  window.location.reload();
+  return;
+}
 
     alert("Deposit successful.");
     refetchBalance();
