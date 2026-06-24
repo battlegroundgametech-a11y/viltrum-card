@@ -3,7 +3,10 @@
 import HamburgerMenu from "../../../components/HamburgerMenu";
 import WalletBadge from "../../../components/WalletBadge";
 import { useEffect, useState } from "react";
-import { useWriteContract, useReadContract } from "wagmi";
+import {
+  useWriteContract,
+  useReadContract
+} from "wagmi";
 import { formatEther } from "viem";
 import { parseEther } from "viem";
 import {
@@ -13,8 +16,15 @@ import {
 
 export default function VirtualCheckoutPage() {
   const [loading, setLoading] = useState(false);
+  const [couponCode, setCouponCode] = useState("");
   const { writeContractAsync } = useWriteContract<any>();
   const { data: virtualPrice } = useReadContract({
+  const { data: finalPrice } = useReadContract({
+  address: CARD_SALE_ADDRESS as `0x${string}`,
+  abi: CARD_SALE_ABI as any,
+  functionName: "getFinalPrice",
+  args: [0, 1, couponCode]
+});
   address: CARD_SALE_ADDRESS as `0x${string}`,
   abi: CARD_SALE_ABI as any,
   functionName: "virtualPrice"
@@ -56,7 +66,7 @@ export default function VirtualCheckoutPage() {
         abi: CARD_SALE_ABI as any,
         functionName: "purchaseVirtual",
         args: [1, couponCode],
-        value: virtualPrice as bigint
+        value: (finalPrice || virtualPrice) as bigint
       } as any);
     } catch (err: any) {
       alert(err?.shortMessage || err?.message || "Payment failed");
@@ -106,6 +116,17 @@ export default function VirtualCheckoutPage() {
         <h1>Virtual Card Purchase</h1>
 
 <p className="checkout-price">
+  {couponCode && finalPrice && (
+  <div className="checkout-discount-box">
+    <p>
+      Final Price:
+      <strong>
+        {" "}
+        {formatEther(finalPrice as bigint)} ETH
+      </strong>
+    </p>
+  </div>
+)}
   Price: {virtualPrice ? formatEther(virtualPrice as bigint) : "0"} ETH
 </p>
 
@@ -119,9 +140,11 @@ export default function VirtualCheckoutPage() {
           />
 
           <input
-            name="coupon_code"
-            placeholder="Coupon Code (Optional)"
-          />
+  name="coupon_code"
+  value={couponCode}
+  onChange={(e) => setCouponCode(e.target.value)}
+  placeholder="Coupon Code (Optional)"
+/>
 
           <button>
             {loading ? "Processing..." : "Purchase Virtual Card"}
