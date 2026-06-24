@@ -33,23 +33,59 @@ export async function POST(req: NextRequest) {
       updateData.status = "rejected";
     }
 
-    if (action === "processing") {
-      updateData.shipment_status = "processing";
-      updateData.tracking_note =
-        "Your shipment is being prepared.";
-    }
+    if (action === "card_printing") {
+  updateData.shipment_status = "card_printing";
+  updateData.tracking_note =
+    "Your physical card is being printed and prepared.";
+}
 
-    if (action === "shipped") {
-      updateData.shipment_status = "shipped";
-      updateData.tracking_note =
-        "Your card has been shipped.";
-    }
+if (action === "quality_check") {
+  updateData.shipment_status = "quality_check";
+  updateData.tracking_note =
+    "Your card has entered final quality verification.";
+}
 
-    if (action === "delivered") {
-      updateData.shipment_status = "delivered";
-      updateData.tracking_note =
-        "Your card has been delivered.";
-    }
+if (action === "packaging") {
+  updateData.shipment_status = "packaging";
+  updateData.tracking_note =
+    "Your card is being packed securely for shipment.";
+}
+
+if (action === "processing") {
+  updateData.shipment_status = "processing";
+  updateData.tracking_note =
+    "Your shipment is being prepared.";
+}
+
+if (action === "dispatched") {
+  updateData.shipment_status = "dispatched";
+  updateData.tracking_note =
+    "Your card has been dispatched from our facility.";
+}
+
+if (action === "in_transit") {
+  updateData.shipment_status = "in_transit";
+  updateData.tracking_note =
+    "Your card is in transit.";
+}
+
+if (action === "out_for_delivery") {
+  updateData.shipment_status = "out_for_delivery";
+  updateData.tracking_note =
+    "Your card is out for delivery.";
+}
+
+if (action === "delivered") {
+  updateData.shipment_status = "delivered";
+  updateData.tracking_note =
+    "Your card has been delivered.";
+}
+
+if (action === "delivery_failed") {
+  updateData.shipment_status = "delivery_failed";
+  updateData.tracking_note =
+    "Delivery failed. Support will contact you for the next steps.";
+}
 
     const { error } = await supabase
       .from("orders")
