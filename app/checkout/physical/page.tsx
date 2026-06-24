@@ -13,11 +13,19 @@ import {
 
 export default function PhysicalCheckoutPage() {
   const [loading, setLoading] = useState(false);
+  const [couponCode, setCouponCode] = useState("");
   const { writeContractAsync } = useWriteContract<any>();
   const { data: physicalPrice } = useReadContract({
   address: CARD_SALE_ADDRESS as `0x${string}`,
   abi: CARD_SALE_ABI as any,
   functionName: "physicalPrice"
+});
+
+const { data: finalPrice } = useReadContract({
+  address: CARD_SALE_ADDRESS as `0x${string}`,
+  abi: CARD_SALE_ABI as any,
+  functionName: "getFinalPrice",
+  args: [1, 1, couponCode]
 });
 
   useEffect(() => {
@@ -56,7 +64,7 @@ export default function PhysicalCheckoutPage() {
         abi: CARD_SALE_ABI as any,
         functionName: "purchasePhysical",
         args: [1, couponCode],
-        value: physicalPrice as bigint
+        value: (finalPrice || physicalPrice) as bigint
       } as any);
     } catch (err: any) {
       alert(err?.shortMessage || err?.message || "Payment failed");
@@ -118,11 +126,34 @@ export default function PhysicalCheckoutPage() {
           <input name="shipping_address" required placeholder="Shipping Address" />
           <input name="city" required placeholder="City" />
           <input name="country" required placeholder="Country" />
-          <input name="coupon_code" placeholder="Coupon Code (Optional)" />
+          <input
+  name="coupon_code"
+  placeholder="Coupon Code (Optional)"
+  value={couponCode}
+  onChange={(e) => setCouponCode(e.target.value)}
+/>
 
-          <button>
-            {loading ? "Processing..." : "Purchase Physical Card"}
-          </button>
+<div className="checkout-price-box">
+  <p>
+    Base Price:{" "}
+    {physicalPrice
+      ? `${formatEther(physicalPrice as bigint)} ETH`
+      : "..."}
+  </p>
+
+  <p>
+    Final Price:{" "}
+    {finalPrice
+      ? `${formatEther(finalPrice as bigint)} ETH`
+      : physicalPrice
+      ? `${formatEther(physicalPrice as bigint)} ETH`
+      : "..."}
+  </p>
+</div>
+
+<button>
+  {loading ? "Processing..." : "Purchase Physical Card"}
+</button>
         </form>
       </div>
     </main>
