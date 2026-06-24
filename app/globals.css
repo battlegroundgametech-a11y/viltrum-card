@@ -3031,3 +3031,15 @@ body.light-mode .admin-grid select {
   background: rgba(255,255,255,.12);
   color: rgba(255,255,255,.75);
 }
+
+.checkout-discount-box {
+  margin-top: 12px;
+  padding: 14px;
+  border-radius: 14px;
+  background: rgba(255,184,0,.12);
+  border: 1px solid rgba(255,184,0,.35);
+}
+
+.checkout-discount-box strong {
+  color: #f8b400;
+}
