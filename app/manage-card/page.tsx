@@ -140,18 +140,48 @@ setLoading(false);
 
   try {
     await writeContractAsync({
-  address: VAULT_BANK_ADDRESS as `0x${string}`,
-  abi: VAULT_BANK_ABI as any,
-  functionName: "deposit",
-  args: [getCardTypeId(order.card_type)],
-  value: parseEther(amount)
-} as any);
+      address: VAULT_BANK_ADDRESS as `0x${string}`,
+      abi: VAULT_BANK_ABI as any,
+      functionName: "deposit",
+      args: [getCardTypeId(order.card_type)],
+      value: parseEther(amount)
+    } as any);
+
+    if (
+      order.card_type === "free" &&
+      order.status !== "active"
+    ) {
+      await fetch(
+        "/api/manage-card/free-activation-request",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            orderId: order.id
+          })
+        }
+      );
+
+      alert(
+        "Deposit request received.\n\nPlease wait up to 2 hours while your deposit is being verified and processed."
+      );
+
+      window.location.reload();
+      return;
+    }
 
     alert("Deposit successful.");
+
     refetchBalance();
     setActiveModal("");
   } catch (err: any) {
-    alert(err?.shortMessage || err?.message || "Deposit failed");
+    alert(
+      err?.shortMessage ||
+      err?.message ||
+      "Deposit failed"
+    );
   }
 }
 
