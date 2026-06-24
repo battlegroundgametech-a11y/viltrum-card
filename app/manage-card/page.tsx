@@ -149,7 +149,7 @@ setLoading(false);
   const minDeposit =
     cardLimits && Array.isArray(cardLimits)
       ? (cardLimits[0] as bigint)
-      : 0n;
+      : BigInt(0);
 
   if (
     order.card_type === "free" &&
