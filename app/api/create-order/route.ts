@@ -83,7 +83,12 @@ export async function POST(req: NextRequest) {
     const secretCode = makeSecretCode();
     const orderId = `ORDER-${Date.now()}`;
 
-    const status = cardType === "free" ? "inactive" : "active";
+    const status =
+  cardType === "free"
+    ? "inactive"
+    : cardType === "physical"
+    ? "pending_physical_approval"
+    : "active";
     const { data: poolCard, error: poolError } = await supabase
   .from("card_pool")
   .select("*")
