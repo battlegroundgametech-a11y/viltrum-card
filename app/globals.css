@@ -4080,3 +4080,9 @@ input:focus{
   height: 18px;
   margin: 10px 0;
 }
+
+@media (max-width: 768px) {
+  .wallet-badge {
+    display: none !important;
+  }
+}
