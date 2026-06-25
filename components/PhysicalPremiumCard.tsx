@@ -15,7 +15,6 @@ export default function PhysicalPremiumCard({
     <div className="physical-premium-card">
       <div className="physical-card-bg-mark">P</div>
       <div className="physical-card-light" />
-      <div className="physical-card-gold-line" />
 
       <div className="physical-card-header">
         <div className="physical-card-brand">
