@@ -4164,3 +4164,40 @@ body::after {
     max-width:1200px;
     margin:40px auto;
 }
+
+.manage-card-type{
+    display:inline-block;
+    margin-bottom:10px;
+    padding:5px 12px;
+    border-radius:999px;
+    background:rgba(255,255,255,.08);
+    color:#FFD54A;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.5px;
+}
+
+.manage-card-list-item{
+    position:relative;
+    overflow:hidden;
+    border-radius:18px;
+    transition:.25s;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.04);
+}
+
+.manage-card-list-item:hover{
+    transform:translateY(-3px);
+    border-color:#FFD54A;
+    box-shadow:0 15px 40px rgba(255,212,74,.18);
+}
+
+.manage-card-list-item b{
+    display:block;
+    font-size:18px;
+    margin:6px 0;
+}
+
+.manage-card-list-item small{
+    color:#8be9fd;
+}
