@@ -383,7 +383,6 @@ setLoading(false);
 
       <section className="manage-bank-layout">
         <div className="manage-card-panel">
-          {isVirtual ? (
   {isVirtual ? (
   <PremiumCard
     variant="virtual"
