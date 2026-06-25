@@ -4214,4 +4214,52 @@ body::after {
 
     font-size:16px !important;
 }
+
+/* Manage card list cleanup */
+
+.manage-card-list-item {
+  min-height: 118px !important;
+  padding: 22px 24px !important;
+
+  display: grid !important;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  column-gap: 18px;
+}
+
+/* Hide faint type pill/text */
+.manage-card-list-item > span,
+.manage-card-type {
+  display: none !important;
+}
+
+/* Card name */
+.manage-card-list-item b {
+  margin: 0 !important;
+  font-size: 23px !important;
+  line-height: 1.18 !important;
+  color: #111 !important;
+  text-align: left !important;
+}
+
+/* VISA */
+.manage-card-visa {
+  position: static !important;
+  color: #111 !important;
+  font-size: 20px !important;
+  font-weight: 900 !important;
+  font-style: italic;
+  line-height: 1;
+}
+
+/* Status */
+.manage-card-list-item small {
+  margin: 0 !important;
+  background: rgba(255,255,255,.35) !important;
+  color: #111 !important;
+  padding: 7px 12px !important;
+  border-radius: 999px !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  white-space: nowrap;
 }
