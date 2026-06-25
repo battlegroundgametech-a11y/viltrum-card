@@ -3371,3 +3371,53 @@ body.light-mode .admin-grid select {
     font-size: 30px;
   }
 }
+
+.admin-contract-panel {
+  max-width: 1300px;
+  margin: 0 auto 24px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  padding: 24px;
+}
+
+.admin-contract-panel h2 {
+  margin-bottom: 18px;
+}
+
+.admin-contract-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 16px;
+}
+
+.admin-contract-card {
+  background: rgba(255,255,255,0.05);
+  border-radius: 18px;
+  padding: 18px;
+}
+
+.admin-contract-card h3 {
+  color: #f8b400;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.admin-contract-card p {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.admin-contract-card b {
+  color: white;
+}
+
+@media (max-width: 900px) {
+  .admin-contract-grid {
+    grid-template-columns: 1fr;
+  }
+}
