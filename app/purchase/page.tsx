@@ -42,7 +42,7 @@ export default function PurchasePage() {
           </div>
 
           <h2>Virtual Card</h2>
-          <h3>Virtual Access</h3>
+          <h3>$5</h3>
           <p>
             Includes virtual card, NFT access, and instant digital card
             assignment after purchase.
@@ -58,7 +58,7 @@ export default function PurchasePage() {
           </div>
 
           <h2>Physical Card</h2>
-          <h3>Physical Access</h3>
+          <h3>$60</h3>
           <p>
             Includes physical card request, virtual access, NFT access, manual
             approval, and shipment tracking.
