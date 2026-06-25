@@ -32,8 +32,9 @@ const statusData = await statusRes.json();
 if (statusData.success) {
   setContractStatus(statusData.status);
 }
+}
 
-  async function login() {
+async function login() {
     loadOrders(password);
   }
 
@@ -387,16 +388,6 @@ if (statusData.success) {
 
       {order.card_type === "physical" && (
         <div className="admin-shipment-actions">
-          <button
-            onClick={() =>
-              updateOrder(
-                order.id,
-                "processing"
-              )
-            }
-          >
-            Processing
-          </button>
 
           <button onClick={() => updateOrder(order.id, "card_printing")}>
   Card Printing
