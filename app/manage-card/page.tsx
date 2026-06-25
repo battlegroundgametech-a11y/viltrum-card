@@ -333,7 +333,13 @@ setLoading(false);
   {card.card_type === "physical" && "Physical"}
   {card.card_type === "free" && "Free Mint"}
 </span>
-                  <b>{card.order_id}</b>
+                  <b>
+  {card.card_type === "virtual" && "Virtual Card"}
+  {card.card_type === "physical" && "Physical Card"}
+  {card.card_type === "free" && "Free Mint Card"}
+</b>
+
+<em className="manage-card-visa">VISA</em>
                   <small>{card.status}</small>
                 </button>
               ))}
