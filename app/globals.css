@@ -4304,119 +4304,134 @@ body::after {
   pointer-events:none;
 }
 
-/* Existing CSS */
-
-/* ...lots of CSS above... */
-
-
-/* ===== Manage Card List Theme ===== */
-
-.manage-card-list-item{
-    background:#14161c !important;
-    border:1px solid rgba(255,196,0,.35);
-    color:#fff;
-    border-radius:24px;
-    box-shadow:0 15px 40px rgba(0,0,0,.45);
-}
-
-.manage-card-list-item span{
-    color:#ffc928 !important;
-    font-weight:800;
-    letter-spacing:2px;
-}
-
-.manage-card-list-item b{
-    color:#fff !important;
-    font-size:1.9rem;
-}
-
-.manage-card-list-item small{
-    background:#1f7a3d;
-    color:#fff !important;
-    padding:6px 14px;
-    border-radius:999px;
-    display:inline-block;
-    font-weight:700;
-}
-
 /* ==========================================================
-   MANAGE CARD LIST - MATCH HAMBURGER YELLOW
+   VILTRUM MANAGE PAGE - PREMIUM THEME
 ========================================================== */
 
-.manage-card-list-item{
-    position: relative;
-    overflow: hidden;
+.manage-page{
+    background:
+        radial-gradient(circle at top left,#2b1a52 0%,transparent 35%),
+        radial-gradient(circle at top right,#0d314d 0%,transparent 35%),
+        linear-gradient(180deg,#090b10 0%,#050608 100%) !important;
+}
 
-    background: linear-gradient(
-        135deg,
-        #FFD54A 0%,
-        #FFC107 55%,
-        #F4B400 100%
-    ) !important;
+/* Panels */
 
-    border: 1px solid rgba(255,255,255,.18);
-    border-radius: 22px;
+.manage-card-panel,
+.manage-money-panel,
+.manage-status-box,
+.manage-details,
+.manage-modal,
+.manage-unlock-card{
 
-    color:#111 !important;
+    background:rgba(16,20,30,.72) !important;
+
+    backdrop-filter:blur(20px);
+
+    border:1px solid rgba(255,255,255,.08);
 
     box-shadow:
-        0 12px 30px rgba(0,0,0,.25);
+        0 18px 45px rgba(0,0,0,.45);
 
-    transition:.25s ease;
+    border-radius:26px;
+}
+
+/* Card list */
+
+.manage-card-list-item{
+
+    background:rgba(255,255,255,.05) !important;
+
+    border:1px solid rgba(255,215,120,.15);
+
+    color:#fff !important;
+
+    transition:.25s;
+
+    border-radius:22px;
 }
 
 .manage-card-list-item:hover{
+
     transform:translateY(-3px);
+
+    border-color:#caa95c;
+
+    background:rgba(255,255,255,.08) !important;
+
     box-shadow:
-        0 18px 40px rgba(0,0,0,.32);
+        0 18px 45px rgba(0,0,0,.4);
 }
 
-.manage-card-list-item::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:
-        radial-gradient(circle at top right,
-        rgba(255,255,255,.28),
-        transparent 45%);
-    pointer-events:none;
-}
+/* Card Type */
 
-.manage-card-list-item span{
-    display:inline-block;
-    padding:6px 12px;
-    margin-bottom:10px;
+.manage-card-type{
 
-    background:rgba(0,0,0,.12);
+    background:rgba(202,169,92,.14) !important;
 
-    border-radius:999px;
+    border:1px solid rgba(202,169,92,.35);
 
-    color:#222 !important;
-
-    font-size:12px;
-    font-weight:900;
-    letter-spacing:1.2px;
-    text-transform:uppercase;
-}
-
-.manage-card-list-item b{
-    display:block;
-    color:#111 !important;
-    font-size:20px;
-    font-weight:900;
-    margin:8px 0;
-}
-
-.manage-card-list-item small{
-    display:inline-block;
-
-    background:rgba(255,255,255,.38);
-
-    color:#111 !important;
-
-    padding:6px 14px;
-
-    border-radius:999px;
+    color:#e6c97c !important;
 
     font-weight:800;
+}
+
+/* Order ID */
+
+.manage-card-list-item b{
+
+    color:#fff !important;
+}
+
+/* Status */
+
+.manage-card-list-item small{
+
+    background:#1b6e47 !important;
+
+    color:#fff !important;
+
+    border-radius:999px;
+
+    padding:6px 14px;
+}
+
+/* Titles */
+
+.manage-page h1,
+.manage-page h2{
+
+    color:#fff;
+}
+
+.manage-page p,
+.manage-page span{
+
+    color:#b7bcc7;
+}
+
+/* Buttons */
+
+.manage-actions button{
+
+    background:linear-gradient(
+        135deg,
+        #2c313d,
+        #171b23
+    );
+
+    border:1px solid rgba(202,169,92,.25);
+
+    color:#fff;
+}
+
+.manage-actions button:hover{
+
+    border-color:#caa95c;
+
+    background:linear-gradient(
+        135deg,
+        #393f4d,
+        #222834
+    );
 }
