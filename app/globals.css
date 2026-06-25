@@ -4101,3 +4101,40 @@ body::after {
   background: #06070b;
   z-index: -9999;
 }
+
+/* =====================================================
+   VIRTUAL CARD - DEEP RED THEME
+===================================================== */
+
+/* Purchase page */
+.virtual-card {
+  background: linear-gradient(
+    135deg,
+    #3A0D12 0%,
+    #6B1822 55%,
+    #E33C55 100%
+  ) !important;
+
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 18px 45px rgba(227,60,85,.28);
+}
+
+/* Virtual checkout preview */
+.virtual-preview {
+  background: linear-gradient(
+    135deg,
+    #3A0D12 0%,
+    #6B1822 55%,
+    #E33C55 100%
+  ) !important;
+
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 18px 45px rgba(227,60,85,.28);
+}
+
+/* Hover glow */
+.virtual-card:hover,
+.virtual-preview:hover {
+  box-shadow:
+    0 25px 60px rgba(227,60,85,.45);
+}
