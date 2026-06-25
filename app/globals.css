@@ -4086,31 +4086,3 @@ input:focus{
     display: none !important;
   }
 }
-
-html,
-body {
-  background: #06070b !important;
-  min-height: 100%;
-}
-
-#__next,
-body > div {
-  background: #06070b !important;
-}
-
-main {
-  background: transparent !important;
-  min-height: 100vh;
-}
-
-.purchase-premium,
-.manage-page,
-.checkout-premium,
-.admin-page,
-.admin-login {
-  background:
-    radial-gradient(circle at top left, #28154d 0%, transparent 35%),
-    radial-gradient(circle at top right, #063d5b 0%, transparent 35%),
-    linear-gradient(180deg, #090909, #06070b) !important;
-  min-height: 100vh;
-}
