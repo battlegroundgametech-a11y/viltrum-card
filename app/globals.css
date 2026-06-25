@@ -3527,3 +3527,34 @@ body.light-mode .admin-grid select {
   }
 
 }
+
+/* ===================================== */
+/* PREMIUM APP BACKGROUND */
+/* ===================================== */
+
+body{
+  background:
+    radial-gradient(circle at top left,#2f195a 0%,transparent 30%),
+    radial-gradient(circle at top right,#0d4b68 0%,transparent 28%),
+    radial-gradient(circle at bottom,#101010 0%,#070707 80%);
+}
+
+main{
+  position:relative;
+  overflow:hidden;
+}
+
+main::before{
+  content:"";
+  position:fixed;
+  inset:0;
+
+  background:
+    radial-gradient(circle,#ffffff08 1px,transparent 1px);
+
+  background-size:42px 42px;
+
+  pointer-events:none;
+
+  opacity:.18;
+}
