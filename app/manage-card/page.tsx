@@ -12,6 +12,7 @@ import {
 } from "../../lib/vaultBank";
 import { useToast } from "../../components/ToastProvider";
 import PremiumCard from "../../components/PremiumCard";
+import Skeleton from "../../components/Skeleton";
 
 export default function ManageCardPage() {
   const [secret, setSecret] = useState("");
@@ -40,6 +41,9 @@ export default function ManageCardPage() {
   args: order ? [cardTypeId] : undefined
 });
   const [transactions, setTransactions] = useState<any[]>([]);
+  const [depositTotal, setDepositTotal] = useState(0);
+  const [withdrawTotal, setWithdrawTotal] = useState(0);
+  const [loadingStats, setLoadingStats] = useState(true);
   
 useEffect(() => {
   const user = localStorage.getItem("viltrum_user");
@@ -132,7 +136,31 @@ localStorage.setItem(
 const txData = await txRes.json();
 
 if (txData.success) {
-  setTransactions(txData.transactions || []);
+  const txs = txData.transactions || [];
+
+  setTransactions(txs);
+
+  setDepositTotal(
+    txs
+      .filter((t: any) => t.type === "deposit")
+      .reduce(
+        (sum: number, t: any) =>
+          sum + Number(t.amount || 0),
+        0
+      )
+  );
+
+  setWithdrawTotal(
+    txs
+      .filter((t: any) => t.type === "withdraw")
+      .reduce(
+        (sum: number, t: any) =>
+          sum + Number(t.amount || 0),
+        0
+      )
+  );
+
+  setLoadingStats(false);
 }
 
 setLoading(false);
@@ -439,24 +467,38 @@ setLoading(false);
         <div className="manage-money-panel">
           <p>Current Balance</p>
           <h2>
-  {vaultBalance
-    ? `${formatEther(vaultBalance as bigint)} ETH`
-    : "0 ETH"}
-</h2>
+            {vaultBalance === undefined ? (
+  <Skeleton className="skeleton-line" />
+) : (
+  <h2>
+    {formatEther(vaultBalance as bigint)} ETH
+  </h2>
+)}
           <span>Vault contract balance will appear here.</span>
 
           <div className="manage-mini-stats">
-            <div>
-              <small>Total Deposits</small>
-              <b>$0.00</b>
-            </div>
 
-            <div>
-              <small>Total Withdrawals</small>
-              <b>$0.00</b>
-            </div>
-          </div>
-        </div>
+  <div>
+    <small>Total Deposits</small>
+
+    {loadingStats ? (
+      <Skeleton className="skeleton-line" />
+    ) : (
+      <b>{depositTotal.toFixed(4)} ETH</b>
+    )}
+  </div>
+
+  <div>
+    <small>Total Withdrawals</small>
+
+    {loadingStats ? (
+      <Skeleton className="skeleton-line" />
+    ) : (
+      <b>{withdrawTotal.toFixed(4)} ETH</b>
+    )}
+  </div>
+
+</div>
       </section>
 
       <section className="manage-actions">
