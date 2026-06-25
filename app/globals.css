@@ -4991,3 +4991,127 @@ body::after {
     letter-spacing: 3px;
   }
 }
+
+/* ==========================================================
+   FIX FREE PREMIUM CARD FIT — MOBILE + DESKTOP
+========================================================== */
+
+.free-premium-card{
+  width: min(100%, 856px) !important;
+  max-width: 856px !important;
+  aspect-ratio: 85.6 / 53.98 !important;
+  height: auto !important;
+  min-height: unset !important;
+  box-sizing: border-box !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+
+  padding: clamp(20px, 3.2vw, 46px) !important;
+}
+
+/* Keep internal content above effects */
+.free-card-header,
+.free-card-chip,
+.free-card-number,
+.free-card-bottom,
+.free-card-visa{
+  z-index: 5 !important;
+}
+
+/* Better desktop spacing */
+.free-card-chip{
+  margin-top: clamp(26px, 4vw, 50px) !important;
+}
+
+.free-card-number{
+  margin-top: clamp(22px, 3vw, 42px) !important;
+  white-space: nowrap !important;
+}
+
+.free-card-bottom{
+  margin-top: auto !important;
+  padding-right: 190px !important;
+}
+
+.free-card-visa{
+  right: clamp(24px, 4vw, 48px) !important;
+  bottom: clamp(22px, 3.5vw, 38px) !important;
+}
+
+/* Mobile perfect fit */
+@media (max-width: 768px){
+
+  .free-premium-card{
+    width: 100% !important;
+    aspect-ratio: 85.6 / 53.98 !important;
+    padding: 16px !important;
+    border-radius: 22px !important;
+  }
+
+  .free-card-brand{
+    gap: 9px !important;
+    font-size: 12px !important;
+    letter-spacing: 4px !important;
+  }
+
+  .free-card-logo{
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 24px !important;
+    border-radius: 10px !important;
+  }
+
+  .free-card-type{
+    font-size: 9px !important;
+    letter-spacing: 4px !important;
+  }
+
+  .free-card-chip{
+    margin-top: 22px !important;
+    width: 50px !important;
+    height: 36px !important;
+    border-radius: 9px !important;
+  }
+
+  .free-card-number{
+    margin-top: 20px !important;
+    font-size: 24px !important;
+    letter-spacing: 5px !important;
+    line-height: 1 !important;
+  }
+
+  .free-card-bottom{
+    position: absolute !important;
+    left: 16px !important;
+    bottom: 14px !important;
+    gap: 26px !important;
+    padding-right: 110px !important;
+  }
+
+  .free-card-bottom small{
+    font-size: 7px !important;
+    letter-spacing: 1.4px !important;
+  }
+
+  .free-card-bottom b{
+    font-size: 10px !important;
+    letter-spacing: 1.5px !important;
+  }
+
+  .free-card-visa{
+    right: 16px !important;
+    bottom: 14px !important;
+  }
+
+  .free-card-visa strong{
+    font-size: 27px !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  .free-card-visa span{
+    font-size: 8px !important;
+    letter-spacing: 2px !important;
+  }
+}
