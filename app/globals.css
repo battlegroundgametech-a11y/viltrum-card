@@ -3558,3 +3558,200 @@ main::before{
 
   opacity:.18;
 }
+
+/* =======================================================
+   VILTRUM PREMIUM UI OVERRIDES
+   Paste at the bottom of globals.css
+======================================================= */
+
+body{
+    background:
+        radial-gradient(circle at top left,#28154d 0%,transparent 35%),
+        radial-gradient(circle at top right,#063d5b 0%,transparent 35%),
+        linear-gradient(180deg,#090909,#111111);
+}
+
+/* Glass cards */
+
+.manage-card,
+.purchase-option,
+.admin-order,
+.manage-money-panel,
+.manage-status-box,
+.checkout-form-box,
+.manage-unlock-card,
+.admin-login-card,
+.admin-contract-card{
+
+    background:rgba(255,255,255,.06)!important;
+
+    backdrop-filter:blur(24px);
+
+    -webkit-backdrop-filter:blur(24px);
+
+    border:1px solid rgba(255,255,255,.08)!important;
+
+    border-radius:28px!important;
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.35)!important;
+
+    transition:.35s;
+}
+
+/* Hover */
+
+.manage-card:hover,
+.purchase-option:hover,
+.admin-order:hover,
+.admin-contract-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:
+        0 30px 70px rgba(0,0,0,.45)!important;
+
+    border-color:#f8b400!important;
+}
+
+/* Buttons */
+
+button{
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8b400,
+            #ffcf40
+        )!important;
+
+    color:#111!important;
+
+    border:none!important;
+
+    border-radius:18px!important;
+
+    font-weight:700;
+
+    transition:.25s;
+}
+
+button:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 10px 30px rgba(248,180,0,.45);
+}
+
+/* Titles */
+
+h1{
+    font-size:3rem;
+    font-weight:800;
+    letter-spacing:-1px;
+}
+
+h2{
+    font-weight:700;
+}
+
+.purchase-label,
+.manage-header p,
+.admin-topbar p{
+
+    color:#f8b400;
+
+    text-transform:uppercase;
+
+    letter-spacing:3px;
+
+    font-size:.82rem;
+}
+
+/* Status badges */
+
+.manage-card-top small,
+.inactive-card-label{
+
+    background:#f8b400;
+
+    color:#111;
+
+    padding:6px 12px;
+
+    border-radius:999px;
+
+    font-weight:700;
+}
+
+/* Inputs */
+
+input{
+
+    background:rgba(255,255,255,.06)!important;
+
+    border:1px solid rgba(255,255,255,.08)!important;
+
+    border-radius:16px!important;
+
+    color:white!important;
+}
+
+input:focus{
+
+    border-color:#f8b400!important;
+
+    box-shadow:
+        0 0 20px rgba(248,180,0,.25);
+}
+
+/* Card shine */
+
+.manage-card::before,
+.purchase-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+        linear-gradient(
+            120deg,
+            transparent,
+            rgba(255,255,255,.15),
+            transparent
+        );
+
+    transform:translateX(-100%);
+
+    transition:1s;
+}
+
+.manage-card:hover::before,
+.purchase-card:hover::before{
+
+    transform:translateX(100%);
+}
+
+/* Smooth animation */
+
+*{
+
+    transition:
+        background .25s,
+        border-color .25s,
+        box-shadow .25s,
+        transform .25s;
+}
+
+/* Better spacing */
+
+.manage-page,
+.purchase-premium,
+.admin-page{
+
+    padding-bottom:80px;
+}
