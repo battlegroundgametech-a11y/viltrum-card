@@ -7,6 +7,7 @@ export default function AdminPage() {
   const [authorized, setAuthorized] = useState(false);
   const [orders, setOrders] = useState<any[]>([]);
   const [filter, setFilter] = useState("all");
+  const [contractStatus, setContractStatus] = useState<any>(null);
 
   async function loadOrders(pass = password) {
     const res = await fetch("/api/admin/orders", {
@@ -25,7 +26,12 @@ export default function AdminPage() {
     localStorage.setItem("viltrum_admin_password", pass);
     setOrders(data.orders || []);
     setAuthorized(true);
-  }
+    const statusRes = await fetch("/api/admin/contract-status");
+const statusData = await statusRes.json();
+
+if (statusData.success) {
+  setContractStatus(statusData.status);
+}
 
   async function login() {
     loadOrders(password);
@@ -151,6 +157,89 @@ export default function AdminPage() {
     <b>{rejected.length}</b>
   </div>
 </section>
+
+      {contractStatus && (
+  <section className="admin-contract-panel">
+    <h2>Contract Controls Status</h2>
+
+    <div className="admin-contract-grid">
+      {["virtual", "physical", "free"].map((type) => (
+        <div key={type} className="admin-contract-card">
+          <h3>{type}</h3>
+
+          <p>
+            Purchase/Mint:
+            <b>
+              {type === "virtual"
+                ? contractStatus.virtualPurchaseEnabled
+                  ? " Enabled"
+                  : " Disabled"
+                : type === "physical"
+                ? contractStatus.physicalPurchaseEnabled
+                  ? " Enabled"
+                  : " Disabled"
+                : contractStatus.freeMintEnabled
+                ? " Enabled"
+                : " Disabled"}
+            </b>
+          </p>
+
+          <p>
+            Max Per Wallet:
+            <b>
+              {" "}
+              {type === "virtual"
+                ? contractStatus.virtualMaxPerWallet
+                : type === "physical"
+                ? contractStatus.physicalMaxPerWallet
+                : contractStatus.freeMaxPerWallet}
+            </b>
+          </p>
+
+          <p>
+            Deposit:
+            <b>
+              {" "}
+              {contractStatus[type].depositEnabled
+                ? "Enabled"
+                : "Disabled"}
+            </b>
+          </p>
+
+          <p>
+            Withdrawal:
+            <b>
+              {" "}
+              {contractStatus[type].withdrawEnabled
+                ? "Enabled"
+                : "Disabled"}
+            </b>
+          </p>
+
+          <p>
+            Min Deposit:
+            <b> {contractStatus[type].minDeposit} ETH</b>
+          </p>
+
+          <p>
+            Max Deposit:
+            <b> {contractStatus[type].maxDeposit} ETH</b>
+          </p>
+
+          <p>
+            Min Withdraw:
+            <b> {contractStatus[type].minWithdraw} ETH</b>
+          </p>
+
+          <p>
+            Max Withdraw:
+            <b> {contractStatus[type].maxWithdraw} ETH</b>
+          </p>
+        </div>
+      ))}
+    </div>
+  </section>
+)}
 
 <section className="admin-actions-panel">
   <button
