@@ -17,10 +17,17 @@ export const FREE_MINT_ABI: any = [
     type: "function"
   },
   {
-    inputs: [],
-    name: "totalMinted",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function"
-  }
+  inputs: [],
+  name: "totalMinted",
+  outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+  stateMutability: "view",
+  type: "function"
+},
+{
+  inputs: [],
+  name: "maxMintPerWallet",
+  outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+  stateMutability: "view",
+  type: "function"
+}
 ];
