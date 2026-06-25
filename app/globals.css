@@ -5593,3 +5593,18 @@ body::after {
     letter-spacing: 2px !important;
   }
 }
+
+/* Fix physical card chip position */
+@media (max-width: 768px) {
+  .physical-card-chip {
+    margin-top: 30px !important;
+    margin-left: 0 !important;
+    transform: translateY(4px) !important;
+  }
+
+  .physical-card-gold-line {
+    left: 10% !important;
+    top: 42% !important;
+    width: 24% !important;
+  }
+}
