@@ -10,6 +10,7 @@ import {
   VAULT_BANK_ABI,
   getCardTypeId
 } from "../../lib/vaultBank";
+import { useToast } from "../../components/ToastProvider";
 
 export default function ManageCardPage() {
   const [secret, setSecret] = useState("");
@@ -18,6 +19,7 @@ export default function ManageCardPage() {
   const [showDetails, setShowDetails] = useState(false);
   const [activeModal, setActiveModal] = useState("");
   const [unlockedCards, setUnlockedCards] = useState<any[]>([]);
+  const { showToast } = useToast();
   const { address } = useAccount();
   const { writeContractAsync } = useWriteContract<any>();
 
@@ -92,7 +94,7 @@ useEffect(() => {
     const data = await res.json();
 
     if (!data.success) {
-      alert(data.error || "Invalid secret code");
+      showToast(data.error || "Invalid secret code", "error");
       setLoading(false);
       return;
     }
@@ -137,7 +139,7 @@ setLoading(false);
 
   async function depositAction() {
   if (!order || !address) {
-    alert("Connect wallet first.");
+    showToast("Connect wallet first.", "error");
     return;
   }
 
@@ -156,9 +158,10 @@ setLoading(false);
     order.status !== "active" &&
     depositAmount < minDeposit
   ) {
-    alert(
-      `Minimum deposit required is ${formatEther(minDeposit)} ETH.`
-    );
+    showToast(
+  `Minimum deposit required is ${formatEther(minDeposit)} ETH.`,
+  "error"
+);
     return;
   }
 
@@ -201,23 +204,23 @@ setLoading(false);
     }
   );
 
-  alert(
-    "Minimum deposit received.\n\nYour activation request has been sent for admin approval. Please wait up to 2 hours while it is verified and processed."
-  );
+  showToast(
+  "Minimum deposit received. Your activation request has been sent for admin approval.",
+  "success"
+);
 
   window.location.reload();
   return;
 }
 
-    alert("Deposit successful.");
+    showToast("Deposit successful.", "success");
     refetchBalance();
     setActiveModal("");
   } catch (err: any) {
-    alert(
-      err?.shortMessage ||
-        err?.message ||
-        "Deposit failed"
-    );
+    showToast(
+  err?.shortMessage || err?.message || "Deposit failed",
+  "error"
+);
   }
 }
 
@@ -239,11 +242,14 @@ setLoading(false);
   args: [getCardTypeId(order.card_type), parseEther(amount)]
 } as any);
 
-    alert("Withdrawal successful.");
+    showToast("Withdrawal successful.", "success");
     refetchBalance();
     setActiveModal("");
   } catch (err: any) {
-    alert(err?.shortMessage || err?.message || "Withdrawal failed");
+    showToast(
+  err?.shortMessage || err?.message || "Withdrawal failed",
+  "error"
+);
   }
 }
 
