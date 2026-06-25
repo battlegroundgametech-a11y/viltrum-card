@@ -4303,3 +4303,38 @@ body::after {
     transparent 55%);
   pointer-events:none;
 }
+
+/* Existing CSS */
+
+/* ...lots of CSS above... */
+
+
+/* ===== Manage Card List Theme ===== */
+
+.manage-card-list-item{
+    background:#14161c !important;
+    border:1px solid rgba(255,196,0,.35);
+    color:#fff;
+    border-radius:24px;
+    box-shadow:0 15px 40px rgba(0,0,0,.45);
+}
+
+.manage-card-list-item span{
+    color:#ffc928 !important;
+    font-weight:800;
+    letter-spacing:2px;
+}
+
+.manage-card-list-item b{
+    color:#fff !important;
+    font-size:1.9rem;
+}
+
+.manage-card-list-item small{
+    background:#1f7a3d;
+    color:#fff !important;
+    padding:6px 14px;
+    border-radius:999px;
+    display:inline-block;
+    font-weight:700;
+}
