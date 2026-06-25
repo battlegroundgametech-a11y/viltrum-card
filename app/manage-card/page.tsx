@@ -11,6 +11,7 @@ import {
   getCardTypeId
 } from "../../lib/vaultBank";
 import { useToast } from "../../components/ToastProvider";
+import PremiumCard from "../../components/PremiumCard";
 
 export default function ManageCardPage() {
   const [secret, setSecret] = useState("");
@@ -343,34 +344,66 @@ setLoading(false);
 
       <section className="manage-bank-layout">
         <div className="manage-card-panel">
-          <div
-            className={`manage-card ${
-              isInactiveFree ? "manage-card-blur" : ""
-            }`}
-          >
-            <div className="manage-card-top">
-              <span>VILTRUM</span>
-              <small>{order.status || "active"}</small>
-            </div>
+          {isVirtual ? (
+  <PremiumCard
+    variant="virtual"
+    title="Virtual Card"
+    number={
+      showDetails && order.card_number
+        ? order.card_number
+        : maskedNumber
+    }
+    holder={order.full_name || "Card Holder"}
+    expiry={
+      showDetails && order.card_exp
+        ? order.card_exp
+        : "**/**"
+    }
+    status={
+      order.status
+        ? order.status.toUpperCase()
+        : "ACTIVE"
+    }
+  />
+) : (
+  <div
+    className={`manage-card ${
+      isInactiveFree ? "manage-card-blur" : ""
+    }`}
+  >
+    <div className="manage-card-top">
+      <span>VILTRUM</span>
+      <small>{order.status || "active"}</small>
+    </div>
 
-            <h2>
-              {isVirtual && "Virtual Card"}
-              {isPhysical && "Physical Card"}
-              {isFree && "Free Mint Card"}
-            </h2>
+    <h2>
+      {isPhysical && "Physical Card"}
+      {isFree && "Free Mint Card"}
+    </h2>
 
-            <p className="manage-card-number">
-              {showDetails && order.card_number
-                ? order.card_number
-                : maskedNumber}
-            </p>
+    <p className="manage-card-number">
+      {showDetails && order.card_number
+        ? order.card_number
+        : maskedNumber}
+    </p>
 
-            <div className="manage-card-bottom">
-              <b>{order.full_name || "Card Holder"}</b>
-              <b>
-                {showDetails && order.card_exp ? order.card_exp : "**/**"}
-              </b>
-            </div>
+    <div className="manage-card-bottom">
+      <b>{order.full_name || "Card Holder"}</b>
+
+      <b>
+        {showDetails && order.card_exp
+          ? order.card_exp
+          : "**/**"}
+      </b>
+    </div>
+
+    {isInactiveFree && (
+      <div className="inactive-card-label">
+        INACTIVE
+      </div>
+    )}
+  </div>
+)}
 
             {isInactiveFree && (
               <div className="inactive-card-label">
