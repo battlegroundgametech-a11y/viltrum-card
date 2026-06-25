@@ -4130,3 +4130,27 @@ main {
   }
 
 }
+
+/* Restore original Viltrum dark background */
+html,
+body {
+  background: #05070c !important;
+}
+
+body {
+  background:
+    radial-gradient(circle at top right, rgba(248, 180, 0, 0.10), transparent 28%),
+    radial-gradient(circle at top left, rgba(255, 72, 0, 0.08), transparent 26%),
+    #05070c !important;
+}
+
+.purchase-premium,
+.manage-page,
+.checkout-premium,
+.admin-page,
+.admin-login {
+  background:
+    radial-gradient(circle at top right, rgba(248, 180, 0, 0.10), transparent 28%),
+    radial-gradient(circle at top left, rgba(255, 72, 0, 0.08), transparent 26%),
+    #05070c !important;
+}
