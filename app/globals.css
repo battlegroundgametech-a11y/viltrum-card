@@ -4593,17 +4593,24 @@ body::after {
 .lux-visa strong{
     font-family: "Arial Black", Arial, Helvetica, sans-serif;
     font-style: italic;
-    font-weight:900;
+    font-weight: 900;
 
-    font-size:clamp(22px,4vw,48px);
+    font-size: clamp(24px, 4vw, 48px);
 
-    color:#f8f8f8;
+    color: #f8f8f8;
 
-    letter-spacing:-2px;
+    /* Fix spacing */
+    letter-spacing: 0;
+    word-spacing: 0;
+    white-space: nowrap;
+
+    line-height: .9;
 
     text-shadow:
         0 1px 2px rgba(0,0,0,.6),
         0 6px 12px rgba(0,0,0,.35);
+
+    transform: skewX(-8deg);
 }
 
 .lux-visa span{
@@ -4647,4 +4654,23 @@ body::after {
   .lux-card-number {
     letter-spacing: 5px;
   }
+}
+
+@media (max-width:768px){
+
+    .lux-visa{
+        right:18px;
+        bottom:18px;
+    }
+
+    .lux-visa strong{
+        font-size:30px;
+        letter-spacing:0;
+    }
+
+    .lux-visa span{
+        font-size:10px;
+        letter-spacing:3px;
+    }
+
 }
