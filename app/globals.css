@@ -4138,3 +4138,29 @@ body::after {
   box-shadow:
     0 25px 60px rgba(227,60,85,.45);
 }
+
+/* ===== Manage Page Theme ===== */
+
+.manage-page{
+    background:
+        radial-gradient(circle at top left,#2d0d48 0%,transparent 35%),
+        radial-gradient(circle at top right,#0b3d5d 0%,transparent 35%),
+        linear-gradient(180deg,#090909,#05070c);
+    min-height:100vh;
+}
+
+.manage-header{
+    max-width:1200px;
+    margin:auto;
+}
+
+.manage-bank-layout{
+    max-width:1200px;
+    margin:auto;
+}
+
+.manage-actions,
+.manage-details{
+    max-width:1200px;
+    margin:40px auto;
+}
