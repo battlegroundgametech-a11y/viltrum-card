@@ -4138,3 +4138,80 @@ body::after {
   box-shadow:
     0 25px 60px rgba(227,60,85,.45);
 }
+
+/* =========================================
+   Manage Card - Professional Mobile Layout
+   ========================================= */
+
+/* Better spacing between Unlock Card and Your Cards */
+
+.manage-unlock{
+    margin-bottom: 36px !important;
+}
+
+.manage-unlock-card{
+    margin-bottom: 0 !important;
+}
+
+/* Smaller, premium buttons */
+
+.manage-unlock-card button,
+.manage-actions button,
+.manage-modal button{
+
+    width: auto !important;
+    min-width: 170px;
+
+    height: 50px !important;
+
+    padding: 0 26px !important;
+
+    border-radius: 14px !important;
+
+    font-size: 16px !important;
+    font-weight: 700;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 14px;
+}
+
+/* Keep Unlock button centered */
+
+.manage-unlock-card form{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+/* Action buttons spacing */
+
+.manage-actions{
+    gap:14px !important;
+    justify-content:center;
+}
+
+.manage-actions button{
+    flex:0 0 auto !important;
+}
+
+/* Desktop */
+
+@media (min-width:768px){
+
+.manage-unlock{
+    margin-bottom:48px !important;
+}
+
+.manage-unlock-card button,
+.manage-actions button{
+
+    min-width:185px;
+
+    height:52px !important;
+
+    font-size:16px !important;
+}
+}
