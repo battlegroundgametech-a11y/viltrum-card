@@ -13,6 +13,7 @@ import {
 import { useToast } from "../../components/ToastProvider";
 import PremiumCard from "../../components/PremiumCard";
 import Skeleton from "../../components/Skeleton";
+import FreePremiumCard from "../../components/FreePremiumCard";
 
 export default function ManageCardPage() {
   const [secret, setSecret] = useState("");
