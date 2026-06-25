@@ -2,12 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { useDisconnect } from "wagmi";
 
 export default function HamburgerMenu() {
   const [open, setOpen] = useState(false);
   const [light, setLight] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
- 
+  const [wallet, setWallet] = useState("");
+  const { disconnect } = useDisconnect();
+
   useEffect(() => {
     const saved = localStorage.getItem("viltrum_theme");
 
@@ -17,7 +20,13 @@ export default function HamburgerMenu() {
     }
 
     const user = localStorage.getItem("viltrum_user");
+    const savedWallet = localStorage.getItem("viltrum_wallet");
+
     setLoggedIn(!!user);
+
+    if (user && savedWallet) {
+      setWallet(`${savedWallet.slice(0, 6)}...${savedWallet.slice(-4)}`);
+    }
   }, []);
 
   function toggleTheme() {
@@ -31,6 +40,13 @@ export default function HamburgerMenu() {
       document.body.classList.remove("light-mode");
       localStorage.setItem("viltrum_theme", "dark");
     }
+  }
+
+  function disconnectWallet() {
+    disconnect();
+    localStorage.removeItem("viltrum_wallet");
+    setWallet("");
+    window.location.href = "/connect-wallet";
   }
 
   function logout() {
@@ -66,7 +82,28 @@ export default function HamburgerMenu() {
               </button>
             </div>
 
-            <div className="mt-10 flex flex-col gap-4">
+            {wallet && (
+              <div className="mt-8 rounded-3xl border border-white/10 bg-white/5 p-4">
+                <p className="text-xs font-bold uppercase tracking-[3px] text-yellow-400">
+                  Connected Wallet
+                </p>
+
+                <div className="mt-3 flex items-center justify-between gap-3">
+                  <span className="rounded-2xl bg-black/40 px-4 py-3 font-black text-white">
+                    {wallet}
+                  </span>
+
+                  <button
+                    onClick={disconnectWallet}
+                    className="rounded-2xl bg-red-500 px-4 py-3 font-black text-white"
+                  >
+                    Disconnect
+                  </button>
+                </div>
+              </div>
+            )}
+
+            <div className="mt-8 flex flex-col gap-4">
               <button
                 onClick={toggleTheme}
                 className="rounded-2xl bg-yellow-400 px-5 py-4 font-black text-black"
@@ -110,14 +147,10 @@ export default function HamburgerMenu() {
               </a>
 
               <a
-               className="rounded-2xl bg-white/10 px-5 py-4 text-white"
-               href={
-                 localStorage.getItem("viltrum_user")
-                   ? "/manage-card"
-                   : "/login"
-               }
+                className="rounded-2xl bg-white/10 px-5 py-4 text-white"
+                href={loggedIn ? "/manage-card" : "/login"}
               >
-                 Manage Card
+                Manage Card
               </a>
 
               <a className="rounded-2xl bg-white/10 px-5 py-4 text-white" href="/#about">
