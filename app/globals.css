@@ -5215,3 +5215,381 @@ body::after {
     letter-spacing: 2px !important;
   }
 }
+
+/* ==========================================================
+   PHYSICAL PREMIUM CARD
+========================================================== */
+
+.physical-premium-card {
+  width: 100% !important;
+  max-width: 856px !important;
+  aspect-ratio: 85.6 / 53.98 !important;
+  height: auto !important;
+  min-height: unset !important;
+
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  padding: clamp(18px, 3.2vw, 46px) !important;
+  border-radius: clamp(22px, 3vw, 34px);
+
+  background:
+    radial-gradient(circle at 82% 12%, rgba(255, 213, 92, .28), transparent 34%),
+    radial-gradient(circle at 10% 85%, rgba(255, 255, 255, .07), transparent 32%),
+    linear-gradient(135deg, #060606 0%, #17120a 38%, #6b4b12 72%, #0a0703 100%);
+
+  border: 1px solid rgba(212, 175, 55, .55);
+
+  box-shadow:
+    0 35px 80px rgba(0,0,0,.65),
+    0 0 45px rgba(212, 175, 55, .18),
+    inset 0 1px rgba(255,255,255,.15),
+    inset 0 -1px rgba(255,255,255,.05);
+
+  transform-style: preserve-3d;
+}
+
+@media (hover: hover) {
+  .physical-premium-card:hover {
+    transform: perspective(1200px) rotateX(4deg) rotateY(-5deg) translateY(-6px);
+  }
+}
+
+.physical-premium-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      115deg,
+      rgba(255,255,255,.035) 0px,
+      rgba(255,255,255,.035) 1px,
+      transparent 1px,
+      transparent 8px
+    );
+  opacity: .42;
+  pointer-events: none;
+}
+
+.physical-premium-card::after {
+  content: "";
+  position: absolute;
+  inset: -45%;
+  background:
+    linear-gradient(
+      115deg,
+      transparent 35%,
+      rgba(255,255,255,.17) 50%,
+      transparent 65%
+    );
+  transform: translateX(-120%) rotate(12deg);
+  transition: 1.2s;
+  pointer-events: none;
+}
+
+.physical-premium-card:hover::after {
+  transform: translateX(120%) rotate(12deg);
+}
+
+.physical-card-bg-mark {
+  position: absolute;
+  right: 8%;
+  top: 14%;
+  font-size: clamp(150px, 20vw, 300px);
+  line-height: .8;
+  font-weight: 900;
+  color: rgba(255,255,255,.035);
+  transform: skewX(-12deg);
+  pointer-events: none;
+}
+
+.physical-card-light {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      120deg,
+      transparent 0%,
+      transparent 45%,
+      rgba(212, 175, 55, .22) 46%,
+      rgba(212, 175, 55, .08) 53%,
+      transparent 54%
+    );
+  pointer-events: none;
+}
+
+.physical-card-gold-line {
+  position: absolute;
+  left: 8%;
+  top: 46%;
+  width: 18%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(212,175,55,.8), transparent);
+  opacity: .7;
+}
+
+.physical-card-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.physical-card-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: clamp(5px, 1vw, 10px);
+  font-size: clamp(15px, 1.5vw, 24px);
+}
+
+.physical-card-logo {
+  width: clamp(34px, 5vw, 62px);
+  height: clamp(34px, 5vw, 62px);
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    linear-gradient(145deg, #ffe08a, #b8860b 55%, #3b2603);
+
+  color: #111;
+  font-size: clamp(24px, 3vw, 44px);
+  font-weight: 900;
+  font-style: italic;
+
+  box-shadow:
+    inset 0 1px rgba(255,255,255,.45),
+    0 10px 24px rgba(0,0,0,.45),
+    0 0 22px rgba(212,175,55,.2);
+}
+
+.physical-card-type {
+  color: rgba(255,255,255,.88);
+  letter-spacing: clamp(4px, .9vw, 10px);
+  font-size: clamp(10px, 1.1vw, 17px);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.physical-card-chip {
+  position: relative;
+  z-index: 2;
+  margin-top: clamp(26px, 4vw, 50px);
+  width: clamp(58px, 9vw, 110px);
+  height: clamp(42px, 6.5vw, 78px);
+  border-radius: 12px;
+
+  background:
+    linear-gradient(135deg, #fff1a8 0%, #c99a2e 42%, #7e5512 100%);
+
+  box-shadow:
+    inset 0 2px rgba(255,255,255,.55),
+    inset 0 -2px rgba(0,0,0,.25),
+    0 10px 22px rgba(0,0,0,.4);
+}
+
+.physical-card-chip::before,
+.physical-card-chip::after {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  border: 1px solid rgba(80,45,0,.45);
+  border-radius: 8px;
+}
+
+.physical-card-chip::after {
+  inset: 0;
+  background:
+    linear-gradient(90deg, transparent 30%, rgba(60,30,0,.35) 31%, transparent 32%, transparent 68%, rgba(60,30,0,.35) 69%, transparent 70%),
+    linear-gradient(0deg, transparent 45%, rgba(60,30,0,.28) 46%, transparent 47%);
+}
+
+.physical-card-chip span {
+  position: absolute;
+  background: rgba(75,42,0,.35);
+}
+
+.physical-card-chip span:nth-child(1) {
+  width: 1px;
+  height: 100%;
+  left: 32%;
+  top: 0;
+}
+
+.physical-card-chip span:nth-child(2) {
+  width: 1px;
+  height: 100%;
+  right: 32%;
+  top: 0;
+}
+
+.physical-card-chip span:nth-child(3) {
+  height: 1px;
+  width: 100%;
+  left: 0;
+  top: 36%;
+}
+
+.physical-card-chip span:nth-child(4) {
+  height: 1px;
+  width: 100%;
+  left: 0;
+  bottom: 36%;
+}
+
+.physical-card-number {
+  position: relative;
+  z-index: 2;
+  margin-top: clamp(22px, 3vw, 42px);
+
+  color: #f8f8f8;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: clamp(22px, 4.2vw, 54px);
+  letter-spacing: clamp(5px, 1vw, 14px);
+  white-space: nowrap;
+
+  text-shadow:
+    0 2px 0 rgba(0,0,0,.55),
+    0 8px 18px rgba(0,0,0,.55);
+}
+
+.physical-card-bottom {
+  position: relative;
+  z-index: 2;
+  margin-top: auto;
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(42px, 8vw, 110px);
+  padding-right: 190px;
+}
+
+.physical-card-bottom small {
+  display: block;
+  color: rgba(255,255,255,.58);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: clamp(9px, 1vw, 15px);
+}
+
+.physical-card-bottom b {
+  display: block;
+  margin-top: 5px;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: clamp(2px, .45vw, 6px);
+  font-size: clamp(14px, 2vw, 28px);
+}
+
+.physical-card-visa {
+  position: absolute;
+  right: clamp(24px, 4vw, 48px);
+  bottom: clamp(22px, 3.5vw, 38px);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1;
+}
+
+.physical-card-visa strong {
+  font-family: "Arial Black", Arial, Helvetica, sans-serif;
+  font-style: italic;
+  font-weight: 900;
+  font-size: clamp(24px, 4vw, 48px);
+  color: #f8f8f8;
+  letter-spacing: 0;
+  white-space: nowrap;
+  line-height: .9;
+  transform: skewX(-8deg);
+
+  text-shadow:
+    0 1px 2px rgba(0,0,0,.6),
+    0 6px 12px rgba(0,0,0,.35);
+}
+
+.physical-card-visa span {
+  margin-top: 4px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(8px,.9vw,13px);
+  letter-spacing: 2px;
+  color: #dedede;
+}
+
+@media (max-width: 768px) {
+  .physical-premium-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    aspect-ratio: 85.6 / 53.98 !important;
+    padding: 16px !important;
+    border-radius: 22px !important;
+  }
+
+  .physical-card-brand {
+    font-size: 12px !important;
+    letter-spacing: 4px !important;
+    gap: 9px !important;
+  }
+
+  .physical-card-logo {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 23px !important;
+  }
+
+  .physical-card-type {
+    font-size: 8px !important;
+    letter-spacing: 3px !important;
+  }
+
+  .physical-card-chip {
+    width: 48px !important;
+    height: 34px !important;
+    margin-top: 18px !important;
+  }
+
+  .physical-card-number {
+    font-size: 22px !important;
+    letter-spacing: 4px !important;
+    margin-top: 18px !important;
+  }
+
+  .physical-card-bottom {
+    position: absolute !important;
+    left: 16px !important;
+    bottom: 13px !important;
+    gap: 24px !important;
+    padding-right: 115px !important;
+  }
+
+  .physical-card-bottom small {
+    font-size: 7px !important;
+    letter-spacing: 1.2px !important;
+  }
+
+  .physical-card-bottom b {
+    font-size: 10px !important;
+    letter-spacing: 1.2px !important;
+  }
+
+  .physical-card-visa {
+    right: 16px !important;
+    bottom: 13px !important;
+  }
+
+  .physical-card-visa strong {
+    font-size: 25px !important;
+  }
+
+  .physical-card-visa span {
+    font-size: 7px !important;
+    letter-spacing: 2px !important;
+  }
+}
