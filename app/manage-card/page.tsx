@@ -420,6 +420,20 @@ setLoading(false);
     }
     blurred={isInactiveFree}
   />
+) : isPhysical ? (
+  <PhysicalPremiumCard
+    number={
+      showDetails && order.card_number
+        ? order.card_number
+        : maskedNumber
+    }
+    holder={order.full_name || "Card Holder"}
+    expiry={
+      showDetails && order.card_exp
+        ? order.card_exp
+        : "**/**"
+    }
+  />
 ) : (
   <div
     className={`manage-card ${
