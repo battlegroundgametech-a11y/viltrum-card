@@ -15,54 +15,59 @@ export default function PremiumCard({
   number,
   holder,
   expiry = "**/**",
-  status = "ACTIVE",
   variant = "virtual",
   blurred = false
 }: PremiumCardProps) {
+  const displayNumber = number || "**** **** **** 0000";
+
   return (
     <div
-      className={`premium-card ${variant} ${
+      className={`premium-card luxury-virtual-card ${variant} ${
         blurred ? "premium-card-blurred" : ""
       }`}
     >
-      <div className="premium-card-shine" />
+      <div className="lux-card-bg-mark">V</div>
+      <div className="lux-card-light" />
+      <div className="lux-card-line lux-card-line-one" />
+      <div className="lux-card-line lux-card-line-two" />
 
-      <div className="premium-card-top">
-        <div className="premium-chip" />
+      <div className="lux-card-header">
+        <div className="lux-brand">
+          <span className="lux-brand-mark">V</span>
+          <span>VILTRUM</span>
+        </div>
 
-        <div className="premium-contactless">
-          )))
+        <div className="lux-card-type">
+          {title}
         </div>
       </div>
 
-      <div className="premium-brand">
-        VILTRUM
+      <div className="lux-chip">
+        <span />
+        <span />
+        <span />
+        <span />
       </div>
 
-      <div className="premium-title">
-        {title}
+      <div className="lux-card-number">
+        {displayNumber}
       </div>
 
-      <div className="premium-number">
-        {number}
-      </div>
-
-      <div className="premium-bottom">
-
+      <div className="lux-card-meta">
         <div>
           <small>Card Holder</small>
           <b>{holder}</b>
         </div>
 
         <div>
-          <small>Expires</small>
+          <small>Valid Thru</small>
           <b>{expiry}</b>
         </div>
-
       </div>
 
-      <div className="premium-status">
-        {status}
+      <div className="lux-visa">
+        <strong>VISA</strong>
+        <span>SIGNATURE</span>
       </div>
     </div>
   );
