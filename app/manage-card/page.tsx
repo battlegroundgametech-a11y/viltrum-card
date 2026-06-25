@@ -287,36 +287,6 @@ setLoading(false);
     <main className="manage-page">
       <HamburgerMenu />
 
-      {unlockedCards.length > 0 && (
-        <div className="manage-unlock">
-          <div className="manage-unlock-card">
-            <p className="manage-eyebrow">Viltrum Cards</p>
-            <h1>Your Cards</h1>
-            <p>Select a card to manage or unlock a new card below.</p>
-
-            <div className="manage-card-list">
-              {unlockedCards.map((card: any) => (
-                <button
-                  key={card.id}
-                  onClick={() => {
-                    setOrder(card);
-                    localStorage.setItem(
-                      "viltrum_selected_card",
-                      JSON.stringify(card)
-                    );
-                  }}
-                  className="manage-card-list-item"
-                >
-                  <span>{card.card_type}</span>
-                  <b>{card.order_id}</b>
-                  <small>{card.status}</small>
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
       <div className="manage-unlock">
         <div className="manage-unlock-card">
           <p className="manage-eyebrow">Viltrum Secure Access</p>
@@ -337,6 +307,40 @@ setLoading(false);
           </form>
         </div>
       </div>
+
+      {unlockedCards.length > 0 && (
+        <div className="manage-unlock">
+          <div className="manage-unlock-card">
+            <p className="manage-eyebrow">Viltrum Cards</p>
+            <h1>Your Cards</h1>
+            <p>Select a card to manage or unlock a new card below.</p>
+
+            <div className="manage-card-list">
+              {unlockedCards.map((card: any) => (
+                <button
+                  key={card.id}
+                  onClick={() => {
+                    setOrder(card);
+                    localStorage.setItem(
+                      "viltrum_selected_card",
+                      JSON.stringify(card)
+                    );
+                  }}
+                  className="manage-card-list-item"
+                >
+                  <span className="manage-card-type">
+  {card.card_type === "virtual" && "🟥 Virtual"}
+  {card.card_type === "physical" && "🟨 Physical"}
+  {card.card_type === "free" && "🟦 Free Mint"}
+</span>
+                  <b>{card.order_id}</b>
+                  <small>{card.status}</small>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
