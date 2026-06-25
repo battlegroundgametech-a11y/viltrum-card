@@ -405,13 +405,6 @@ setLoading(false);
   </div>
 )}
 
-            {isInactiveFree && (
-              <div className="inactive-card-label">
-                INACTIVE
-              </div>
-            )}
-          </div>
-
           {isPhysical && (
             <div className="manage-status-box">
               <h2>
