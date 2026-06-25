@@ -4036,3 +4036,13 @@ input:focus{
 
     backdrop-filter:blur(6px);
 }
+
+/* Fix PremiumCard status overlap */
+.premium-status {
+  top: 32px !important;
+  right: 32px !important;
+}
+
+.premium-contactless {
+  margin-right: 80px !important;
+}
