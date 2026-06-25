@@ -4479,3 +4479,45 @@ body::after {
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
 }
+
+/* Manage card list: premium readable card style */
+
+.manage-card-list-item b {
+  color: #fff7f9 !important;
+  font-size: 26px !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.5px !important;
+  text-shadow: 0 2px 12px rgba(0,0,0,.35);
+}
+
+.manage-card-type,
+.manage-card-list-item span {
+  color: #ffd6de !important;
+  background: rgba(255,255,255,.10) !important;
+  border: 1px solid rgba(255,255,255,.22) !important;
+  text-shadow: none !important;
+}
+
+.manage-card-list-item small {
+  background: rgba(255,255,255,.13) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255,255,255,.16);
+}
+
+.manage-card-list-item {
+  position: relative !important;
+  min-height: 170px;
+  padding-bottom: 48px !important;
+}
+
+.manage-card-visa {
+  position: absolute;
+  right: 24px;
+  bottom: 22px;
+  color: rgba(255,255,255,.88);
+  font-size: 22px;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -1px;
+  text-shadow: 0 2px 12px rgba(0,0,0,.35);
+}
