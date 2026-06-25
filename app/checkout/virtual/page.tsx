@@ -118,21 +118,6 @@ const { data: finalPrice } = useReadContract({
       <div className="checkout-form-box">
         <h1>Virtual Card Purchase</h1>
 
-<p className="checkout-price">
-  {couponCode && finalPrice && (
-  <div className="checkout-discount-box">
-    <p>
-      Final Price:
-      <strong>
-        {" "}
-        {formatEther(finalPrice as bigint)} ETH
-      </strong>
-    </p>
-  </div>
-)}
-  Price: {virtualPrice ? formatEther(virtualPrice as bigint) : "0"} ETH
-</p>
-
         <form onSubmit={submitOrder}>
           <input name="full_name" required placeholder="Full Name" />
 
