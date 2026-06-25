@@ -5,11 +5,13 @@ import WalletBadge from "../../../components/WalletBadge";
 import { useEffect, useState } from "react";
 import { useWriteContract, useReadContract } from "wagmi";
 import { FREE_MINT_ADDRESS, FREE_MINT_ABI } from "../../../lib/freeMintContract";
+import { useToast } from "../../../components/ToastProvider";
 
 export default function FreeMintPage() {
   const [loading, setLoading] = useState(false);
 
 const { writeContractAsync } = useWriteContract();
+const { showToast } = useToast();
 
 const { data: mintEnabled } = useReadContract({
   address: FREE_MINT_ADDRESS as `0x${string}`,
@@ -39,7 +41,7 @@ const { data: mintEnabled } = useReadContract({
   const telegramId = localStorage.getItem("viltrum_user");
 
   if (!wallet) {
-    alert("Please connect wallet first.");
+    showToast("Please connect wallet first.", "error");
     window.location.href = "/connect-wallet";
     return;
   }
@@ -59,13 +61,14 @@ try {
   functionName: "freeMint"
 } as any);
 
-  alert("NFT minted successfully.");
+  showToast("NFT minted successfully.", "success");
 } catch (err) {
   console.error(err);
 
-  alert(
-    "Mint failed.\n\nYou may already have minted your NFT or the transaction was rejected."
-  );
+  showToast(
+  "Mint failed. You may already have minted or rejected the transaction.",
+  "error"
+);
 
   setLoading(false);
   return;
@@ -105,7 +108,7 @@ try {
   window.location.href =
     `/success?order=${data.order_id}&secret=${data.secret_code}`;
 } else {
-  alert(data.error || "Order failed");
+  showToast(data.error || "Order failed", "error");
 }
 
   setLoading(false);
