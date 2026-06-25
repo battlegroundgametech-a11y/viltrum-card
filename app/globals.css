@@ -5115,3 +5115,103 @@ body::after {
     letter-spacing: 2px !important;
   }
 }
+
+/* ==========================================================
+   FINAL FIX: FREE CARD SAME SIZE AS VIRTUAL CARD
+========================================================== */
+
+.free-premium-card {
+  width: 100% !important;
+  max-width: 856px !important;
+  aspect-ratio: 85.6 / 53.98 !important;
+  height: auto !important;
+  min-height: unset !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+
+  padding: clamp(18px, 3.2vw, 46px) !important;
+  border-radius: clamp(22px, 3vw, 34px) !important;
+}
+
+/* stop content from pushing outside */
+.free-card-number,
+.free-card-brand,
+.free-card-type,
+.free-card-bottom,
+.free-card-visa {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* mobile exact fit */
+@media (max-width: 768px) {
+  .free-premium-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    aspect-ratio: 85.6 / 53.98 !important;
+    padding: 16px !important;
+  }
+
+  .free-card-brand {
+    font-size: 12px !important;
+    letter-spacing: 4px !important;
+  }
+
+  .free-card-logo {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 23px !important;
+  }
+
+  .free-card-type {
+    font-size: 8px !important;
+    letter-spacing: 3px !important;
+  }
+
+  .free-card-chip {
+    width: 48px !important;
+    height: 34px !important;
+    margin-top: 18px !important;
+  }
+
+  .free-card-number {
+    font-size: 22px !important;
+    letter-spacing: 4px !important;
+    margin-top: 18px !important;
+    white-space: nowrap !important;
+  }
+
+  .free-card-bottom {
+    position: absolute !important;
+    left: 16px !important;
+    bottom: 13px !important;
+    gap: 24px !important;
+    padding-right: 115px !important;
+  }
+
+  .free-card-bottom small {
+    font-size: 7px !important;
+    letter-spacing: 1.2px !important;
+  }
+
+  .free-card-bottom b {
+    font-size: 10px !important;
+    letter-spacing: 1.2px !important;
+  }
+
+  .free-card-visa {
+    right: 16px !important;
+    bottom: 13px !important;
+  }
+
+  .free-card-visa strong {
+    font-size: 25px !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  .free-card-visa span {
+    font-size: 7px !important;
+    letter-spacing: 2px !important;
+  }
+}
