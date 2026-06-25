@@ -4086,3 +4086,18 @@ input:focus{
     display: none !important;
   }
 }
+
+/* Remove white overscroll area */
+html,
+body {
+  background: #06070b !important;
+  overscroll-behavior: none;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: #06070b;
+  z-index: -9999;
+}
