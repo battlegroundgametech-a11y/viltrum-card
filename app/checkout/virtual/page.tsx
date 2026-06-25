@@ -13,11 +13,13 @@ import {
   CARD_SALE_ADDRESS,
   CARD_SALE_ABI
 } from "../../../lib/cardSale";
+import { useToast } from "../../../components/ToastProvider";
 
 export default function VirtualCheckoutPage() {
   const [loading, setLoading] = useState(false);
   const [couponCode, setCouponCode] = useState("");
   const { writeContractAsync } = useWriteContract<any>();
+  const { showToast } = useToast();
   const { data: virtualPrice } = useReadContract({
   address: CARD_SALE_ADDRESS as `0x${string}`,
   abi: CARD_SALE_ABI as any,
@@ -53,7 +55,7 @@ const { data: finalPrice } = useReadContract({
     const telegramId = localStorage.getItem("viltrum_user");
 
     if (!wallet) {
-      alert("Please connect wallet first.");
+      showToast("Please connect wallet first.", "error");
       window.location.href = "/connect-wallet";
       return;
     }
@@ -70,7 +72,7 @@ const { data: finalPrice } = useReadContract({
         value: (finalPrice || virtualPrice) as bigint
       } as any);
     } catch (err: any) {
-      alert(err?.shortMessage || err?.message || "Payment failed");
+      showToast(err?.shortMessage || err?.message || "Payment failed", "error");
       setLoading(false);
       return;
     }
@@ -96,7 +98,7 @@ const { data: finalPrice } = useReadContract({
       window.location.href =
         `/success?order=${data.order_id}&secret=${data.secret_code}`;
     } else {
-      alert(data.error || "Order failed");
+      showToast(data.error || "Order failed", "error");
     }
 
     setLoading(false);
