@@ -384,6 +384,7 @@ setLoading(false);
       <section className="manage-bank-layout">
         <div className="manage-card-panel">
           {isVirtual ? (
+  {isVirtual ? (
   <PremiumCard
     variant="virtual"
     title="Virtual Card"
@@ -403,6 +404,21 @@ setLoading(false);
         ? order.status.toUpperCase()
         : "ACTIVE"
     }
+  />
+) : isFree ? (
+  <FreePremiumCard
+    number={
+      showDetails && order.card_number
+        ? order.card_number
+        : maskedNumber
+    }
+    holder={order.full_name || "Card Holder"}
+    expiry={
+      showDetails && order.card_exp
+        ? order.card_exp
+        : "**/**"
+    }
+    blurred={isInactiveFree}
   />
 ) : (
   <div
