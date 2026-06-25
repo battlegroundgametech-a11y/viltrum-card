@@ -39,21 +39,21 @@ export async function POST(req: NextRequest) {
     const cardTypeId = getCardTypeId(order.card_type);
 
     const balance = await publicClient.readContract({
-      address: VAULT_BANK_ADDRESS as `0x${string}`,
-      abi: VAULT_BANK_ABI as any,
-      functionName: "getBalance",
-      args: [
-        order.wallet_address as `0x${string}`,
-        cardTypeId
-      ]
-    });
+  address: VAULT_BANK_ADDRESS as `0x${string}`,
+  abi: VAULT_BANK_ABI as any,
+  functionName: "getBalance",
+  args: [
+    order.wallet_address as `0x${string}`,
+    cardTypeId
+  ]
+} as any);
 
     const limits = await publicClient.readContract({
-      address: VAULT_BANK_ADDRESS as `0x${string}`,
-      abi: VAULT_BANK_ABI as any,
-      functionName: "cardLimits",
-      args: [cardTypeId]
-    });
+  address: VAULT_BANK_ADDRESS as `0x${string}`,
+  abi: VAULT_BANK_ABI as any,
+  functionName: "cardLimits",
+  args: [cardTypeId]
+} as any);
 
     const minDeposit = Array.isArray(limits)
       ? (limits[0] as bigint)
