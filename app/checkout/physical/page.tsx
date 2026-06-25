@@ -118,10 +118,6 @@ const { data: finalPrice } = useReadContract({
       <div className="checkout-form-box">
         <h1>Physical Card Purchase</h1>
 
-<p className="checkout-price">
-  Price: {physicalPrice ? formatEther(physicalPrice as bigint) : "0"} ETH
-</p>
-
         <form onSubmit={submitOrder}>
           <input name="full_name" required placeholder="Full Name" />
           <input name="telegram_username" required placeholder="Telegram Username" />
@@ -134,24 +130,6 @@ const { data: finalPrice } = useReadContract({
   value={couponCode}
   onChange={(e) => setCouponCode(e.target.value)}
 />
-
-<div className="checkout-price-box">
-  <p>
-    Base Price:{" "}
-    {physicalPrice
-      ? `${formatEther(physicalPrice as bigint)} ETH`
-      : "..."}
-  </p>
-
-  <p>
-    Final Price:{" "}
-    {finalPrice
-      ? `${formatEther(finalPrice as bigint)} ETH`
-      : physicalPrice
-      ? `${formatEther(physicalPrice as bigint)} ETH`
-      : "..."}
-  </p>
-</div>
 
 <button>
   {loading ? "Processing..." : "Purchase Physical Card"}
