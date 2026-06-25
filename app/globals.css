@@ -4305,17 +4305,17 @@ body::after {
 }
 
 /* ==========================================================
-   VILTRUM MANAGE PAGE - PREMIUM THEME
+   VILTRUM MANAGE PAGE - CRIMSON EDITION
 ========================================================== */
 
 .manage-page{
     background:
-        radial-gradient(circle at top left,#2b1a52 0%,transparent 35%),
-        radial-gradient(circle at top right,#0d314d 0%,transparent 35%),
-        linear-gradient(180deg,#090b10 0%,#050608 100%) !important;
+        radial-gradient(circle at top left, rgba(120,0,30,.35) 0%, transparent 35%),
+        radial-gradient(circle at top right, rgba(60,0,15,.35) 0%, transparent 35%),
+        linear-gradient(180deg,#090909 0%,#040404 100%) !important;
 }
 
-/* Panels */
+/* Glass panels */
 
 .manage-card-panel,
 .manage-money-panel,
@@ -4323,71 +4323,97 @@ body::after {
 .manage-details,
 .manage-modal,
 .manage-unlock-card{
-
-    background:rgba(16,20,30,.72) !important;
-
-    backdrop-filter:blur(20px);
-
-    border:1px solid rgba(255,255,255,.08);
-
+    background:rgba(20,20,22,.78) !important;
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(180,40,70,.22);
+    border-radius:24px;
     box-shadow:
-        0 18px 45px rgba(0,0,0,.45);
-
-    border-radius:26px;
+        0 20px 50px rgba(0,0,0,.45),
+        inset 0 1px rgba(255,255,255,.05);
 }
 
-/* Card list */
+/* Buttons */
 
-.manage-card-list-item{
+.manage-actions button,
+.manage-unlock-card button,
+.manage-modal button{
+    background:linear-gradient(
+        135deg,
+        #5f0f22,
+        #8d1634
+    ) !important;
 
-    background:rgba(255,255,255,.05) !important;
-
-    border:1px solid rgba(255,215,120,.15);
+    border:1px solid rgba(255,80,120,.25);
 
     color:#fff !important;
 
     transition:.25s;
+}
+
+.manage-actions button:hover,
+.manage-unlock-card button:hover,
+.manage-modal button:hover{
+
+    background:linear-gradient(
+        135deg,
+        #7d1730,
+        #b01f45
+    ) !important;
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 12px 30px rgba(176,31,69,.28);
+}
+
+/* My Cards */
+
+.manage-card-list-item{
+
+    background:linear-gradient(
+        135deg,
+        #1b1b1d,
+        #2d1119,
+        #4d1425
+    ) !important;
+
+    border:1px solid rgba(190,55,90,.25);
 
     border-radius:22px;
+
+    color:#fff !important;
+
+    transition:.25s;
 }
 
 .manage-card-list-item:hover{
 
+    border-color:#d23b62;
+
     transform:translateY(-3px);
 
-    border-color:#caa95c;
-
-    background:rgba(255,255,255,.08) !important;
-
     box-shadow:
-        0 18px 45px rgba(0,0,0,.4);
+        0 18px 40px rgba(150,25,55,.28);
 }
 
 /* Card Type */
 
 .manage-card-type{
 
-    background:rgba(202,169,92,.14) !important;
+    background:rgba(170,30,60,.18) !important;
 
-    border:1px solid rgba(202,169,92,.35);
+    border:1px solid rgba(220,70,100,.45);
 
-    color:#e6c97c !important;
+    color:#ffb8c7 !important;
 
     font-weight:800;
-}
-
-/* Order ID */
-
-.manage-card-list-item b{
-
-    color:#fff !important;
 }
 
 /* Status */
 
 .manage-card-list-item small{
 
-    background:#1b6e47 !important;
+    background:#811b33 !important;
 
     color:#fff !important;
 
@@ -4396,42 +4422,60 @@ body::after {
     padding:6px 14px;
 }
 
-/* Titles */
+/* Typography */
 
 .manage-page h1,
-.manage-page h2{
-
-    color:#fff;
+.manage-page h2,
+.manage-page b{
+    color:#ffffff;
 }
 
 .manage-page p,
 .manage-page span{
-
-    color:#b7bcc7;
+    color:#bfc2ca;
 }
 
-/* Buttons */
+/* Inputs */
 
-.manage-actions button{
+.manage-page input{
 
-    background:linear-gradient(
-        135deg,
-        #2c313d,
-        #171b23
-    );
+    background:#131416 !important;
 
-    border:1px solid rgba(202,169,92,.25);
+    border:1px solid rgba(180,40,70,.22);
 
     color:#fff;
 }
 
-.manage-actions button:hover{
+.manage-page input:focus{
 
-    border-color:#caa95c;
+    border-color:#cf3058;
+
+    box-shadow:
+        0 0 0 3px rgba(207,48,88,.18);
+}
+
+/* Money panel */
+
+.manage-money-panel{
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(90,10,30,.25),
+            rgba(20,20,22,.92)
+        ) !important;
+}
+
+/* Header */
+
+.manage-header h1{
 
     background:linear-gradient(
-        135deg,
-        #393f4d,
-        #222834
+        90deg,
+        #ffffff,
+        #ff9cb5
     );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
 }
