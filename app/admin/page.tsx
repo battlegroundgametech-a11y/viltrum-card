@@ -248,6 +248,33 @@ export default function AdminPage() {
               : "-"}
           </b>
         </p>
+
+        {order.card_type === "free" && (
+  <>
+    <p>
+      <span>Min Deposit</span>
+      <b>
+        {order.free_min_deposit_done
+          ? "Done"
+          : "Not Done"}
+      </b>
+    </p>
+
+    <p>
+      <span>Deposited</span>
+      <b>
+        {order.free_current_deposit || "0"} ETH
+      </b>
+    </p>
+
+    <p>
+      <span>Required</span>
+      <b>
+        {order.free_required_deposit || "-"} ETH
+      </b>
+    </p>
+  </>
+)}
       </div>
 
       <div className="admin-button-row">
