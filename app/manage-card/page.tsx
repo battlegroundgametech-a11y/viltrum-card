@@ -465,18 +465,17 @@ setLoading(false);
         </div>
 
         <div className="manage-money-panel">
-          <p>Current Balance</p>
-          <h2>
-            {vaultBalance === undefined ? (
-  <Skeleton className="skeleton-line" />
-) : (
-  <h2>
-    {formatEther(vaultBalance as bigint)} ETH
-  </h2>
-)}
-          <span>Vault contract balance will appear here.</span>
+  <p>Current Balance</p>
 
-          <div className="manage-mini-stats">
+  {vaultBalance === undefined ? (
+    <Skeleton className="skeleton-line" />
+  ) : (
+    <h2>{formatEther(vaultBalance as bigint)} ETH</h2>
+  )}
+
+  <span>Vault contract balance will appear here.</span>
+
+  <div className="manage-mini-stats">
 
   <div>
     <small>Total Deposits</small>
@@ -499,6 +498,8 @@ setLoading(false);
   </div>
 
 </div>
+        </div>
+      </section>
 
       <section className="manage-actions">
   {!(isFree && order.status !== "active") && (
