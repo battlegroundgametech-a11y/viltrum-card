@@ -4264,3 +4264,376 @@ body::after {
   font-weight: 800 !important;
   white-space: nowrap;
 }
+
+/* ==========================================================
+   LUXURY VIRTUAL CARD - MANAGE PAGE ONLY
+========================================================== */
+
+.luxury-virtual-card {
+  width: min(100%, 856px) !important;
+  aspect-ratio: 85.6 / 53.98 !important;
+  min-height: unset !important;
+
+  position: relative;
+  overflow: hidden;
+
+  padding: clamp(22px, 3.2vw, 46px) !important;
+
+  border-radius: clamp(22px, 3vw, 34px) !important;
+
+  background:
+    radial-gradient(circle at 85% 10%, rgba(255, 35, 75, .35), transparent 32%),
+    radial-gradient(circle at 12% 88%, rgba(255, 255, 255, .08), transparent 30%),
+    linear-gradient(135deg, #070707 0%, #111114 35%, #360812 72%, #060606 100%) !important;
+
+  border: 1px solid rgba(255, 70, 105, .55) !important;
+
+  box-shadow:
+    0 35px 80px rgba(0,0,0,.65),
+    0 0 45px rgba(190, 20, 50, .22),
+    inset 0 1px rgba(255,255,255,.16),
+    inset 0 -1px rgba(255,255,255,.06) !important;
+
+  transform-style: preserve-3d;
+}
+
+/* 3D hover only on devices that support hover */
+@media (hover: hover) {
+  .luxury-virtual-card:hover {
+    transform: perspective(1200px) rotateX(4deg) rotateY(-5deg) translateY(-6px);
+  }
+}
+
+/* subtle carbon pattern */
+.luxury-virtual-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    repeating-linear-gradient(
+      115deg,
+      rgba(255,255,255,.035) 0px,
+      rgba(255,255,255,.035) 1px,
+      transparent 1px,
+      transparent 8px
+    );
+
+  opacity: .45;
+  pointer-events: none;
+}
+
+/* animated premium shine */
+.luxury-virtual-card::after {
+  content: "";
+  position: absolute;
+  inset: -45%;
+
+  background:
+    linear-gradient(
+      115deg,
+      transparent 35%,
+      rgba(255,255,255,.18) 50%,
+      transparent 65%
+    );
+
+  transform: translateX(-120%) rotate(12deg);
+  transition: 1.2s;
+  pointer-events: none;
+}
+
+.luxury-virtual-card:hover::after {
+  transform: translateX(120%) rotate(12deg);
+}
+
+/* large embossed V */
+.lux-card-bg-mark {
+  position: absolute;
+  right: 8%;
+  top: 16%;
+
+  font-size: clamp(160px, 20vw, 310px);
+  line-height: .8;
+  font-weight: 900;
+
+  color: rgba(255,255,255,.035);
+  text-shadow:
+    0 1px rgba(255,255,255,.08),
+    0 25px 45px rgba(0,0,0,.65);
+
+  transform: skewX(-12deg);
+  pointer-events: none;
+}
+
+/* red lighting */
+.lux-card-light {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      120deg,
+      transparent 0%,
+      transparent 45%,
+      rgba(255, 30, 70, .24) 46%,
+      rgba(255, 30, 70, .07) 53%,
+      transparent 54%
+    );
+
+  pointer-events: none;
+}
+
+.lux-card-line {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,60,95,.9), transparent);
+  transform: rotate(-35deg);
+  pointer-events: none;
+}
+
+.lux-card-line-one {
+  width: 70%;
+  left: 18%;
+  top: 34%;
+}
+
+.lux-card-line-two {
+  width: 50%;
+  right: -5%;
+  bottom: 35%;
+  opacity: .55;
+}
+
+/* header */
+.lux-card-header {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.lux-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: clamp(5px, 1vw, 11px);
+  font-size: clamp(15px, 1.6vw, 25px);
+}
+
+.lux-brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: clamp(34px, 5vw, 62px);
+  height: clamp(34px, 5vw, 62px);
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(145deg, #ff315b, #7b1025 55%, #22050b);
+
+  color: white;
+  font-size: clamp(24px, 3vw, 44px);
+  font-weight: 900;
+  font-style: italic;
+
+  box-shadow:
+    inset 0 1px rgba(255,255,255,.35),
+    0 10px 24px rgba(0,0,0,.45),
+    0 0 22px rgba(255,35,75,.24);
+}
+
+.lux-card-type {
+  color: rgba(255,255,255,.9);
+  letter-spacing: clamp(4px, .9vw, 10px);
+  text-transform: uppercase;
+  font-size: clamp(10px, 1.1vw, 17px);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* detailed EMV chip */
+.lux-chip {
+  position: relative;
+  z-index: 2;
+
+  margin-top: clamp(28px, 5vw, 62px);
+
+  width: clamp(58px, 9vw, 110px);
+  height: clamp(42px, 6.5vw, 78px);
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(135deg, #fff1a8 0%, #c99a2e 42%, #7e5512 100%);
+
+  box-shadow:
+    inset 0 2px rgba(255,255,255,.55),
+    inset 0 -2px rgba(0,0,0,.25),
+    0 10px 22px rgba(0,0,0,.4);
+}
+
+.lux-chip::before,
+.lux-chip::after {
+  content: "";
+  position: absolute;
+  inset: 9px;
+
+  border: 1px solid rgba(80,45,0,.45);
+  border-radius: 8px;
+}
+
+.lux-chip::after {
+  inset: 0;
+  background:
+    linear-gradient(90deg, transparent 30%, rgba(60,30,0,.35) 31%, transparent 32%, transparent 68%, rgba(60,30,0,.35) 69%, transparent 70%),
+    linear-gradient(0deg, transparent 45%, rgba(60,30,0,.28) 46%, transparent 47%);
+}
+
+.lux-chip span {
+  position: absolute;
+  background: rgba(75,42,0,.35);
+}
+
+.lux-chip span:nth-child(1) {
+  width: 1px;
+  height: 100%;
+  left: 32%;
+  top: 0;
+}
+
+.lux-chip span:nth-child(2) {
+  width: 1px;
+  height: 100%;
+  right: 32%;
+  top: 0;
+}
+
+.lux-chip span:nth-child(3) {
+  height: 1px;
+  width: 100%;
+  left: 0;
+  top: 36%;
+}
+
+.lux-chip span:nth-child(4) {
+  height: 1px;
+  width: 100%;
+  left: 0;
+  bottom: 36%;
+}
+
+/* number */
+.lux-card-number {
+  position: relative;
+  z-index: 2;
+
+  margin-top: clamp(24px, 4vw, 54px);
+
+  color: #f7f7f7;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: clamp(22px, 4.2vw, 54px);
+  letter-spacing: clamp(5px, 1vw, 14px);
+
+  text-shadow:
+    0 2px 0 rgba(0,0,0,.55),
+    0 8px 18px rgba(0,0,0,.55);
+}
+
+/* bottom info */
+.lux-card-meta {
+  position: relative;
+  z-index: 2;
+
+  margin-top: auto;
+
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(42px, 8vw, 110px);
+}
+
+.lux-card-meta small {
+  display: block;
+  color: rgba(255,255,255,.58);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: clamp(9px, 1vw, 15px);
+}
+
+.lux-card-meta b {
+  display: block;
+  margin-top: 5px;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: clamp(2px, .45vw, 6px);
+  font-size: clamp(14px, 2vw, 28px);
+}
+
+/* Visa Signature text-only branding */
+.lux-visa {
+  position: absolute;
+  right: clamp(24px, 4vw, 54px);
+  bottom: clamp(22px, 3.6vw, 44px);
+
+  z-index: 3;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  line-height: .85;
+}
+
+.lux-visa strong {
+  color: #f4f4f4;
+  font-size: clamp(34px, 6vw, 82px);
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -5px;
+
+  text-shadow:
+    0 2px 0 rgba(0,0,0,.65),
+    0 8px 18px rgba(0,0,0,.6);
+}
+
+.lux-visa span {
+  margin-top: 8px;
+  color: #ff315b;
+  font-size: clamp(10px, 1.3vw, 18px);
+  letter-spacing: clamp(4px, .7vw, 9px);
+  font-weight: 800;
+}
+
+/* remove old premium card internals if they still exist */
+.luxury-virtual-card .premium-card-shine,
+.luxury-virtual-card .premium-card-top,
+.luxury-virtual-card .premium-brand,
+.luxury-virtual-card .premium-title,
+.luxury-virtual-card .premium-number,
+.luxury-virtual-card .premium-bottom,
+.luxury-virtual-card .premium-status {
+  display: none !important;
+}
+
+/* Mobile keeps same ratio, just scales down */
+@media (max-width: 768px) {
+  .luxury-virtual-card {
+    width: 100% !important;
+    padding: 22px !important;
+  }
+
+  .lux-card-meta {
+    gap: 34px;
+  }
+
+  .lux-card-number {
+    letter-spacing: 5px;
+  }
+}
