@@ -499,7 +499,6 @@ setLoading(false);
   </div>
 
 </div>
-      </section>
 
       <section className="manage-actions">
   {!(isFree && order.status !== "active") && (
