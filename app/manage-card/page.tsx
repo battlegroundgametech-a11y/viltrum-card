@@ -329,9 +329,9 @@ setLoading(false);
                   className="manage-card-list-item"
                 >
                   <span className="manage-card-type">
-  {card.card_type === "virtual" && "🟥 Virtual"}
-  {card.card_type === "physical" && "🟨 Physical"}
-  {card.card_type === "free" && "🟦 Free Mint"}
+  {card.card_type === "virtual" && "Virtual"}
+  {card.card_type === "physical" && "Physical"}
+  {card.card_type === "free" && "Free Mint"}
 </span>
                   <b>{card.order_id}</b>
                   <small>{card.status}</small>
