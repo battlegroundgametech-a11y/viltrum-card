@@ -3755,3 +3755,284 @@ input:focus{
 
     padding-bottom:80px;
 }
+
+/* ==========================================================
+   PREMIUM VILTRUM CARD
+========================================================== */
+
+.premium-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    width:100%;
+
+    min-height:245px;
+
+    border-radius:30px;
+
+    padding:28px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.18),
+            rgba(255,255,255,.03)
+        );
+
+    backdrop-filter:blur(35px);
+
+    -webkit-backdrop-filter:blur(35px);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    box-shadow:
+        0 18px 60px rgba(0,0,0,.45);
+
+    transition:.45s ease;
+
+    isolation:isolate;
+}
+
+.premium-card:hover{
+
+    transform:
+        rotateX(5deg)
+        rotateY(-5deg)
+        translateY(-8px);
+
+    box-shadow:
+        0 35px 80px rgba(0,0,0,.55);
+}
+
+/* Shine */
+
+.premium-card-shine{
+
+    position:absolute;
+
+    inset:-40%;
+
+    background:
+        linear-gradient(
+            120deg,
+            transparent,
+            rgba(255,255,255,.18),
+            transparent
+        );
+
+    transform:translateX(-120%) rotate(18deg);
+
+    transition:1.2s;
+
+    pointer-events:none;
+}
+
+.premium-card:hover .premium-card-shine{
+
+    transform:
+        translateX(120%)
+        rotate(18deg);
+}
+
+/* Themes */
+
+.premium-card.virtual{
+
+    background:
+        linear-gradient(
+            135deg,
+            #23265c,
+            #141932,
+            #0b0f18
+        );
+}
+
+.premium-card.physical{
+
+    background:
+        linear-gradient(
+            135deg,
+            #a67c00,
+            #d7b64d,
+            #5f4700
+        );
+}
+
+.premium-card.free{
+
+    background:
+        linear-gradient(
+            135deg,
+            #404040,
+            #1d1d1d,
+            #101010
+        );
+}
+
+/* Chip */
+
+.premium-chip{
+
+    width:54px;
+
+    height:42px;
+
+    border-radius:10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f9e48c,
+            #d7ae36
+        );
+
+    box-shadow:
+        inset 0 0 5px rgba(255,255,255,.4);
+}
+
+/* Contactless */
+
+.premium-contactless{
+
+    font-size:26px;
+
+    opacity:.8;
+}
+
+.premium-card-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+}
+
+.premium-brand{
+
+    margin-top:20px;
+
+    font-size:.8rem;
+
+    letter-spacing:5px;
+
+    color:#f8d86a;
+
+    font-weight:700;
+}
+
+.premium-title{
+
+    margin-top:10px;
+
+    font-size:1.4rem;
+
+    font-weight:700;
+}
+
+.premium-number{
+
+    margin-top:26px;
+
+    font-size:1.35rem;
+
+    letter-spacing:4px;
+
+    font-family:monospace;
+}
+
+.premium-bottom{
+
+    margin-top:30px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-end;
+}
+
+.premium-bottom small{
+
+    display:block;
+
+    opacity:.65;
+
+    margin-bottom:4px;
+
+    font-size:.72rem;
+}
+
+.premium-bottom b{
+
+    font-size:.92rem;
+}
+
+.premium-status{
+
+    position:absolute;
+
+    top:22px;
+
+    right:22px;
+
+    background:rgba(255,255,255,.14);
+
+    backdrop-filter:blur(10px);
+
+    padding:7px 14px;
+
+    border-radius:999px;
+
+    font-size:.72rem;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+}
+
+/* Inactive */
+
+.premium-card-blurred{
+
+    filter:blur(3px) grayscale(.35);
+
+    opacity:.82;
+}
+
+.premium-card-blurred::after{
+
+    content:"INACTIVE";
+
+    position:absolute;
+
+    inset:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:2rem;
+
+    font-weight:800;
+
+    letter-spacing:6px;
+
+    color:white;
+
+    background:rgba(0,0,0,.35);
+
+    backdrop-filter:blur(6px);
+}
