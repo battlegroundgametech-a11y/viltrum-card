@@ -4114,3 +4114,19 @@ main {
     linear-gradient(180deg, #090909, #06070b) !important;
   min-height: 100vh;
 }
+
+/* Better tablet layout */
+@media (min-width: 768px) and (max-width: 1200px) {
+
+  .hero,
+  .hero-content,
+  .purchase-grid,
+  .faq-section,
+  .manage-page,
+  .purchase-premium,
+  .manage-bank-layout {
+    padding-left: 32px !important;
+    padding-right: 32px !important;
+  }
+
+}
