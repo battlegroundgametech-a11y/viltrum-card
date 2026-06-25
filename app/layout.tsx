@@ -1,5 +1,6 @@
 import "./globals.css";
 import Providers from "./providers";
+import { ToastProvider } from "../components/ToastProvider";
 
 export const metadata = {
   title: "Viltrum Card",
@@ -15,7 +16,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          {children}
+          <ToastProvider>
+            {children}
+          </ToastProvider>
         </Providers>
       </body>
     </html>
