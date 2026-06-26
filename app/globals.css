@@ -6116,3 +6116,18 @@ body::after {
     margin-top: 0 !important;
   }
 }
+
+/* Make floating-card labels and footer visible in light mode */
+.device-points span,
+.polish-footer,
+.polish-footer h2,
+.polish-footer p,
+.polish-footer a,
+.polish-footer small {
+  color: #ffffff !important;
+}
+
+.device-points span {
+  background: rgba(0, 0, 0, 0.72) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+}
