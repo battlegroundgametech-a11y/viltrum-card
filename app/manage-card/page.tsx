@@ -84,6 +84,39 @@ useEffect(() => {
   }
 }, []);
 
+  async function loadTransactions(selectedOrder: any) {
+  setLoadingStats(true);
+
+  const txRes = await fetch(
+    `/api/manage-card/transactions?order_id=${selectedOrder.id}`
+  );
+
+  const txData = await txRes.json();
+
+  if (txData.success) {
+    const txs = txData.transactions || [];
+
+    setTransactions(txs);
+
+    const deposits = txs
+      .filter((tx: any) =>
+        String(tx.transaction_type || tx.type || "").toLowerCase() === "deposit"
+      )
+      .reduce((sum: number, tx: any) => sum + Number(tx.amount || 0), 0);
+
+    const withdrawals = txs
+      .filter((tx: any) =>
+        String(tx.transaction_type || tx.type || "").toLowerCase() === "withdraw"
+      )
+      .reduce((sum: number, tx: any) => sum + Number(tx.amount || 0), 0);
+
+    setDepositTotal(deposits);
+    setWithdrawTotal(withdrawals);
+  }
+
+  setLoadingStats(false);
+}
+  
   async function unlockCard(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
@@ -107,6 +140,7 @@ useEffect(() => {
     }
 
     setOrder(data.order);
+    loadTransactions(data.order);
 
 const savedCards = JSON.parse(
   localStorage.getItem("viltrum_unlocked_cards") || "[]"
@@ -131,40 +165,21 @@ localStorage.setItem(
   "viltrum_selected_card",
   JSON.stringify(data.order)
 );
-    const txRes = await fetch(
-  `/api/manage-card/transactions?order_id=${data.order.id}`
-);
 
-const txData = await txRes.json();
+async function loadTransactions(selectedOrder: any) {
+  setLoadingStats(true);
 
-if (txData.success) {
-  const txs = txData.transactions || [];
-
-  setTransactions(txs);
-
-  setDepositTotal(
-    txs
-      .filter((t: any) => t.type === "deposit")
-      .reduce(
-        (sum: number, t: any) =>
-          sum + Number(t.amount || 0),
-        0
-      )
+  const txRes = await fetch(
+    `/api/manage-card/transactions?order_id=${selectedOrder.id}`
   );
 
-  setWithdrawTotal(
-    txs
-      .filter((t: any) => t.type === "withdraw")
-      .reduce(
-        (sum: number, t: any) =>
-          sum + Number(t.amount || 0),
-        0
-      )
-  );
+  const txData = await txRes.json();
 
-  setLoadingStats(false);
-}
+  if (txData.success) {
+    const txs = txData.transactions || [];
 
+    setTransactions(txs);
+    
 setLoading(false);
   }
 
@@ -322,12 +337,14 @@ setLoading(false);
                 <button
                   key={card.id}
                   onClick={() => {
-                    setOrder(card);
-                    localStorage.setItem(
-                      "viltrum_selected_card",
-                      JSON.stringify(card)
-                    );
-                  }}
+  setOrder(card);
+  loadTransactions(card);
+
+  localStorage.setItem(
+    "viltrum_selected_card",
+    JSON.stringify(card)
+  );
+}}
                   className="manage-card-list-item"
                 >
                   <span className="manage-card-type">
