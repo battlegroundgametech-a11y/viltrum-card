@@ -6017,3 +6017,101 @@ body::after {
     transform: none;
   }
 }
+
+/* ==========================================================
+   PHYSICAL CARD ALIGNMENT RESET — MATCH VIRTUAL/FREE
+========================================================== */
+
+.physical-card-bottom {
+  position: absolute !important;
+  left: 7% !important;
+  right: 26% !important;
+  bottom: 9% !important;
+
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.15fr) minmax(90px, .55fr) !important;
+  gap: clamp(22px, 5vw, 70px) !important;
+
+  padding-right: 0 !important;
+  width: auto !important;
+  z-index: 6 !important;
+}
+
+.physical-card-bottom > div {
+  min-width: 0 !important;
+  width: auto !important;
+}
+
+.physical-card-bottom small {
+  display: block !important;
+  margin-bottom: 6px !important;
+
+  font-size: clamp(8px, .9vw, 13px) !important;
+  letter-spacing: clamp(1.4px, .35vw, 3px) !important;
+
+  white-space: nowrap !important;
+  color: rgba(255,255,255,.65) !important;
+}
+
+.physical-card-bottom b {
+  display: block !important;
+
+  font-size: clamp(12px, 1.45vw, 22px) !important;
+  letter-spacing: clamp(1.6px, .35vw, 4px) !important;
+  line-height: 1.1 !important;
+
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+
+  color: #fff !important;
+}
+
+.physical-card-number {
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+
+  margin-top: clamp(22px, 3vw, 42px) !important;
+
+  font-size: clamp(22px, 4.2vw, 54px) !important;
+  letter-spacing: clamp(5px, 1vw, 14px) !important;
+
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: clip !important;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .physical-card-bottom {
+    right: 26% !important;
+    bottom: 8.5% !important;
+    grid-template-columns: minmax(0, 1.1fr) minmax(72px, .5fr) !important;
+    gap: 32px !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .physical-card-bottom {
+    left: 7% !important;
+    right: 27% !important;
+    bottom: 8% !important;
+
+    grid-template-columns: minmax(0, 1.1fr) minmax(58px, .55fr) !important;
+    gap: 20px !important;
+  }
+
+  .physical-card-bottom small {
+    font-size: 7px !important;
+    letter-spacing: 1.2px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .physical-card-bottom b {
+    font-size: 9.5px !important;
+    letter-spacing: 1.1px !important;
+  }
+}
