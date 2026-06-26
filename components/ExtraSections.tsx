@@ -1,12 +1,6 @@
 export default function ExtraSections() {
   return (
     <>
-      <section className="extra-stats">
-        <div className="extra-stat"><b>10K+</b><span>Cards Created</span></div>
-        <div className="extra-stat"><b>$1.2M+</b><span>Demo Volume</span></div>
-        <div className="extra-stat"><b>150+</b><span>Countries Ready</span></div>
-        <div className="extra-stat"><b>99.9%</b><span>System Uptime</span></div>
-      </section>
 
       <section className="extra-timeline">
         <p className="extra-label">Viltrum Flow</p>
@@ -90,32 +84,6 @@ export default function ExtraSections() {
     </div>
   </div>
 </section>
-
-      <section className="extra-security">
-        <p className="extra-label">Security Layer</p>
-        <h2>Built around verification and controlled access</h2>
-
-        <div className="security-grid">
-          <div>Telegram Authentication</div>
-          <div>Wallet Verification</div>
-          <div>NFT Ownership Proof</div>
-          <div>Supabase Data Layer</div>
-          <div>Admin Reload Limits</div>
-          <div>Admin Withdraw Limits</div>
-        </div>
-      </section>
-
-      <section className="extra-roadmap">
-        <p className="extra-label">Roadmap</p>
-        <h2>Viltrum development path</h2>
-
-        <div className="roadmap-grid">
-          <div><b>Q3</b><span>Virtual Cards</span></div>
-          <div><b>Q4</b><span>Physical Orders</span></div>
-          <div><b>Q1</b><span>Rewards System</span></div>
-          <div><b>Q2</b><span>Expanded Vault Controls</span></div>
-        </div>
-      </section>
 
       <section className="extra-faq">
         <p className="extra-label">FAQ</p>
