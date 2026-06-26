@@ -6037,3 +6037,82 @@ body::after {
 .official-rainbow-wallet button {
   width: 100% !important;
 }
+
+/* Android/iPhone Chrome "Desktop site" only */
+@media (hover: none) and (pointer: coarse) and (min-width: 951px) and (max-device-width: 600px) {
+  .elite-hero {
+    min-height: unset !important;
+    height: auto !important;
+    padding-top: 90px !important;
+    padding-bottom: 35px !important;
+    gap: 28px !important;
+    align-items: center !important;
+  }
+
+  .elite-title {
+    font-size: 46px !important;
+    line-height: 0.92 !important;
+  }
+
+  .elite-desc {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    max-width: 430px !important;
+    margin-top: 18px !important;
+  }
+
+  .elite-actions {
+    margin-top: 24px !important;
+  }
+
+  .elite-metrics {
+    margin-top: 24px !important;
+  }
+
+  .elite-stack {
+    width: 420px !important;
+    height: 285px !important;
+  }
+
+  .elite-main-card {
+    top: 52px !important;
+    padding: 20px !important;
+    overflow: visible !important;
+  }
+
+  .elite-card-top h3 {
+    font-size: 23px !important;
+  }
+
+  .elite-card-center {
+    margin-top: 22px !important;
+  }
+
+  .elite-number {
+    font-size: 16px !important;
+    letter-spacing: 0.15em !important;
+  }
+
+  .elite-tag {
+    margin-top: 8px !important;
+    font-size: 7px !important;
+    letter-spacing: 0.12em !important;
+  }
+
+  .elite-card-bottom {
+    margin-top: 18px !important;
+    gap: 8px !important;
+  }
+
+  .elite-card-bottom span {
+    font-size: 6px !important;
+  }
+
+  .elite-card-bottom b {
+    font-size: 8px !important;
+  }
+
+  .power-ticker {
+    margin-top: 0 !important;
+  }
+}
