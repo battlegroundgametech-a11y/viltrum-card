@@ -18,7 +18,7 @@ export default function WalletConnect() {
 
         if (!ready) {
           return (
-            <button className="wallet-connect-button" disabled>
+            <button className="light-wallet-btn" disabled>
               Loading…
             </button>
           );
@@ -29,7 +29,7 @@ export default function WalletConnect() {
             <button
               type="button"
               onClick={openConnectModal}
-              className="wallet-connect-button"
+              className="light-wallet-btn"
             >
               Connect Wallet
             </button>
@@ -41,7 +41,7 @@ export default function WalletConnect() {
             <button
               type="button"
               onClick={openChainModal}
-              className="wallet-connect-button wallet-connect-warning"
+              className="light-wallet-btn wallet-warning"
             >
               Wrong Network
             </button>
@@ -49,11 +49,11 @@ export default function WalletConnect() {
         }
 
         return (
-          <div className="wallet-connected-row">
+          <div className="light-wallet-connected">
             <button
               type="button"
               onClick={openChainModal}
-              className="wallet-pill"
+              className="light-wallet-chip"
             >
               {chain.name}
             </button>
@@ -61,7 +61,7 @@ export default function WalletConnect() {
             <button
               type="button"
               onClick={openAccountModal}
-              className="wallet-pill wallet-address-pill"
+              className="light-wallet-chip address"
             >
               {account.displayName}
             </button>
