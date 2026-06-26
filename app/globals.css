@@ -6017,3 +6017,91 @@ body::after {
     transform: none;
   }
 }
+
+.light-wallet-btn {
+  width: 100%;
+  height: 46px;
+  border-radius: 14px;
+  border: 1px solid rgba(248, 180, 0, 0.35);
+  background: linear-gradient(135deg, #f8b400, #ffd45a);
+  color: #111;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(248, 180, 0, 0.18);
+  transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+}
+
+.light-wallet-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(248, 180, 0, 0.24);
+}
+
+.light-wallet-btn:active {
+  transform: translateY(0);
+}
+
+.light-wallet-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  box-shadow: none;
+}
+
+.light-wallet-btn:focus-visible,
+.light-wallet-chip:focus-visible {
+  outline: 2px solid rgba(248, 180, 0, 0.8);
+  outline-offset: 3px;
+}
+
+.wallet-warning {
+  background: linear-gradient(135deg, #ef4444, #f97316);
+  color: #fff;
+}
+
+.light-wallet-connected {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  width: 100%;
+}
+
+.light-wallet-chip {
+  height: 44px;
+  min-width: 0;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 13px;
+  font-weight: 750;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.light-wallet-chip:hover {
+  background: rgba(255, 255, 255, 0.11);
+  transform: translateY(-1px);
+}
+
+.light-wallet-chip.address {
+  padding: 0 12px;
+}
+
+@media (max-width: 640px) {
+  .light-wallet-btn {
+    height: 44px;
+    border-radius: 13px;
+    font-size: 13px;
+  }
+
+  .light-wallet-connected {
+    grid-template-columns: 1fr;
+  }
+
+  .light-wallet-chip {
+    height: 42px;
+  }
+}
