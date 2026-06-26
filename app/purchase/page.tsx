@@ -1,23 +1,34 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import HamburgerMenu from "../../components/HamburgerMenu";
 import WalletBadge from "../../components/WalletBadge";
 
 export default function PurchasePage() {
+  const router = useRouter();
+  const [allowed, setAllowed] = useState(false);
+
   useEffect(() => {
     const user = localStorage.getItem("viltrum_user");
     const wallet = localStorage.getItem("viltrum_wallet");
 
     if (!user) {
-      window.location.href = "/login";
+      router.replace("/login");
       return;
     }
 
     if (!wallet) {
-      window.location.href = "/connect-wallet";
+      router.replace("/connect-wallet");
+      return;
     }
-  }, []);
+
+    setAllowed(true);
+  }, [router]);
+
+  if (!allowed) {
+    return null;
+  }
 
   return (
     <main className="purchase-premium">
