@@ -166,23 +166,6 @@ localStorage.setItem(
   JSON.stringify(data.order)
 );
 
-async function loadTransactions(selectedOrder: any) {
-  setLoadingStats(true);
-
-  const txRes = await fetch(
-    `/api/manage-card/transactions?order_id=${selectedOrder.id}`
-  );
-
-  const txData = await txRes.json();
-
-  if (txData.success) {
-    const txs = txData.transactions || [];
-
-    setTransactions(txs);
-    
-setLoading(false);
-  }
-
   async function depositAction() {
   if (!order || !address) {
     showToast("Connect wallet first.", "error");
