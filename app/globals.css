@@ -6017,3 +6017,23 @@ body::after {
     transform: none;
   }
 }
+
+.official-rainbow-wallet [data-rk] button,
+.official-rainbow-wallet button {
+  background: unset;
+  color: unset;
+  box-shadow: unset;
+  border: unset;
+}
+
+.official-rainbow-wallet {
+  width: 100%;
+}
+
+.official-rainbow-wallet > div {
+  width: 100%;
+}
+
+.official-rainbow-wallet button {
+  width: 100% !important;
+}
