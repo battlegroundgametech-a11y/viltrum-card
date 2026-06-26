@@ -166,7 +166,10 @@ localStorage.setItem(
   JSON.stringify(data.order)
 );
 
-  async function depositAction() {
+setLoading(false);
+}
+
+async function depositAction() {
   if (!order || !address) {
     showToast("Connect wallet first.", "error");
     return;
@@ -255,7 +258,7 @@ localStorage.setItem(
 
   async function withdrawAction() {
   if (!order || !address) {
-    alert("Connect wallet first.");
+    showToast("Connect wallet first.", "error");
     return;
   }
 
