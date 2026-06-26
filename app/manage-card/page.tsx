@@ -725,4 +725,3 @@ localStorage.setItem(
     </main>
   );
 }
-}
