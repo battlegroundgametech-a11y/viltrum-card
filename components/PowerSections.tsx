@@ -55,40 +55,39 @@ export default function PowerSections() {
         </div>
       </section>
 
-      <section className="power-dashboard">
-        <div className="power-copy">
-          <p>Live Command Center</p>
-          <h2>Everything controlled from one premium vault layer.</h2>
-        </div>
+      <section className="extra-showcase premium-device-section">
+  <div className="device-copy">
+    <p className="extra-label left">Physical Card Preview</p>
+    <h2>Crypto cards built for a premium wallet experience</h2>
+    <p>
+      A modern card interface designed for virtual access, future physical
+      delivery, Telegram tracking, vault controls, reloads, withdrawals, and NFT
+      ownership proof.
+    </p>
 
-        <div className="dash-panel">
-          <div className="dash-top">
-            <span>Viltrum Vault</span>
-            <b>Live</b>
-          </div>
+    <div className="device-points">
+      <span>Shipment tracking</span>
+      <span>Vault controls</span>
+      <span>NFT verified</span>
+    </div>
+  </div>
 
-          <div className="dash-balance">
-            <span>Total Website Volume</span>
-            <h3>{stats.totalVolume}</h3>
-          </div>
+  <div className="device-scene">
+    <div className="floating-card card-front">
+      <span>VILTRUM</span>
+      <b>Sovereign Black</b>
+    </div>
 
-          <div className="dash-chart">
-            {stats.chart.map((height, index) => (
-              <i
-                key={index}
-                style={{ height: `${height}%` }}
-              />
-            ))}
-          </div>
+    <div className="floating-card card-back">
+      <div className="mag-strip" />
+      <span>VAULT READY</span>
+    </div>
 
-          <div className="dash-grid">
-            <div><b>{stats.totalMinted}</b><span>Total Orders</span></div>
-            <div><b>{stats.physicalOrders}</b><span>Physical Orders</span></div>
-            <div><b>{stats.activeCards}</b><span>Active Cards</span></div>
-            <div><b>{stats.remainingCards}</b><span>Cards Left</span></div>
-          </div>
-        </div>
-      </section>
+    <div className="floating-card card-gold-side">
+      <span>NFT VERIFIED</span>
+    </div>
+  </div>
+</section>
 
       <section className="power-flow">
         <p>How It Works</p>
