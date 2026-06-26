@@ -6192,3 +6192,62 @@ body::after {
     width: 52% !important;
   }
 }
+
+/* Virtual card chip fix — Manage Card only */
+.manage-card-panel .lux-chip {
+  display: block !important;
+  position: relative !important;
+  z-index: 5 !important;
+
+  width: 58px !important;
+  height: 42px !important;
+  min-width: 58px !important;
+  min-height: 42px !important;
+
+  margin-top: 34px !important;
+  border-radius: 10px !important;
+  flex-shrink: 0 !important;
+}
+
+.manage-card-panel .lux-chip::before {
+  inset: 7px !important;
+  border-radius: 6px !important;
+}
+
+.manage-card-panel .lux-chip::after {
+  inset: 0 !important;
+  border-radius: 10px !important;
+}
+
+/* Desktop manage-card virtual chip */
+@media (min-width: 769px) {
+  .manage-card-panel .lux-chip {
+    width: 64px !important;
+    height: 46px !important;
+    min-width: 64px !important;
+    min-height: 46px !important;
+    margin-top: 36px !important;
+  }
+}
+
+/* Mobile manage-card virtual chip */
+@media (max-width: 768px) {
+  .manage-card-panel .lux-chip {
+    width: 42px !important;
+    height: 30px !important;
+    min-width: 42px !important;
+    min-height: 30px !important;
+
+    margin-top: 18px !important;
+    border-radius: 7px !important;
+  }
+
+  .manage-card-panel .lux-chip::before {
+    inset: 5px !important;
+    border-radius: 5px !important;
+  }
+
+  .manage-card-panel .lux-card-number {
+    margin-top: 16px !important;
+  }
+}
