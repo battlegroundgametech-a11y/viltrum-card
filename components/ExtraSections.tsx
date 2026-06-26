@@ -2,20 +2,6 @@ export default function ExtraSections() {
   return (
     <>
 
-      <section className="extra-comparison">
-        <p className="extra-label">Card Plans</p>
-        <h2>Compare every access tier</h2>
-
-        <div className="comparison-table">
-          <div className="row head"><span>Feature</span><span>Free</span><span>Virtual</span><span>Physical</span></div>
-          <div className="row"><span>NFT Ownership</span><span>✓</span><span>✓</span><span>✓</span></div>
-          <div className="row"><span>Purchase Bonus</span><span>—</span><span>$5</span><span>$15</span></div>
-          <div className="row"><span>Reload</span><span>After activation</span><span>✓</span><span>✓</span></div>
-          <div className="row"><span>Withdraw</span><span>After activation</span><span>✓</span><span>✓</span></div>
-          <div className="row"><span>Shipment Tracking</span><span>—</span><span>—</span><span>✓</span></div>
-        </div>
-      </section>
-
         <section className="extra-faq">
         <p className="extra-label">FAQ</p>
         <h2>Common questions</h2>
