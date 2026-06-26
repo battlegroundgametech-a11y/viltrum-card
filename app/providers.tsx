@@ -31,8 +31,8 @@ const connectors = connectorsForWallets(
       groupName: "Recommended",
       wallets: [
         rainbowWallet,
-        base,
         metaMaskWallet,
+        base,
         walletConnectWallet
       ]
     }
@@ -65,7 +65,7 @@ export default function Providers({
         <RainbowKitProvider
           modalSize="compact"
           theme={darkTheme({
-            accentColor: "#16c784",
+            accentColor: "#3898ff",
             accentColorForeground: "white",
             borderRadius: "large"
           })}
