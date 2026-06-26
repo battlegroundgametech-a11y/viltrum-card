@@ -35,17 +35,18 @@ export default function Providers({
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider
-          modalSize="compact"
-          showRecentTransactions={false}
-          theme={darkTheme({
-            accentColor: "#f8b400",
-            accentColorForeground: "#111111",
-            borderRadius: "medium",
-            fontStack: "system"
-          })}
-        >
-          {children}
-        </RainbowKitProvider>
+  modalSize="compact"
+  showRecentTransactions={false}
+  theme={darkTheme({
+    accentColor: "#2E2E33",
+    accentColorForeground: "#FFFFFF",
+    borderRadius: "large",
+    overlayBlur: "small",
+    fontStack: "system"
+  })}
+>
+  {children}
+</RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );
