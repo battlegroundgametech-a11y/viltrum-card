@@ -6018,14 +6018,6 @@ body::after {
   }
 }
 
-.official-rainbow-wallet [data-rk] button,
-.official-rainbow-wallet button {
-  background: unset;
-  color: unset;
-  box-shadow: unset;
-  border: unset;
-}
-
 .official-rainbow-wallet {
   width: 100%;
 }
@@ -6250,4 +6242,22 @@ body::after {
   .manage-card-panel .lux-card-number {
     margin-top: 16px !important;
   }
+}
+
+/* ===========================
+   RainbowKit Button Fix
+=========================== */
+
+[data-rk] button {
+  background: transparent !important;
+  color: inherit !important;
+  border: initial !important;
+  border-radius: initial !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+[data-rk] button:hover {
+  transform: none !important;
+  box-shadow: none !important;
 }
