@@ -6244,20 +6244,18 @@ body::after {
   }
 }
 
-/* ===========================
-   RainbowKit Button Fix
-=========================== */
-
-[data-rk] button {
+/* RainbowKit modal only: remove yellow wallet icon backgrounds */
+[data-rk] [role="dialog"] button {
   background: transparent !important;
   color: inherit !important;
-  border: initial !important;
-  border-radius: initial !important;
   box-shadow: none !important;
-  transform: none !important;
 }
 
-[data-rk] button:hover {
-  transform: none !important;
+[data-rk] [role="dialog"] button:hover {
   box-shadow: none !important;
+}
+
+[data-rk] [role="dialog"] img,
+[data-rk] [role="dialog"] svg {
+  background: transparent !important;
 }
