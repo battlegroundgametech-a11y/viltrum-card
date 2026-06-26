@@ -6115,3 +6115,17 @@ body::after {
     letter-spacing: 1.1px !important;
   }
 }
+
+/* ===== Physical card number sizing fix ===== */
+
+.physical-card-number{
+    font-size: clamp(18px, 3.2vw, 42px) !important;
+    letter-spacing: clamp(3px, .6vw, 8px) !important;
+    line-height: 1 !important;
+
+    width: calc(100% - 14%) !important;
+    margin-top: clamp(18px, 2.6vw, 34px) !important;
+
+    white-space: nowrap !important;
+    overflow: hidden !important;
+}
