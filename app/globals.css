@@ -5608,3 +5608,67 @@ body::after {
     width: 24% !important;
   }
 }
+
+/* ==========================================================
+   MANAGE PAGE LAYOUT FIX — SAME PROPORTIONS FOR ALL CARDS
+========================================================== */
+
+.manage-bank-layout {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.72fr) minmax(300px, 0.78fr) !important;
+  gap: 32px !important;
+  align-items: start !important;
+}
+
+.manage-card-panel {
+  min-width: 0 !important;
+  width: 100% !important;
+}
+
+.manage-money-panel {
+  min-width: 300px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Force all card components to obey the same available column width */
+.luxury-virtual-card,
+.free-premium-card,
+.physical-premium-card {
+  width: 100% !important;
+  max-width: 100% !important;
+  aspect-ratio: 85.6 / 53.98 !important;
+  box-sizing: border-box !important;
+}
+
+/* Tablet and small desktop */
+@media (max-width: 980px) {
+  .manage-bank-layout {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+
+  .manage-money-panel {
+    min-width: 0 !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .manage-bank-layout {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  .luxury-virtual-card,
+  .free-premium-card,
+  .physical-premium-card {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .manage-money-panel {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+}
