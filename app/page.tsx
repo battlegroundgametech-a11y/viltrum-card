@@ -82,8 +82,8 @@ export default function HomePage() {
           </a>
         </div>
       </section>
-     <FinalPolish />
      <ExtraSections />
+    <FinalPolish />
     </main>
   );
 }
