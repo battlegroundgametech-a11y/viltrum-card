@@ -153,18 +153,6 @@ export default function HamburgerMenu() {
                 Manage Card
               </a>
 
-              <a className="rounded-2xl bg-white/10 px-5 py-4 text-white" href="/#about">
-                About Us
-              </a>
-
-              <a className="rounded-2xl bg-white/10 px-5 py-4 text-white" href="/#support">
-                Help & Support
-              </a>
-
-              <a className="rounded-2xl bg-white/10 px-5 py-4 text-white" href="/#faq">
-                FAQ
-              </a>
-
               <a className="rounded-2xl bg-white/10 px-5 py-4 text-white" href="/#social">
                 Social Media
               </a>
