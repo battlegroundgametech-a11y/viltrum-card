@@ -48,27 +48,6 @@ export default function ExtraSections() {
   </div>
 
   <div className="device-scene">
-    <div className="phone-mockup">
-      <div className="phone-top" />
-      <div className="phone-screen">
-        <p>Total Balance</p>
-        <h3>$6,432.43</h3>
-
-        <div className="mini-chart">
-          <i />
-          <i />
-          <i />
-          <i />
-          <i />
-        </div>
-
-        <div className="phone-card-small">
-          <span>Viltrum</span>
-          <b>•••• 1234</b>
-        </div>
-      </div>
-    </div>
-
     <div className="floating-card card-front">
       <span>VILTRUM</span>
       <b>Sovereign Black</b>
