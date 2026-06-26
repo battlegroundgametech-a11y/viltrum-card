@@ -1,4 +1,52 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
+type VaultStats = {
+  totalVolume: string;
+  totalMinted: string;
+  physicalOrders: string;
+  activeCards: string;
+  remainingCards: string;
+  chart: number[];
+};
+
+const defaultStats: VaultStats = {
+  totalVolume: "$0.00",
+  totalMinted: "0",
+  physicalOrders: "0",
+  activeCards: "0",
+  remainingCards: "0",
+  chart: [18, 18, 18, 18, 18, 18, 18]
+};
+
 export default function PowerSections() {
+  const [stats, setStats] = useState<VaultStats>(defaultStats);
+
+  async function loadVaultStats() {
+    try {
+      const res = await fetch("/api/homepage/vault-stats", {
+        cache: "no-store"
+      });
+
+      const data = await res.json();
+
+      if (data.success && data.stats) {
+        setStats(data.stats);
+      }
+    } catch {
+      setStats(defaultStats);
+    }
+  }
+
+  useEffect(() => {
+    loadVaultStats();
+
+    const interval = setInterval(loadVaultStats, 15000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <>
       <section className="power-ticker">
@@ -16,23 +64,28 @@ export default function PowerSections() {
         <div className="dash-panel">
           <div className="dash-top">
             <span>Viltrum Vault</span>
-            <b>Online</b>
+            <b>Live</b>
           </div>
 
           <div className="dash-balance">
-            <span>Total Demo Balance</span>
-            <h3>$24,950.42</h3>
+            <span>Total Website Volume</span>
+            <h3>{stats.totalVolume}</h3>
           </div>
 
           <div className="dash-chart">
-            <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            {stats.chart.map((height, index) => (
+              <i
+                key={index}
+                style={{ height: `${height}%` }}
+              />
+            ))}
           </div>
 
           <div className="dash-grid">
-            <div><b>4,921</b><span>NFTs Minted</span></div>
-            <div><b>783</b><span>Physical Orders</span></div>
-            <div><b>99.9%</b><span>Uptime</span></div>
-            <div><b>24/7</b><span>Verification</span></div>
+            <div><b>{stats.totalMinted}</b><span>Total Orders</span></div>
+            <div><b>{stats.physicalOrders}</b><span>Physical Orders</span></div>
+            <div><b>{stats.activeCards}</b><span>Active Cards</span></div>
+            <div><b>{stats.remainingCards}</b><span>Cards Left</span></div>
           </div>
         </div>
       </section>
