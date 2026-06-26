@@ -6105,3 +6105,20 @@ body::after {
     height: 42px;
   }
 }
+
+[data-rk] {
+  --rk-colors-accentColor: #2E2E33;
+  --rk-colors-accentColorForeground: #FFFFFF;
+
+  --rk-colors-modalBackground: #1E1F23;
+  --rk-colors-modalBorder: #303238;
+
+  --rk-colors-connectButtonBackground: #2E2E33;
+  --rk-colors-connectButtonText: #FFFFFF;
+
+  --rk-colors-profileAction: #2E2E33;
+  --rk-colors-profileActionHover: #383A40;
+
+  --rk-radii-modal: 24px;
+  --rk-radii-connectButton: 14px;
+}
