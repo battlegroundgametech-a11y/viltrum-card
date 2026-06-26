@@ -102,13 +102,6 @@ export default function PowerSections() {
           ))}
         </div>
       </section>
-
-      <section className="power-prestige">
-        <div><b>3</b><span>Card Types</span></div>
-        <div><b>$5</b><span>Virtual Entry</span></div>
-        <div><b>$15</b><span>Physical Bonus</span></div>
-        <div><b>100%</b><span>NFT Proof</span></div>
-      </section>
     </>
   );
 }
