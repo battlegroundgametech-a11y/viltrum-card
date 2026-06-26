@@ -4,7 +4,6 @@ import "@rainbow-me/rainbowkit/styles.css";
 
 import {
   RainbowKitProvider,
-  darkTheme,
   getDefaultConfig
 } from "@rainbow-me/rainbowkit";
 
