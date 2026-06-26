@@ -5674,48 +5674,53 @@ body::after {
 }
 
 /* ==========================================================
-   PHYSICAL CARD TEXT ALIGNMENT FIX
-   (matches Virtual & Free card)
+   PHYSICAL CARD TEXT POSITION FIX
+   Matches Virtual Card layout exactly
 ========================================================== */
 
-.physical-premium-card .card-bottom,
-.physical-premium-card .premium-card-bottom,
-.physical-premium-card .card-footer {
-    position: absolute;
-    left: 7%;
-    right: 7%;
-    bottom: 12%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-end;
-    gap: 48px;
-    width: auto;
+.physical-card-bottom{
+    position:absolute;
+    left:7%;
+    right:7%;
+    bottom:12%;
+    display:flex;
+    align-items:flex-end;
+    justify-content:flex-start;
+    gap:56px;
+    z-index:5;
 }
 
-.physical-premium-card .card-holder,
-.physical-premium-card .holder-block {
-    flex: 0 0 42%;
+.physical-card-bottom > div:first-child{
+    width:42%;
 }
 
-.physical-premium-card .card-expiry,
-.physical-premium-card .expiry-block {
-    flex: 0 0 auto;
+.physical-card-bottom > div:last-child{
+    width:auto;
 }
 
-/* Mobile refinement */
+.physical-card-bottom small{
+    display:block;
+    margin-bottom:6px;
+    white-space:nowrap;
+}
+
+.physical-card-bottom b{
+    display:block;
+    white-space:nowrap;
+}
+
+/* Mobile */
 @media (max-width:768px){
 
-    .physical-premium-card .card-bottom,
-    .physical-premium-card .premium-card-bottom,
-    .physical-premium-card .card-footer{
+    .physical-card-bottom{
         left:7%;
         right:7%;
         bottom:11%;
         gap:34px;
     }
 
-    .physical-premium-card .card-holder,
-    .physical-premium-card .holder-block{
-        flex-basis:40%;
+    .physical-card-bottom > div:first-child{
+        width:38%;
     }
+
 }
