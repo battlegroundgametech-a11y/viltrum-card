@@ -2,20 +2,6 @@ export default function ExtraSections() {
   return (
     <>
 
-      <section className="extra-timeline">
-        <p className="extra-label">Viltrum Flow</p>
-        <h2>From login to card ownership</h2>
-
-        <div className="timeline-grid">
-          {["Telegram Login", "Wallet Connect", "Card Mint", "Reload", "Withdraw", "NFT Ownership"].map((item, i) => (
-            <div className="timeline-step" key={item}>
-              <b>{String(i + 1).padStart(2, "0")}</b>
-              <span>{item}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
       <section className="extra-comparison">
         <p className="extra-label">Card Plans</p>
         <h2>Compare every access tier</h2>
@@ -30,41 +16,7 @@ export default function ExtraSections() {
         </div>
       </section>
 
-      <section className="extra-showcase premium-device-section">
-  <div className="device-copy">
-    <p className="extra-label left">Physical Card Preview</p>
-    <h2>Crypto cards built for a premium wallet experience</h2>
-    <p>
-      A modern card interface designed for virtual access, future physical
-      delivery, Telegram tracking, vault controls, reloads, withdrawals, and NFT
-      ownership proof.
-    </p>
-
-    <div className="device-points">
-      <span>Shipment tracking</span>
-      <span>Vault controls</span>
-      <span>NFT verified</span>
-    </div>
-  </div>
-
-  <div className="device-scene">
-    <div className="floating-card card-front">
-      <span>VILTRUM</span>
-      <b>Sovereign Black</b>
-    </div>
-
-    <div className="floating-card card-back">
-      <div className="mag-strip" />
-      <span>VAULT READY</span>
-    </div>
-
-    <div className="floating-card card-gold-side">
-      <span>NFT VERIFIED</span>
-    </div>
-  </div>
-</section>
-
-      <section className="extra-faq">
+        <section className="extra-faq">
         <p className="extra-label">FAQ</p>
         <h2>Common questions</h2>
 
