@@ -4,22 +4,51 @@ import "@rainbow-me/rainbowkit/styles.css";
 
 import {
   RainbowKitProvider,
-  getDefaultConfig
+  connectorsForWallets,
+  darkTheme
 } from "@rainbow-me/rainbowkit";
 
-import { WagmiProvider } from "wagmi";
+import {
+  rainbowWallet,
+  metaMaskWallet,
+  base,
+  walletConnectWallet
+} from "@rainbow-me/rainbowkit/wallets";
+
+import { WagmiProvider, createConfig, http } from "wagmi";
+import { sepolia } from "wagmi/chains";
 
 import {
   QueryClient,
   QueryClientProvider
 } from "@tanstack/react-query";
 
-import { sepolia } from "wagmi/chains";
+const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!;
 
-const config = getDefaultConfig({
-  appName: "Viltrum Card",
-  projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
+const connectors = connectorsForWallets(
+  [
+    {
+      groupName: "Recommended",
+      wallets: [
+        rainbowWallet,
+        base,
+        metaMaskWallet,
+        walletConnectWallet
+      ]
+    }
+  ],
+  {
+    appName: "Viltrum Card",
+    projectId
+  }
+);
+
+const config = createConfig({
   chains: [sepolia],
+  connectors,
+  transports: {
+    [sepolia.id]: http()
+  },
   ssr: true
 });
 
@@ -33,9 +62,16 @@ export default function Providers({
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider modalSize="compact">
-  {children}
-</RainbowKitProvider>
+        <RainbowKitProvider
+          modalSize="compact"
+          theme={darkTheme({
+            accentColor: "#16c784",
+            accentColorForeground: "white",
+            borderRadius: "large"
+          })}
+        >
+          {children}
+        </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );
