@@ -4,12 +4,11 @@ import "@rainbow-me/rainbowkit/styles.css";
 
 import {
   RainbowKitProvider,
+  darkTheme,
   getDefaultConfig
 } from "@rainbow-me/rainbowkit";
 
-import {
-  WagmiProvider
-} from "wagmi";
+import { WagmiProvider } from "wagmi";
 
 import {
   QueryClient,
@@ -21,7 +20,8 @@ import { sepolia } from "wagmi/chains";
 const config = getDefaultConfig({
   appName: "Viltrum Card",
   projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
-  chains: [sepolia]
+  chains: [sepolia],
+  ssr: true
 });
 
 const queryClient = new QueryClient();
@@ -35,17 +35,17 @@ export default function Providers({
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider
-  modalSize="compact"
-  showRecentTransactions={false}
-  theme={darkTheme({
-    accentColor: "#f8b400",
-    accentColorForeground: "#111111",
-    borderRadius: "medium",
-    fontStack: "system"
-  })}
->
-  {children}
-</RainbowKitProvider>
+          modalSize="compact"
+          showRecentTransactions={false}
+          theme={darkTheme({
+            accentColor: "#f8b400",
+            accentColorForeground: "#111111",
+            borderRadius: "medium",
+            fontStack: "system"
+          })}
+        >
+          {children}
+        </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );
