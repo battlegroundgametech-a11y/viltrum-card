@@ -5672,3 +5672,50 @@ body::after {
     min-width: 0 !important;
   }
 }
+
+/* ==========================================================
+   PHYSICAL CARD TEXT ALIGNMENT FIX
+   (matches Virtual & Free card)
+========================================================== */
+
+.physical-premium-card .card-bottom,
+.physical-premium-card .premium-card-bottom,
+.physical-premium-card .card-footer {
+    position: absolute;
+    left: 7%;
+    right: 7%;
+    bottom: 12%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    gap: 48px;
+    width: auto;
+}
+
+.physical-premium-card .card-holder,
+.physical-premium-card .holder-block {
+    flex: 0 0 42%;
+}
+
+.physical-premium-card .card-expiry,
+.physical-premium-card .expiry-block {
+    flex: 0 0 auto;
+}
+
+/* Mobile refinement */
+@media (max-width:768px){
+
+    .physical-premium-card .card-bottom,
+    .physical-premium-card .premium-card-bottom,
+    .physical-premium-card .card-footer{
+        left:7%;
+        right:7%;
+        bottom:11%;
+        gap:34px;
+    }
+
+    .physical-premium-card .card-holder,
+    .physical-premium-card .holder-block{
+        flex-basis:40%;
+    }
+}
