@@ -6038,3 +6038,30 @@ body::after {
   width: 100% !important;
 }
 
+/* Fix only mobile browser "Desktop site" view */
+@media (min-width: 900px) and (max-width: 1200px) and (max-height: 900px) {
+  .elite-hero {
+    min-height: auto !important;
+    padding-top: 150px !important;
+    padding-bottom: 90px !important;
+  }
+
+  .elite-card-area {
+    transform: scale(0.9) !important;
+    transform-origin: center;
+  }
+
+  .elite-home .power-ticker {
+    margin-top: 0 !important;
+  }
+
+  .card-holder,
+  .card-expiry,
+  .card-cvv,
+  .card-bottom,
+  .hero-card-bottom {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: flex !important;
+  }
+}
