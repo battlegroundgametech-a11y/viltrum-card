@@ -6338,3 +6338,64 @@ body.light-mode .footer-socials a {
   background: rgba(255, 255, 255, 0.72);
   border-color: rgba(17, 17, 17, 0.12);
 }
+
+/* ===========================
+   Homepage Headings - Cinzel
+=========================== */
+
+/* Hero */
+.elite-title {
+  font-family: var(--font-cinzel), serif;
+}
+
+/* Power section */
+.power-section h2,
+.power-title {
+  font-family: var(--font-cinzel), serif;
+}
+
+/* Compare Access Tier */
+.extra-comparison h2 {
+  font-family: var(--font-cinzel), serif;
+}
+
+/* Choose Your Access Tier */
+.elite-products h2 {
+  font-family: var(--font-cinzel), serif;
+}
+
+/* Card names */
+.elite-product h3 {
+  font-family: var(--font-cinzel), serif;
+}
+
+/* Physical Card Preview */
+.extra-showcase h2 {
+  font-family: var(--font-cinzel), serif;
+}
+
+/* Timeline */
+.extra-timeline h2 {
+  font-family: var(--font-cinzel), serif;
+}
+
+/* FAQ */
+.extra-faq h2 {
+  font-family: var(--font-cinzel), serif;
+}
+
+/* Footer */
+.polish-footer h2 {
+  font-family: var(--font-cinzel), serif;
+}
+
+/* ===========================
+   Elite Kicker Enhancement
+=========================== */
+
+.elite-kicker {
+  font-size: clamp(15px, 1.2vw, 18px) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.22em !important;
+  line-height: 1.5 !important;
+}
