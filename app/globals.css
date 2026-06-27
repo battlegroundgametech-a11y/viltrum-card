@@ -6285,3 +6285,23 @@ body::after {
   font-weight: 700;
   letter-spacing: -0.02em;
 }
+
+/* ===========================
+   Premium FAQ Typography
+=========================== */
+
+.extra-faq .extra-label {
+  font-family: var(--font-cinzel), serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+.extra-faq h2 {
+  font-family: var(--font-cinzel), serif;
+  font-weight: 700;
+  font-size: clamp(40px, 5vw, 68px);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
