@@ -35,7 +35,7 @@ export default function HomePage() {
 
         <div className="elite-copy">
           <div className="elite-kicker">
-            SEPOLIA TESTNET • TELEGRAM VERIFIED • WALLET READY
+            VILTRUM
           </div>
 
           <h1 className="elite-title">
@@ -64,9 +64,7 @@ export default function HomePage() {
 
         <div className="comparison-table">
           <div className="row head"><span>Feature</span><span>Free</span><span>Virtual</span><span>Physical</span></div>
-          <div className="row"><span>NFT Ownership</span><span>✓</span><span>—</span><span>—</span></div>
-          <div className="row"><span>Purchase Discount</span><span>—</span><span>$5</span><span>—</span></div>
-          <div className="row"><span>Purchase Bonus</span><span>—</span><span>$5</span><span>$15</span></div>
+          <div className="row"><span>Purchase Bonus</span><span>—</span><span>—</span><span>$15</span></div>
           <div className="row"><span>Reload</span><span>After activation</span><span>✓</span><span>✓</span></div>
           <div className="row"><span>Withdraw</span><span>After activation</span><span>✓</span><span>✓</span></div>
           <div className="row"><span>Shipment Tracking</span><span>—</span><span>—</span><span>✓</span></div>
@@ -94,7 +92,7 @@ export default function HomePage() {
 
           <a href="/checkout/free" className="elite-product">
             <small>03 • FREE MINT</small>
-            <h3>Free Mint</h3>
+            <h3>Free Card</h3>
             <div className="elite-price">Free</div>
             <p>Inactive card and NFT.</p>
           </a>
