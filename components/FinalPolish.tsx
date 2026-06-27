@@ -2,7 +2,7 @@ export default function FinalPolish() {
   return (
     <>
       <footer className="polish-footer">
-        <h2>Viltrum Card</h2>
+        <h2>Viltrum</h2>
 
         <div className="footer-socials">
           <a href="https://t.me/" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
