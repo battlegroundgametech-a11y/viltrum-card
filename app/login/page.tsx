@@ -62,6 +62,10 @@ export default function LoginPage() {
         <a href="/signup" className="mt-5 block text-white/60">
           New user? Create account with Telegram OTP
         </a>
+
+        <a href="/forgot-password" className="mt-3 block text-yellow-400 font-bold">
+          Forgot password?
+        </a>
       </div>
     </main>
   );
