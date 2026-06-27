@@ -18,8 +18,8 @@ export default function FinalPolish() {
           </a>
 
           <a href="https://warpcast.com/" target="_blank" rel="noopener noreferrer" aria-label="Farcaster">
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-              <path d="M5 3h14v18h-2.4v-7.1c0-2.6-1.6-4.2-3.8-4.2-1.2 0-2.2.5-2.8 1.4-.6-.9-1.6-1.4-2.8-1.4C5 9.7 3.4 11.3 3.4 13.9V21H1V3h4zm14.8 4.2h2.2v3.1h-2.2zm-17.8 0h2.2v3.1H2z" />
+            <svg viewBox="0 0 448 448" width="24" height="24" fill="currentColor">
+              <path d="M82 99h284v34h-34v34h34v181h-58l-30-131c-11-48-29-70-54-70s-43 22-54 70l-30 131H82V167h34v-34H82V99z" />
             </svg>
           </a>
         </div>
