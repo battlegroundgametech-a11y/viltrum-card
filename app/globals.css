@@ -6259,3 +6259,29 @@ body::after {
 [data-rk] [role="dialog"] svg {
   background: transparent !important;
 }
+
+.elite-product h3,
+.elite-product p,
+.elite-price {
+  font-family: var(--font-cormorant), serif;
+}
+
+.elite-product h3 {
+  font-size: 38px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.elite-product p {
+  font-size: 20px;
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+.elite-price {
+  margin: 12px 0;
+  color: #facc15;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
