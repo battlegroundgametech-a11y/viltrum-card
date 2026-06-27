@@ -2,7 +2,7 @@ export default function ExtraSections() {
   return (
     <>
 
-        <section className="extra-faq">
+        <section className={`extra-faq ${cinzel.variable}`}>
         <p className="extra-label">FAQ</p>
         <h2>Common questions</h2>
 
