@@ -5,11 +5,18 @@ import PowerSections from "../components/PowerSections";
 import FinalPolish from "../components/FinalPolish";
 import WalletBadge from "../components/WalletBadge";
 import { Cormorant_Garamond } from "next/font/google";
+import { Cormorant_Garamond, Cinzel } from "next/font/google";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["500", "600", "700"],
   variable: "--font-cormorant",
+});
+
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+  variable: "--font-cinzel",
 });
 
 export default function HomePage() {
