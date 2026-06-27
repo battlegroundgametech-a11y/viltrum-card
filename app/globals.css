@@ -6305,3 +6305,36 @@ body::after {
   letter-spacing: -0.03em;
   line-height: 1.05;
 }
+
+.footer-socials {
+  margin: 28px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+}
+
+.footer-socials a {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #facc15;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  transition: 0.25s ease;
+}
+
+.footer-socials a:hover {
+  transform: translateY(-4px);
+  background: rgba(250, 204, 21, 0.14);
+  border-color: rgba(250, 204, 21, 0.45);
+}
+
+body.light-mode .footer-socials a {
+  color: #b45309;
+  background: rgba(255, 255, 255, 0.72);
+  border-color: rgba(17, 17, 17, 0.12);
+}
