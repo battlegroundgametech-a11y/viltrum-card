@@ -40,7 +40,6 @@ export default function HomePage() {
           <div className="elite-actions">
             <a href="/signup" className="elite-primary">Sign Up</a>
             <a href="#cards" className="elite-secondary">Explore Cards</a>
-            </div>
           </div>
         </div>
       </section>
