@@ -24,7 +24,6 @@ export default function HeroCard() {
 
         <div className="elite-card-center">
           <p className="elite-number">4242 4242 4242 1234</p>
-          <p className="elite-tag">NFT VERIFIED • SEPOLIA • VAULT READY</p>
         </div>
 
         <div className="elite-card-bottom">
