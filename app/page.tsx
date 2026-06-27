@@ -26,14 +26,15 @@ export default function HomePage() {
           </div>
 
           <h1 className="elite-title">
-            Elite crypto
-            <span>card command</span>
+            Spend Crypto with
+            <span>Confidence</span>
           </h1>
 
           <p className="elite-desc">
-            Viltrum brings a premium finance-grade crypto card experience with
-            NFT ownership, virtual cards, future physical cards, reload controls,
-            withdrawals, bonuses, and Telegram-based access.
+            Viltrum Card brings together secure blockchain technology and premium financial
+            services in one seamless experience. Instantly connect your wallet, 
+            own your card as an NFT, manage your funds with confidence, 
+            and enjoy a modern payment ecosystem designed for the next generation of digital finance.
           </p>
 
           <div className="elite-actions">
@@ -65,7 +66,8 @@ export default function HomePage() {
 
         <div className="comparison-table">
           <div className="row head"><span>Feature</span><span>Free</span><span>Virtual</span><span>Physical</span></div>
-          <div className="row"><span>NFT Ownership</span><span>✓</span><span>✓</span><span>✓</span></div>
+          <div className="row"><span>NFT Ownership</span><span>✓</span><span>—</span><span>—</span></div>
+          <div className="row"><span>Purchase Discount</span><span>—</span><span>$5</span><span>—</span></div>
           <div className="row"><span>Purchase Bonus</span><span>—</span><span>$5</span><span>$15</span></div>
           <div className="row"><span>Reload</span><span>After activation</span><span>✓</span><span>✓</span></div>
           <div className="row"><span>Withdraw</span><span>After activation</span><span>✓</span><span>✓</span></div>
