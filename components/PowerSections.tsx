@@ -57,18 +57,17 @@ export default function PowerSections() {
 
       <section className="extra-showcase premium-device-section">
   <div className="device-copy">
-    <p className="extra-label left">Physical Card Preview</p>
     <h2>Crypto cards built for a premium wallet experience</h2>
     <p>
       A modern card interface designed for virtual access, future physical
-      delivery, Telegram tracking, vault controls, reloads, withdrawals, and NFT
+      delivery, Tracking, vault controls, reloads, withdrawals, and NFT
       ownership proof.
     </p>
 
     <div className="device-points">
-      <span>Shipment tracking</span>
+      <span>No KYC</span>
       <span>Vault controls</span>
-      <span>NFT verified</span>
+      <span>Fully Secured</span>
     </div>
   </div>
 
