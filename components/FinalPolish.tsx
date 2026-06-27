@@ -1,16 +1,27 @@
 export default function FinalPolish() {
   return (
-
     <>
-        <footer className="polish-footer">
+      <footer className="polish-footer">
         <h2>Viltrum Card</h2>
-        <p>Premium crypto card experience on Sepolia testnet.</p>
 
-        <div>
-          <a href="/">Home</a>
-          <a href="/login">Sign Up</a>
-          <a href="/dashboard">Dashboard</a>
-          <a href="#cards">Cards</a>
+        <div className="footer-socials">
+          <a href="https://t.me/" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+              <path d="M9.04 15.47 8.68 20.5c.52 0 .75-.22 1.02-.49l2.45-2.34 5.08 3.72c.93.51 1.59.24 1.84-.86l3.34-15.66c.3-1.38-.5-1.92-1.4-1.58L1.39 10.86c-1.34.52-1.32 1.27-.23 1.6l5.02 1.56L17.84 6.7c.55-.36 1.05-.16.64.2z" />
+            </svg>
+          </a>
+
+          <a href="https://x.com/" target="_blank" rel="noopener noreferrer" aria-label="X">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+              <path d="M18.9 2H22l-6.78 7.75L23.2 22h-6.24l-4.89-6.39L6.48 22H3.36l7.25-8.29L2.96 2h6.4l4.42 5.84zm-1.1 17.84h1.72L8.42 4.05H6.58z" />
+            </svg>
+          </a>
+
+          <a href="https://warpcast.com/" target="_blank" rel="noopener noreferrer" aria-label="Farcaster">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+              <path d="M5 3h14v18h-2.4v-7.1c0-2.6-1.6-4.2-3.8-4.2-1.2 0-2.2.5-2.8 1.4-.6-.9-1.6-1.4-2.8-1.4C5 9.7 3.4 11.3 3.4 13.9V21H1V3h4zm14.8 4.2h2.2v3.1h-2.2zm-17.8 0h2.2v3.1H2z" />
+            </svg>
+          </a>
         </div>
 
         <small>© 2026 Viltrum.</small>
