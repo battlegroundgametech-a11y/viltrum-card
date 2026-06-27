@@ -4,6 +4,13 @@ import ExtraSections from "../components/ExtraSections";
 import PowerSections from "../components/PowerSections";
 import FinalPolish from "../components/FinalPolish";
 import WalletBadge from "../components/WalletBadge";
+import { Cormorant_Garamond } from "next/font/google";
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  variable: "--font-cormorant",
+});
 
 export default function HomePage() {
   return (
@@ -60,7 +67,7 @@ export default function HomePage() {
         </div>
       </section>
 
-       <section id="cards" className="elite-products">
+       <section id="cards" className={`elite-products ${cormorant.variable}`}>
         <p className="elite-section-label">Viltrum Card Collection</p>
         <h2>Choose your access tier</h2>
 
@@ -68,19 +75,22 @@ export default function HomePage() {
           <a href="/checkout/virtual" className="elite-product">
             <small>01 • VIRTUAL ACCESS</small>
             <h3>Virtual Card</h3>
-            <p>$10 card ownership. Also receive a $5 discount.</p>
+            <div className="elite-price">$10</div>
+            <p>Card ownership. Also receive a $5 discount.</p>
           </a>
 
           <a href="/checkout/physical" className="elite-product elite-featured">
             <small>02 • PREMIUM ORDER</small>
             <h3>Physical Card</h3>
-            <p>$60 card with $15 bonus, virtual access and shipment tracking.</p>
+            <div className="elite-price">$60</div>
+            <p>Card with $15 bonus, virtual access and shipment tracking.</p>
           </a>
 
           <a href="/checkout/free" className="elite-product">
             <small>03 • FREE MINT</small>
             <h3>Free Mint</h3>
-            <p>Free inactive card and NFT.</p>
+            <div className="elite-price">Free</div>
+            <p>Inactive card and NFT.</p>
           </a>
         </div>
       </section>
