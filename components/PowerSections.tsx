@@ -51,7 +51,7 @@ export default function PowerSections() {
     <>
       <section className="power-ticker">
         <div>
-          NFT VERIFIED • TELEGRAM VERIFIED • SEPOLIA READY • VAULT ENABLED • WALLET CONNECTED • CARD STACK ACTIVE •
+          NO KYC • TELEGRAM VERIFIED • SEPOLIA READY • VAULT ENABLED • WALLET CONNECTED • CARD STACK ACTIVE •
         </div>
       </section>
 
@@ -83,7 +83,7 @@ export default function PowerSections() {
     </div>
 
     <div className="floating-card card-gold-side">
-      <span>NFT VERIFIED</span>
+      <span>NO KYC</span>
     </div>
   </div>
 </section>
