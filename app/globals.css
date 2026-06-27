@@ -6399,3 +6399,8 @@ body.light-mode .footer-socials a {
   letter-spacing: 0.22em !important;
   line-height: 1.5 !important;
 }
+
+/* Power Flow heading */
+.power-flow h2 {
+  font-family: var(--font-cinzel), serif;
+}
