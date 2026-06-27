@@ -4,7 +4,6 @@ import ExtraSections from "../components/ExtraSections";
 import PowerSections from "../components/PowerSections";
 import FinalPolish from "../components/FinalPolish";
 import WalletBadge from "../components/WalletBadge";
-import { Cormorant_Garamond } from "next/font/google";
 import { Cormorant_Garamond, Cinzel } from "next/font/google";
 
 const cormorant = Cormorant_Garamond({
