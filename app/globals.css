@@ -6555,3 +6555,236 @@ body.light-mode .footer-socials a {
     font-size: 20px;
   }
 }
+
+.manage-money-panel,
+.manage-modal {
+  background:
+    radial-gradient(circle at top left, rgba(248, 180, 0, 0.14), transparent 35%),
+    rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(18px);
+}
+
+.manage-money-panel h2,
+.manage-modal-balance {
+  color: #f8b400 !important;
+}
+
+.manage-bonus-balance {
+  margin-top: 22px;
+  border-radius: 20px;
+  border: 1px solid rgba(248, 180, 0, 0.28);
+  background: rgba(248, 180, 0, 0.08);
+  padding: 18px;
+  box-shadow: 0 0 30px rgba(248, 180, 0, 0.08);
+}
+
+.manage-bonus-balance div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #f8b400;
+}
+
+.manage-bonus-balance small {
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.manage-bonus-balance b {
+  display: block;
+  margin-top: 10px;
+  font-size: 28px;
+  color: white;
+}
+
+.manage-modal {
+  position: relative;
+  width: min(92vw, 460px);
+  border-radius: 24px;
+  padding: 28px;
+  animation: manageModalIn 0.22s ease both;
+}
+
+.manage-modal-close {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ffe66d, #f8b400);
+  color: #050505;
+  box-shadow: 0 12px 28px rgba(248, 180, 0, 0.22);
+  transition: transform 0.18s ease;
+}
+
+.manage-modal-close:hover {
+  transform: scale(1.06);
+}
+
+.manage-modal-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-right: 50px;
+}
+
+.manage-modal-heading > svg {
+  min-width: 48px;
+  height: 48px;
+  padding: 12px;
+  border-radius: 16px;
+  background: rgba(248, 180, 0, 0.12);
+  color: #f8b400;
+}
+
+.manage-modal-heading h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 950;
+  color: white;
+}
+
+.manage-modal-heading p,
+.manage-modal-subtext {
+  margin-top: 6px;
+  color: rgba(255, 255, 255, 0.62);
+  line-height: 1.5;
+}
+
+.manage-modal-primary {
+  margin-top: 26px;
+  width: 100%;
+  min-height: 56px;
+  border: 0;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #fff06a, #f8b400, #ff8a00);
+  color: #050505;
+  font-weight: 950;
+  box-shadow: 0 18px 44px rgba(248, 180, 0, 0.22);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.manage-modal-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 52px rgba(248, 180, 0, 0.32);
+}
+
+.manage-modal-note {
+  margin-top: 20px;
+  border-radius: 18px;
+  border: 1px solid rgba(248, 180, 0, 0.22);
+  background: rgba(248, 180, 0, 0.08);
+  padding: 16px;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.manage-modal-balance {
+  margin: 26px 0 4px;
+  font-size: 44px;
+  font-weight: 950;
+}
+
+.manage-tx-empty {
+  margin-top: 26px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  gap: 8px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.22);
+  padding: 34px 20px;
+  color: rgba(255, 255, 255, 0.64);
+}
+
+.manage-tx-empty svg {
+  color: #f8b400;
+}
+
+.manage-tx-empty h3 {
+  margin: 0;
+  color: white;
+  font-size: 20px;
+}
+
+.manage-tx-empty p {
+  margin: 0;
+}
+
+.manage-tx-list {
+  margin-top: 22px;
+  display: grid;
+  gap: 12px;
+}
+
+.manage-tx-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.22);
+  padding: 16px;
+}
+
+.manage-tx-item b {
+  color: white;
+}
+
+.manage-tx-item p {
+  margin: 4px 0 0;
+  color: rgba(255, 255, 255, 0.52);
+}
+
+.manage-support-badge {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  cursor: pointer;
+  border-radius: 20px;
+  border: 1px solid rgba(248, 180, 0, 0.35);
+  background: rgba(248, 180, 0, 0.08);
+  padding: 18px;
+  color: white;
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+
+.manage-support-badge:hover {
+  transform: translateY(-2px);
+  border-color: rgba(248, 180, 0, 0.65);
+}
+
+.manage-support-badge small {
+  display: block;
+  color: #f8b400;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.manage-support-badge b {
+  display: block;
+  margin-top: 6px;
+  word-break: break-word;
+}
+
+@keyframes manageModalIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
