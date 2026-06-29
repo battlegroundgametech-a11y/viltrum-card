@@ -617,6 +617,73 @@ export const VAULT_BANK_ABI: any = [
 		"stateMutability": "view",
 		"type": "function"
 	}
+	{
+  inputs: [
+    {
+      internalType: "uint256",
+      name: "usdCents",
+      type: "uint256"
+    }
+  ],
+  name: "usdCentsToWei",
+  outputs: [
+    {
+      internalType: "uint256",
+      name: "",
+      type: "uint256"
+    }
+  ],
+  stateMutability: "view",
+  type: "function"
+},
+	{
+  inputs: [
+    {
+      internalType: "uint8",
+      name: "cardType",
+      type: "uint8"
+    }
+  ],
+  name: "getDepositWeiLimits",
+  outputs: [
+    {
+      internalType: "uint256",
+      name: "minWei",
+      type: "uint256"
+    },
+    {
+      internalType: "uint256",
+      name: "maxWei",
+      type: "uint256"
+    }
+  ],
+  stateMutability: "view",
+  type: "function"
+},
+		{
+  inputs: [
+    {
+      internalType: "uint8",
+      name: "cardType",
+      type: "uint8"
+    }
+  ],
+  name: "getWithdrawalWeiLimits",
+  outputs: [
+    {
+      internalType: "uint256",
+      name: "minWei",
+      type: "uint256"
+    },
+    {
+      internalType: "uint256",
+      name: "maxWei",
+      type: "uint256"
+    }
+  ],
+  stateMutability: "view",
+  type: "function"
+}
 ];
 
 export function getCardTypeId(cardType: string) {
