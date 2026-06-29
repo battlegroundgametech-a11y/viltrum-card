@@ -264,13 +264,35 @@ const depositAmount = BigInt(result.wei);
     }
 
     try {
-      await writeContractAsync({
+      const txHash = await writeContractAsync({
         address: VAULT_BANK_ADDRESS as `0x${string}`,
         abi: VAULT_BANK_ABI as any,
         functionName: "deposit",
         args: [getCardTypeId(order.card_type)],
         value: depositAmount
       } as any);
+
+      const ledgerRes = await fetch("/api/manage-card/deposit", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    order_id: order.id,
+    wallet_address: address,
+    amount_usd: usd,
+    tx_hash: txHash
+  })
+});
+
+const ledgerData = await ledgerRes.json();
+
+if (!ledgerData.success) {
+  showToast(ledgerData.error || "Deposit saved on-chain, but ledger update failed.", "error");
+  return;
+}
+
+setVaultBalanceUsd(`$${(Number(ledgerData.balance_usd_cents) / 100).toFixed(2)}`);
 
       if (order.card_type === "free" && order.status !== "active") {
         const latestBalance =
@@ -348,12 +370,34 @@ if (!result.success) {
 const withdrawAmount = BigInt(result.wei);
 
     try {
-      await writeContractAsync({
+        const txHash = await writeContractAsync({
         address: VAULT_BANK_ADDRESS as `0x${string}`,
         abi: VAULT_BANK_ABI as any,
         functionName: "withdraw",
         args: [getCardTypeId(order.card_type), withdrawAmount]
       } as any);
+
+      const ledgerRes = await fetch("/api/manage-card/withdraw", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    order_id: order.id,
+    wallet_address: address,
+    amount_usd: usd,
+    tx_hash: txHash
+  })
+});
+
+const ledgerData = await ledgerRes.json();
+
+if (!ledgerData.success) {
+  showToast(ledgerData.error || "Withdrawal completed on-chain, but ledger update failed.", "error");
+  return;
+}
+
+setVaultBalanceUsd(`$${(Number(ledgerData.balance_usd_cents) / 100).toFixed(2)}`);
 
       showToast("Withdrawal successful.", "success");
       refetchBalance();
