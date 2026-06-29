@@ -1,5 +1,5 @@
 export const CARD_SALE_ADDRESS =
-  "0xB44325fC34Bf1679bFd5fba043933c122a44cf15";
+  "0xdEb9E0446d45a95D05Ff500bbd98565f969dF7dD";
 
 export const CARD_SALE_ABI: any = [
   {
