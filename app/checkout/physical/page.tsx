@@ -4,8 +4,6 @@ import HamburgerMenu from "../../../components/HamburgerMenu";
 import WalletBadge from "../../../components/WalletBadge";
 import { useEffect, useState } from "react";
 import { useWriteContract, useReadContract } from "wagmi";
-import { formatEther } from "viem";
-import { parseEther } from "viem";
 import {
   CARD_SALE_ADDRESS,
   CARD_SALE_ABI
@@ -17,11 +15,6 @@ export default function PhysicalCheckoutPage() {
   const [couponCode, setCouponCode] = useState("");
   const { writeContractAsync } = useWriteContract<any>();
   const { showToast } = useToast();
-  const { data: physicalPrice } = useReadContract({
-  address: CARD_SALE_ADDRESS as `0x${string}`,
-  abi: CARD_SALE_ABI as any,
-  functionName: "physicalPrice"
-});
 
 const { data: finalPrice } = useReadContract({
   address: CARD_SALE_ADDRESS as `0x${string}`,
@@ -60,13 +53,22 @@ const { data: finalPrice } = useReadContract({
     const form = new FormData(e.target);
     const couponCode = String(form.get("coupon_code") || "");
 
+    if (!finalPrice) {
+  showToast(
+    "Unable to calculate current ETH price. Please try again.",
+    "error"
+  );
+  setLoading(false);
+  return;
+    }
+
     try {
       await writeContractAsync({
         address: CARD_SALE_ADDRESS as `0x${string}`,
         abi: CARD_SALE_ABI as any,
         functionName: "purchasePhysical",
         args: [1, couponCode],
-        value: (finalPrice || physicalPrice) as bigint
+        value: finalPrice as bigint
       } as any);
     } catch (err: any) {
       showToast(err?.shortMessage || err?.message || "Payment failed", "error");
