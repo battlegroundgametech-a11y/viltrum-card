@@ -39,6 +39,7 @@ export default function ManageCardPage() {
   const [activeModal, setActiveModal] = useState("");
   const [unlockedCards, setUnlockedCards] = useState<any[]>([]);
   const [transactions, setTransactions] = useState<any[]>([]);
+  const [vaultBalanceUsd, setVaultBalanceUsd] = useState("$0.00");
 
   const { showToast } = useToast();
   const { address } = useAccount();
@@ -59,6 +60,35 @@ export default function ManageCardPage() {
   functionName: "getDepositWeiLimits",
   args: order ? [cardTypeId] : undefined
 });
+
+  useEffect(() => {
+  async function convertBalance() {
+    if (!vaultBalance) {
+      setVaultBalanceUsd("$0.00");
+      return;
+    }
+
+    const res = await fetch("/api/convert-wei", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        wei: vaultBalance.toString()
+      })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      setVaultBalanceUsd(
+        `$${(Number(data.usdCents) / 100).toFixed(2)}`
+      );
+    }
+  }
+
+  convertBalance();
+}, [vaultBalance]);
 
   useEffect(() => {
     const user = localStorage.getItem("viltrum_user");
@@ -484,7 +514,7 @@ const withdrawAmount = BigInt(result.wei);
           {vaultBalance === undefined ? (
             <Skeleton className="skeleton-line" />
           ) : (
-            <h2>{formatVaultUSD(vaultBalance)}</h2>
+            <h2>{vaultBalanceUsd}</h2>
           )}
 
           <span>Available Balance</span>
@@ -592,8 +622,8 @@ const withdrawAmount = BigInt(result.wei);
                 </div>
 
                 <p className="manage-modal-balance">
-                  {vaultBalance ? formatVaultUSD(vaultBalance) : "$0.00"}
-                </p>
+                   {vaultBalanceUsd}
+               </p>
 
                 <span className="manage-modal-subtext">Available Balance</span>
               </>
