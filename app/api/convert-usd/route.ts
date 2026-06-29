@@ -44,7 +44,7 @@ export async function POST(req: Request) {
       });
     }
 
-    const usdCents = BigInt(Math.round(usd * 100));
+    const usdCents = BigInt(Math.round(usd * 100) + 1);
 
     const wei = await client.readContract({
       address: VAULT_BANK_ADDRESS as `0x${string}`,
