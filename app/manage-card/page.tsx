@@ -3,8 +3,13 @@
 import { useEffect, useState } from "react";
 import HamburgerMenu from "../../components/HamburgerMenu";
 import WalletBadge from "../../components/WalletBadge";
-import { useAccount, useReadContract, useWriteContract } from "wagmi";
-import { parseEther, formatEther } from "viem";
+import {
+  useAccount,
+  useReadContract,
+  useWriteContract,
+  usePublicClient
+} from "wagmi";
+import { formatEther } from "viem";
 import {
   VAULT_BANK_ADDRESS,
   VAULT_BANK_ABI,
@@ -39,6 +44,7 @@ export default function ManageCardPage() {
   const { showToast } = useToast();
   const { address } = useAccount();
   const { writeContractAsync } = useWriteContract<any>();
+  const publicClient = usePublicClient();
 
   const cardTypeId = order ? getCardTypeId(order.card_type) : 1;
 
@@ -49,12 +55,12 @@ export default function ManageCardPage() {
     args: address && order ? [address, cardTypeId] : undefined
   });
 
-  const { data: cardLimits } = useReadContract({
-    address: VAULT_BANK_ADDRESS,
-    abi: VAULT_BANK_ABI,
-    functionName: "cardLimits",
-    args: order ? [cardTypeId] : undefined
-  });
+  const { data: depositLimits } = useReadContract({
+  address: VAULT_BANK_ADDRESS,
+  abi: VAULT_BANK_ABI,
+  functionName: "getDepositWeiLimits",
+  args: order ? [cardTypeId] : undefined
+});
 
   useEffect(() => {
     const user = localStorage.getItem("viltrum_user");
@@ -175,16 +181,30 @@ export default function ManageCardPage() {
       return;
     }
 
-    const amount = prompt("Enter deposit amount");
+    const amount = prompt("Enter deposit amount (USD)");
 
-    if (!amount) return;
+if (!amount) return;
 
-    const depositAmount = parseEther(amount);
+const usd = Number(amount);
+
+if (isNaN(usd) || usd <= 0) {
+  showToast("Invalid amount.", "error");
+  return;
+}
+
+const usdCents = Math.round(usd * 100);
+
+const depositAmount = await publicClient!.readContract({
+  address: VAULT_BANK_ADDRESS as `0x${string}`,
+  abi: VAULT_BANK_ABI as any,
+  functionName: "usdCentsToWei",
+  args: [usdCents]
+});
 
     const minDeposit =
-      cardLimits && Array.isArray(cardLimits)
-        ? (cardLimits[0] as bigint)
-        : BigInt(0);
+  depositLimits && Array.isArray(depositLimits)
+    ? (depositLimits[0] as bigint)
+    : BigInt(0);
 
     if (
       order.card_type === "free" &&
@@ -254,16 +274,32 @@ export default function ManageCardPage() {
       return;
     }
 
-    const amount = prompt("Enter withdrawal amount");
+    const amount = prompt("Enter withdrawal amount (USD)");
 
-    if (!amount) return;
+if (!amount) return;
+
+const usd = Number(amount);
+
+if (isNaN(usd) || usd <= 0) {
+  showToast("Invalid amount.", "error");
+  return;
+}
+
+const usdCents = Math.round(usd * 100);
+
+const withdrawAmount = await publicClient!.readContract({
+  address: VAULT_BANK_ADDRESS as `0x${string}`,
+  abi: VAULT_BANK_ABI as any,
+  functionName: "usdCentsToWei",
+  args: [usdCents]
+});
 
     try {
       await writeContractAsync({
         address: VAULT_BANK_ADDRESS as `0x${string}`,
         abi: VAULT_BANK_ABI as any,
         functionName: "withdraw",
-        args: [getCardTypeId(order.card_type), parseEther(amount)]
+        args: [getCardTypeId(order.card_type), withdrawAmount]
       } as any);
 
       showToast("Withdrawal successful.", "success");
