@@ -6,7 +6,8 @@ import WalletBadge from "../../components/WalletBadge";
 import {
   useAccount,
   useReadContract,
-  useWriteContract
+  useWriteContract,
+  useWaitForTransactionReceipt
 } from "wagmi";
 import { formatEther } from "viem";
 import {
@@ -39,6 +40,8 @@ export default function ManageCardPage() {
   const [activeModal, setActiveModal] = useState("");
   const [unlockedCards, setUnlockedCards] = useState<any[]>([]);
   const [transactions, setTransactions] = useState<any[]>([]);
+  const [pendingTxHash, setPendingTxHash] = useState<`0x${string}` | undefined>();
+  const [pendingLedger, setPendingLedger] = useState<any>(null);
   const [vaultBalanceUsd, setVaultBalanceUsd] = useState("$0.00");
 
   const { showToast } = useToast();
@@ -60,6 +63,56 @@ export default function ManageCardPage() {
   functionName: "getDepositWeiLimits",
   args: order ? [cardTypeId] : undefined
 });
+
+  const { data: confirmedTx } = useWaitForTransactionReceipt({
+  hash: pendingTxHash
+});
+
+useEffect(() => {
+  async function updateLedgerAfterConfirmation() {
+    if (!confirmedTx || !pendingLedger) return;
+
+    if (confirmedTx.status !== "success") {
+      showToast("Transaction failed on-chain.", "error");
+      setPendingTxHash(undefined);
+      setPendingLedger(null);
+      return;
+    }
+
+    const ledgerRes = await fetch(`/api/manage-card/${pendingLedger.type}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(pendingLedger.body)
+    });
+
+    const ledgerData = await ledgerRes.json();
+
+    if (!ledgerData.success) {
+      showToast(
+        ledgerData.error || "Transaction confirmed, but balance update failed.",
+        "error"
+      );
+      return;
+    }
+
+    setVaultBalanceUsd(`$${(Number(ledgerData.balance_usd_cents) / 100).toFixed(2)}`);
+
+    showToast(
+      pendingLedger.type === "deposit"
+        ? "Deposit confirmed."
+        : "Withdrawal confirmed.",
+      "success"
+    );
+
+    setPendingTxHash(undefined);
+    setPendingLedger(null);
+    setActiveModal("");
+  }
+
+  updateLedgerAfterConfirmation();
+}, [confirmedTx, pendingLedger]);
 
   useEffect(() => {
   async function loadCardLedgerBalance() {
@@ -263,27 +316,19 @@ const depositAmount = BigInt(result.wei);
         value: depositAmount
       } as any);
 
-      const ledgerRes = await fetch("/api/manage-card/deposit", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
+      setPendingTxHash(txHash as `0x${string}`);
+setPendingLedger({
+  type: "deposit",
+  body: {
     order_id: order.id,
     wallet_address: address,
     amount_usd: usd,
     tx_hash: txHash
-  })
+  }
 });
 
-const ledgerData = await ledgerRes.json();
-
-if (!ledgerData.success) {
-  showToast(ledgerData.error || "Deposit saved on-chain, but ledger update failed.", "error");
-  return;
-}
-
-setVaultBalanceUsd(`$${(Number(ledgerData.balance_usd_cents) / 100).toFixed(2)}`);
+showToast("Deposit submitted. Waiting for confirmation...", "success");
+return;
 
       if (order.card_type === "free" && order.status !== "active") {
         const latestBalance =
@@ -393,27 +438,19 @@ if (currentCardBalanceCents < requestedWithdrawCents) {
         args: [getCardTypeId(order.card_type), withdrawAmount]
       } as any);
 
-      const ledgerRes = await fetch("/api/manage-card/withdraw", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
+      setPendingTxHash(txHash as `0x${string}`);
+setPendingLedger({
+  type: "withdraw",
+  body: {
     order_id: order.id,
     wallet_address: address,
     amount_usd: usd,
     tx_hash: txHash
-  })
+  }
 });
 
-const ledgerData = await ledgerRes.json();
-
-if (!ledgerData.success) {
-  showToast(ledgerData.error || "Withdrawal completed on-chain, but ledger update failed.", "error");
-  return;
-}
-
-setVaultBalanceUsd(`$${(Number(ledgerData.balance_usd_cents) / 100).toFixed(2)}`);
+showToast("Withdrawal submitted. Waiting for confirmation...", "success");
+return;
 
       showToast("Withdrawal successful.", "success");
       refetchBalance();
