@@ -9,27 +9,14 @@ export default function ForgotPasswordPage() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const [otpLoading, setOtpLoading] = useState(false);
   const [resetLoading, setResetLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  async function generateOtp() {
-    setMessage("");
-    setOtpLoading(true);
+  const botName = process.env.NEXT_PUBLIC_OTP_BOT_NAME;
 
-    const res = await fetch("/api/auth/forgot-password/generate-otp", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        telegram_username: telegramUsername
-      })
-    });
-
-    const data = await res.json();
-    setMessage(data.error || data.message || "OTP request completed");
-    setOtpLoading(false);
+  function openTelegramResetBot() {
+    setMessage("Open Telegram, send /reset, then enter the OTP here.");
+    window.open(`https://t.me/${botName}?start=reset`, "_blank");
   }
 
   async function changePassword(e: React.FormEvent<HTMLFormElement>) {
@@ -78,6 +65,10 @@ export default function ForgotPasswordPage() {
       <div className="checkout-form-box text-center">
         <h1>Forgot Password</h1>
 
+        <p className="mt-3 text-white/60">
+          Enter your Telegram username, open the bot, send /reset, then use the OTP here.
+        </p>
+
         <div className="mt-6 flex flex-col gap-4">
           <input
             value={telegramUsername}
@@ -86,8 +77,12 @@ export default function ForgotPasswordPage() {
             required
           />
 
-          <button type="button" onClick={generateOtp} disabled={otpLoading || !telegramUsername}>
-            {otpLoading ? "Generating OTP..." : "Generate Reset OTP"}
+          <button
+            type="button"
+            onClick={openTelegramResetBot}
+            disabled={!botName}
+          >
+            Open Telegram Reset Bot
           </button>
         </div>
 
