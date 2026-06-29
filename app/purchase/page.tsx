@@ -53,7 +53,7 @@ export default function PurchasePage() {
           </div>
 
           <h2>Virtual Card</h2>
-          <h3>$5</h3>
+          <h3>$10</h3>
           <p>
             Includes virtual card, NFT access, and instant digital card
             assignment after purchase.
