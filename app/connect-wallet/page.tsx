@@ -2,6 +2,7 @@
 
 import { useAccount } from "wagmi";
 import { useEffect, useRef, useState } from "react";
+import { Wallet, CheckCircle2, ShieldCheck } from "lucide-react";
 import { supabase } from "../../lib/supabaseClient";
 import WalletConnect from "../../components/WalletConnect";
 import HamburgerMenu from "../../components/HamburgerMenu";
@@ -30,9 +31,7 @@ export default function ConnectWalletPage() {
         .eq("telegram_id", telegram_id)
         .limit(1);
 
-      if (!error) {
-        setHasOrders(!!data && data.length > 0);
-      }
+      if (!error) setHasOrders(!!data && data.length > 0);
     }
 
     checkOldOrders();
@@ -94,9 +93,7 @@ export default function ConnectWalletPage() {
       <section className="wallet-shell" aria-labelledby="wallet-title">
         <div className="wallet-hero">
           <div className="wallet-kicker">Sepolia Wallet Access</div>
-
           <h1 id="wallet-title">Connect your wallet</h1>
-
           <p>Securely link your wallet to continue.</p>
         </div>
 
@@ -104,7 +101,7 @@ export default function ConnectWalletPage() {
           <div className="wallet-panel-header">
             <div>
               <span>Wallet</span>
-              <h2>Choose connection</h2>
+              <h2>{isConnected ? "Ready to continue" : "Choose connection"}</h2>
             </div>
 
             <div className={isConnected ? "wallet-status active" : "wallet-status"}>
@@ -112,7 +109,27 @@ export default function ConnectWalletPage() {
             </div>
           </div>
 
-          <WalletConnect />
+          <div className="wallet-premium-state">
+            <div className="wallet-illustration" aria-hidden="true">
+              {isConnected ? <CheckCircle2 size={42} /> : <Wallet size={42} />}
+            </div>
+
+            <div className="wallet-copy">
+              <h3>
+                {isConnected
+                  ? "Wallet connected successfully"
+                  : "Connect your wallet"}
+              </h3>
+
+              <p>
+                {isConnected
+                  ? "Your wallet is linked. Continue to purchase or manage your Viltrum cards."
+                  : "Use your preferred wallet to unlock Viltrum card access."}
+              </p>
+            </div>
+          </div>
+
+          {!isConnected && <WalletConnect />}
 
           {error && (
             <p className="wallet-error" role="alert">
@@ -143,6 +160,11 @@ export default function ConnectWalletPage() {
               )}
             </div>
           )}
+
+          <div className="wallet-trust-row">
+            <ShieldCheck size={18} />
+            <span>Wallet address is saved securely and never displayed here.</span>
+          </div>
         </div>
       </section>
     </main>
