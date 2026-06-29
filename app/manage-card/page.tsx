@@ -6,8 +6,7 @@ import WalletBadge from "../../components/WalletBadge";
 import {
   useAccount,
   useReadContract,
-  useWriteContract,
-  usePublicClient
+  useWriteContract
 } from "wagmi";
 import { formatEther } from "viem";
 import {
@@ -44,7 +43,6 @@ export default function ManageCardPage() {
   const { showToast } = useToast();
   const { address } = useAccount();
   const { writeContractAsync } = useWriteContract<any>();
-  const publicClient = usePublicClient();
 
   const cardTypeId = order ? getCardTypeId(order.card_type) : 1;
 
@@ -192,14 +190,22 @@ if (isNaN(usd) || usd <= 0) {
   return;
 }
 
-const usdCents = Math.round(usd * 100);
-
-const depositAmount = await publicClient!.readContract({
-  address: VAULT_BANK_ADDRESS as `0x${string}`,
-  abi: VAULT_BANK_ABI as any,
-  functionName: "usdCentsToWei",
-  args: [usdCents]
+const response = await fetch("/api/convert-usd", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ usd })
 });
+
+const result = await response.json();
+
+if (!result.success) {
+  showToast("Unable to calculate ETH amount.", "error");
+  return;
+}
+
+const depositAmount = BigInt(result.wei);
 
     const minDeposit =
   depositLimits && Array.isArray(depositLimits)
@@ -285,14 +291,22 @@ if (isNaN(usd) || usd <= 0) {
   return;
 }
 
-const usdCents = Math.round(usd * 100);
-
-const withdrawAmount = await publicClient!.readContract({
-  address: VAULT_BANK_ADDRESS as `0x${string}`,
-  abi: VAULT_BANK_ABI as any,
-  functionName: "usdCentsToWei",
-  args: [usdCents]
+const response = await fetch("/api/convert-usd", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ usd })
 });
+
+const result = await response.json();
+
+if (!result.success) {
+  showToast("Unable to calculate ETH amount.", "error");
+  return;
+}
+
+const withdrawAmount = BigInt(result.wei);
 
     try {
       await writeContractAsync({
