@@ -63,7 +63,14 @@ export default function ManageCardPage() {
 
   useEffect(() => {
   async function convertBalance() {
-    if (!vaultBalance) {
+    if (vaultBalance === undefined || vaultBalance === null) {
+      setVaultBalanceUsd("$0.00");
+      return;
+    }
+
+    const weiValue = BigInt(vaultBalance as bigint);
+
+    if (weiValue === BigInt(0)) {
       setVaultBalanceUsd("$0.00");
       return;
     }
@@ -74,7 +81,7 @@ export default function ManageCardPage() {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        wei: vaultBalance.toString()
+        wei: weiValue.toString()
       })
     });
 
@@ -84,11 +91,13 @@ export default function ManageCardPage() {
       setVaultBalanceUsd(
         `$${(Number(data.usdCents) / 100).toFixed(2)}`
       );
+    } else {
+      setVaultBalanceUsd("$0.00");
     }
   }
 
   convertBalance();
-}, [vaultBalance]);
+}, [vaultBalance, address, cardTypeId]);
 
   useEffect(() => {
     const user = localStorage.getItem("viltrum_user");
