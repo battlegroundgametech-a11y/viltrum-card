@@ -360,6 +360,31 @@ if (!result.success) {
 
 const withdrawAmount = BigInt(result.wei);
 
+    const balanceCheckRes = await fetch("/api/manage-card/balance", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    order_id: order.id
+  })
+});
+
+const balanceCheck = await balanceCheckRes.json();
+
+if (!balanceCheck.success) {
+  showToast("Could not verify card balance.", "error");
+  return;
+}
+
+const currentCardBalanceCents = Number(balanceCheck.balance_usd_cents || 0);
+const requestedWithdrawCents = Math.round(usd * 100);
+
+if (currentCardBalanceCents < requestedWithdrawCents) {
+  showToast("Insufficient balance on this card.", "error");
+  return;
+}
+
     try {
         const txHash = await writeContractAsync({
         address: VAULT_BANK_ADDRESS as `0x${string}`,
