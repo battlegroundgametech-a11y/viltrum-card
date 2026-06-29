@@ -616,7 +616,7 @@ export const VAULT_BANK_ABI: any = [
 		],
 		"stateMutability": "view",
 		"type": "function"
-	}
+	},
 	{
   inputs: [
     {
