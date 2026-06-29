@@ -62,26 +62,19 @@ export default function ManageCardPage() {
 });
 
   useEffect(() => {
-  async function convertBalance() {
-    if (vaultBalance === undefined || vaultBalance === null) {
+  async function loadCardLedgerBalance() {
+    if (!order?.id) {
       setVaultBalanceUsd("$0.00");
       return;
     }
 
-    const weiValue = BigInt(vaultBalance as bigint);
-
-    if (weiValue === BigInt(0)) {
-      setVaultBalanceUsd("$0.00");
-      return;
-    }
-
-    const res = await fetch("/api/convert-wei", {
+    const res = await fetch("/api/manage-card/balance", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        wei: weiValue.toString()
+        order_id: order.id
       })
     });
 
@@ -89,15 +82,13 @@ export default function ManageCardPage() {
 
     if (data.success) {
       setVaultBalanceUsd(
-        `$${(Number(data.usdCents) / 100).toFixed(2)}`
+        `$${(Number(data.balance_usd_cents) / 100).toFixed(2)}`
       );
-    } else {
-      setVaultBalanceUsd("$0.00");
     }
   }
 
-  convertBalance();
-}, [vaultBalance, address, cardTypeId]);
+  loadCardLedgerBalance();
+}, [order?.id]);
 
   useEffect(() => {
     const user = localStorage.getItem("viltrum_user");
