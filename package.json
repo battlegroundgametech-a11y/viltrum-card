@@ -17,8 +17,8 @@
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "viem": "latest",
-    "wagmi": "latest"
+    "viem": "^2.31.7",
+    "wagmi": "^2.16.9"
   },
   "devDependencies": {
     "@types/node": "latest",
