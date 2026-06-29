@@ -4,7 +4,7 @@ import { sepolia } from "viem/chains";
 
 const client: any = createPublicClient({
   chain: sepolia,
-  transport: http()
+  transport: http(process.env.SEPOLIA_RPC_URL)
 });
 
 const VAULT_BANK_ADDRESS =
