@@ -6871,91 +6871,59 @@ body.light-mode .footer-socials a {
   }
 }
 
-/* Fix virtual PremiumCard mobile alignment only */
-.luxury-virtual-card .lux-card-meta {
-  bottom: 18px;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: end;
-  gap: 12px;
-  padding-right: 92px;
-}
-
-.luxury-virtual-card .lux-card-meta small {
-  font-size: 9px;
-  line-height: 1;
-  letter-spacing: 0.14em;
-  white-space: nowrap;
-}
-
-.luxury-virtual-card .lux-card-meta b {
-  display: block;
-  margin-top: 5px;
-  font-size: clamp(11px, 3vw, 15px);
-  line-height: 1.05;
-  letter-spacing: 0.08em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 190px;
-}
-
-.luxury-virtual-card .lux-card-meta > div:last-child {
-  text-align: right;
-  min-width: 58px;
-}
-
-.luxury-virtual-card .lux-visa {
-  right: 20px;
-  bottom: 24px;
-  transform: scale(0.82);
-  transform-origin: bottom right;
-}
-
-@media (max-width: 480px) {
-  .luxury-virtual-card .lux-card-meta {
-    bottom: 14px;
-    padding-right: 82px;
-  }
-
-  .luxury-virtual-card .lux-card-meta b {
-    font-size: 11px;
-    max-width: 170px;
-  }
-
-  .luxury-virtual-card .lux-visa {
-    right: 18px;
-    bottom: 22px;
-    transform: scale(0.76);
-  }
-}
-
-/* Final virtual card mobile alignment fix */
+/* FINAL Virtual Card layout fix - only affects PremiumCard virtual */
 .luxury-virtual-card {
-  overflow: hidden;
+  position: relative !important;
+  overflow: hidden !important;
+  aspect-ratio: 1.586 / 1 !important;
+}
+
+.luxury-virtual-card .lux-card-header {
+  position: absolute !important;
+  top: 10% !important;
+  left: 6% !important;
+  right: 6% !important;
+  z-index: 3 !important;
+}
+
+.luxury-virtual-card .lux-chip {
+  position: absolute !important;
+  top: 30% !important;
+  left: 6% !important;
+  z-index: 3 !important;
 }
 
 .luxury-virtual-card .lux-card-number {
-  font-size: clamp(18px, 5.2vw, 28px) !important;
+  position: absolute !important;
+  top: 52% !important;
+  left: 6% !important;
+  right: 6% !important;
+  z-index: 3 !important;
+
+  font-size: clamp(16px, 4.8vw, 27px) !important;
   line-height: 1 !important;
-  letter-spacing: 0.22em !important;
+  letter-spacing: 0.18em !important;
   white-space: nowrap !important;
-  max-width: 76% !important;
   overflow: hidden !important;
+  text-overflow: clip !important;
 }
 
 .luxury-virtual-card .lux-card-meta {
-  bottom: 18px !important;
-  left: 30px !important;
-  right: 118px !important;
+  position: absolute !important;
+  left: 6% !important;
+  right: 30% !important;
+  bottom: 9% !important;
+  z-index: 3 !important;
+
   display: grid !important;
-  grid-template-columns: minmax(0, 1fr) auto !important;
+  grid-template-columns: minmax(0, 1fr) 72px !important;
   align-items: end !important;
-  gap: 18px !important;
-  padding-right: 0 !important;
+  gap: 14px !important;
+  padding: 0 !important;
 }
 
 .luxury-virtual-card .lux-card-meta small {
+  display: block !important;
   font-size: 8px !important;
   line-height: 1 !important;
   letter-spacing: 0.14em !important;
@@ -6963,50 +6931,49 @@ body.light-mode .footer-socials a {
 }
 
 .luxury-virtual-card .lux-card-meta b {
+  display: block !important;
   margin-top: 5px !important;
   font-size: clamp(10px, 2.7vw, 13px) !important;
-  line-height: 1.05 !important;
+  line-height: 1.1 !important;
   letter-spacing: 0.04em !important;
   white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
-  max-width: 160px !important;
 }
 
 .luxury-virtual-card .lux-card-meta > div:last-child {
   text-align: center !important;
-  min-width: 54px !important;
 }
 
 .luxury-virtual-card .lux-visa {
-  right: 22px !important;
-  bottom: 22px !important;
-  transform: scale(0.72) !important;
+  position: absolute !important;
+  right: 5% !important;
+  bottom: 8% !important;
+  z-index: 3 !important;
+  transform: scale(0.78) !important;
   transform-origin: bottom right !important;
 }
 
 @media (max-width: 480px) {
   .luxury-virtual-card .lux-card-number {
-    font-size: 20px !important;
-    letter-spacing: 0.24em !important;
-    max-width: 78% !important;
+    top: 51% !important;
+    font-size: 17px !important;
+    letter-spacing: 0.16em !important;
   }
 
   .luxury-virtual-card .lux-card-meta {
-    left: 28px !important;
-    right: 106px !important;
-    bottom: 16px !important;
-    gap: 14px !important;
+    bottom: 8% !important;
+    right: 31% !important;
+    grid-template-columns: minmax(0, 1fr) 66px !important;
   }
 
   .luxury-virtual-card .lux-card-meta b {
     font-size: 10px !important;
-    max-width: 145px !important;
   }
 
   .luxury-virtual-card .lux-visa {
-    right: 18px !important;
-    bottom: 20px !important;
+    right: 5% !important;
+    bottom: 7% !important;
     transform: scale(0.68) !important;
   }
 }
