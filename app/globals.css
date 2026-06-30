@@ -6870,3 +6870,62 @@ body.light-mode .footer-socials a {
     padding-right: 58px !important;
   }
 }
+
+/* Fix virtual PremiumCard mobile alignment only */
+.luxury-virtual-card .lux-card-meta {
+  bottom: 18px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 12px;
+  padding-right: 92px;
+}
+
+.luxury-virtual-card .lux-card-meta small {
+  font-size: 9px;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  white-space: nowrap;
+}
+
+.luxury-virtual-card .lux-card-meta b {
+  display: block;
+  margin-top: 5px;
+  font-size: clamp(11px, 3vw, 15px);
+  line-height: 1.05;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 190px;
+}
+
+.luxury-virtual-card .lux-card-meta > div:last-child {
+  text-align: right;
+  min-width: 58px;
+}
+
+.luxury-virtual-card .lux-visa {
+  right: 20px;
+  bottom: 24px;
+  transform: scale(0.82);
+  transform-origin: bottom right;
+}
+
+@media (max-width: 480px) {
+  .luxury-virtual-card .lux-card-meta {
+    bottom: 14px;
+    padding-right: 82px;
+  }
+
+  .luxury-virtual-card .lux-card-meta b {
+    font-size: 11px;
+    max-width: 170px;
+  }
+
+  .luxury-virtual-card .lux-visa {
+    right: 18px;
+    bottom: 22px;
+    transform: scale(0.76);
+  }
+}
