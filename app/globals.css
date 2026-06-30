@@ -6871,61 +6871,92 @@ body.light-mode .footer-socials a {
   }
 }
 
-/* Fix virtual PremiumCard mobile alignment only */
+/* Final virtual card mobile alignment fix */
+.luxury-virtual-card {
+  aspect-ratio: 1.586 / 1;
+  overflow: hidden;
+}
+
+.luxury-virtual-card .lux-card-number {
+  left: 32px !important;
+  right: 28px !important;
+  bottom: 78px !important;
+  font-size: clamp(19px, 6vw, 27px) !important;
+  line-height: 1 !important;
+  letter-spacing: 0.22em !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: clip !important;
+}
+
 .luxury-virtual-card .lux-card-meta {
-  bottom: 18px;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: end;
-  gap: 12px;
-  padding-right: 92px;
+  left: 32px !important;
+  right: 112px !important;
+  bottom: 28px !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 64px !important;
+  align-items: end !important;
+  gap: 14px !important;
+  padding: 0 !important;
 }
 
 .luxury-virtual-card .lux-card-meta small {
-  font-size: 9px;
-  line-height: 1;
-  letter-spacing: 0.14em;
-  white-space: nowrap;
+  display: block !important;
+  font-size: 8px !important;
+  line-height: 1 !important;
+  letter-spacing: 0.18em !important;
+  white-space: nowrap !important;
 }
 
 .luxury-virtual-card .lux-card-meta b {
-  display: block;
-  margin-top: 5px;
-  font-size: clamp(11px, 3vw, 15px);
-  line-height: 1.05;
-  letter-spacing: 0.08em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 190px;
+  display: block !important;
+  margin-top: 6px !important;
+  font-size: 12px !important;
+  line-height: 1 !important;
+  letter-spacing: 0.06em !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.luxury-virtual-card .lux-card-meta > div:first-child b {
+  max-width: 170px !important;
 }
 
 .luxury-virtual-card .lux-card-meta > div:last-child {
-  text-align: right;
-  min-width: 58px;
+  text-align: left !important;
 }
 
 .luxury-virtual-card .lux-visa {
-  right: 20px;
-  bottom: 24px;
-  transform: scale(0.82);
-  transform-origin: bottom right;
+  right: 22px !important;
+  bottom: 27px !important;
+  transform: scale(0.76) !important;
+  transform-origin: bottom right !important;
 }
 
-@media (max-width: 480px) {
-  .luxury-virtual-card .lux-card-meta {
-    bottom: 14px;
-    padding-right: 82px;
+@media (max-width: 420px) {
+  .luxury-virtual-card .lux-card-number {
+    left: 30px !important;
+    right: 26px !important;
+    bottom: 74px !important;
+    font-size: 21px !important;
+    letter-spacing: 0.2em !important;
   }
 
-  .luxury-virtual-card .lux-card-meta b {
-    font-size: 11px;
-    max-width: 170px;
+  .luxury-virtual-card .lux-card-meta {
+    left: 30px !important;
+    right: 105px !important;
+    bottom: 26px !important;
+    grid-template-columns: minmax(0, 1fr) 58px !important;
+  }
+
+  .luxury-virtual-card .lux-card-meta > div:first-child b {
+    max-width: 155px !important;
   }
 
   .luxury-virtual-card .lux-visa {
-    right: 18px;
-    bottom: 22px;
-    transform: scale(0.76);
+    right: 20px !important;
+    bottom: 25px !important;
+    transform: scale(0.7) !important;
   }
 }
